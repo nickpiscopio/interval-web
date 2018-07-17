@@ -21,13 +21,13 @@
         <h3>TIMER BREAKDOWN</h3>
       </div>
 
-      <div *ngIf="timer.intervals !== null">
+      <div *ngIf="hasIntervals()">
         <div *ngFor="let key of objectKeys(timer.intervals)">
           <app-interval [index]="key" [interval]="timer.intervals[key]"></app-interval>
         </div>
       </div>
       <button (click)="addInterval()">ADD</button>
-      <button (click)="save()">SAVE</button>
+      <button (click)="start()" [disabled]="!hasIntervals()">START</button>
 
     </mat-card>
   </div>

@@ -7,7 +7,7 @@
         <p>Fitness timer by Intencity</p>
       </div>
 
-      <button mat-raised-button [routerLink]="getCreateTimerRoute()" *ngIf="showButton" [@buttonAnimation]>
+      <button mat-raised-button (click)="navigateToCreateTimer()" *ngIf="showButton" [@buttonAnimation]>
         <mat-icon>timer</mat-icon>CREATE TIMER
       </button>
 

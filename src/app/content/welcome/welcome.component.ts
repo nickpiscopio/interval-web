@@ -1,6 +1,7 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { Route } from '../../constant/route.constant';
 import { trigger, style, transition, animate, state } from '@angular/animations';
+import { Router } from '../../../../node_modules/@angular/router';
 
 const THRESHOLD_SHOW_BUTTON = 1000;
 const THRESHOLD_ANIMATION_CREATE_BUTTON = 800;
@@ -28,6 +29,8 @@ const STATE_ISNT_SHOWN = 'false';
 export class WelcomeComponent implements AfterContentInit {
   showButton = false;
 
+  constructor(private router: Router) {}
+
   ngAfterContentInit() {
     // We want to show the button after a certain threshold.
     setTimeout(() => {
@@ -36,11 +39,9 @@ export class WelcomeComponent implements AfterContentInit {
   }
 
   /**
-   * Gets the create timer route.
-   *
-   * @returns {string}  The create timer route.
+   * Navigates to the create timer screen.
    */
-  getCreateTimerRoute() {
-    return Route.INTERNAL_ROUTE_TIMER_CREATE;
+  navigateToCreateTimer() {
+    this.router.navigate([Route.INTERNAL_ROUTE_TIMER_CREATE]);
   }
 }
