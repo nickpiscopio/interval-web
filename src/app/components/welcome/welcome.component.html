@@ -1,3 +1,18 @@
-<p>
-  start works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="align-self-center">
+      <div [@titleAnimation]="showButton">
+        <h3>WELCOME TO</h3>
+        <img alt="Interval Logo" src="../../../assets/images/interval_icon.svg" />
+        <p>Fitness timer by Intencity</p>
+      </div>
+
+      <button mat-raised-button [routerLink]="getCreateTimerRoute()" *ngIf="showButton" [@buttonAnimation]>
+        <mat-icon>timer</mat-icon>CREATE TIMER
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

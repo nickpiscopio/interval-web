@@ -1,6 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap-reboot'
+@import '~bootstrap/scss/bootstrap-grid'
 
 @import 'styles/color'
 
+@font-face
+  font-family: "Open Sans Light" !important
+  src: local(OpenSans Light), url("./assets/fonts/open_sans/OpenSans-Light.ttf") format("ttf"), url("./assets/fonts/open_sans/OpenSans-Light.ttf") format("ttf") !important
+  font-weight: 300 !important
+
+@font-face
+  font-family: "Open Sans Regular" !important
+  src: local(OpenSans Regular), url("./assets/fonts/open_sans/OpenSans-Regular.ttf") format("ttf"), url("./assets/fonts/open_sans/OpenSans-Regular.ttf") format("ttf") !important
+  font-weight: 400 !important
+
+@font-face
+  font-family: "Open Sans Medium"
+  src: local(OpenSans Medium), url("./assets/fonts/open_sans/OpenSans-Semibold.ttf") format("ttf"), url("./assets/fonts/open_sans/OpenSans-Semibold.ttf") format("ttf") !important
+  font-weight: 500 !important
+
+@font-face
+  font-family: "Open Sans Bold" !important
+  src: local(OpenSans Bold), url("./assets/fonts/open_sans/OpenSans-Bold.ttf") format("ttf"), url("./assets/fonts/open_sans/OpenSans-Bold.ttf") format("ttf") !important
+  font-weight: 700 !important
+
+button span
+    font-family: "Open Sans Bold", sans-serif !important
+    font-size: 14px
+  
+button:focus
+  outline: 0
+
+// This changes all the elements in the website except for 'mat-icon'.
+*:not(mat-icon)
+  font-family: "Open Sans Regular", sans-serif !important
+
 body
-  background: $color4
+  background: $color-background
+  color: $color-text
+
