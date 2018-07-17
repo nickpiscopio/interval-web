@@ -2,9 +2,9 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route } from './constant/route.constant';
-import { WelcomeComponent } from './components/welcome/welcome.component';
-import { TimerCreateComponent } from './components/timer-create/timer-create.component';
-import { TimerComponent } from './components/timer/timer.component';
+import { WelcomeComponent } from './content/welcome/welcome.component';
+import { TimerCreateComponent } from './content/timer-create/timer-create.component';
+import { TimerComponent } from './content/timer/timer.component';
 
 const appRoutes: Routes = [
   { path: Route.INTERNAL_WELCOME, component: WelcomeComponent },

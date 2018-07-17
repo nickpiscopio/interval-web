@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/bootstrap-grid'
 
 @import 'styles/color'
+@import 'styles/integer'
 
 @font-face
   font-family: "Open Sans Light" !important
@@ -38,3 +39,35 @@ body
   background: $color-background
   color: $color-text
 
+mat-card
+  background: $color-card
+  color: $color-card-text
+
+input
+  outline: 0
+  border: 0
+
+.layout
+  display: flex
+
+.match-parent
+  flex: 1
+
+.title-secondary
+  margin-top: $margin-normal
+  color: $color-grey
+
+  mat-icon, h3
+    display: inline-flex
+    vertical-align: middle
+  
+  mat-icon
+    margin-right: $margin-x-small
+  
+  h3
+    margin: .111em 0 0 0
+  
+  input
+    display: block
+    margin-left: 2.222em
+    width: 75%

@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './timer-create.component.html',
   styleUrls: ['./timer-create.component.sass']
 })
-export class TimerCreateComponent {}
+export class TimerCreateComponent {
+  timerName: string;
+}
