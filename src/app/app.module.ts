@@ -13,12 +13,13 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { routes } from './app.router';
-import { TimerComponent } from './content/timer/timer.component';
-import { TimerCreateComponent } from './content/timer-create/timer-create.component';
+import { TimerComponent } from './content/timer/timer-run/timer-run.component';
+import { TimerCreateComponent } from './content/timer/timer-create/timer-create.component';
 import { FooterComponent } from './fragments/footer/footer.component';
+import { IntervalComponent } from './content/timer/interval/interval.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, TimerComponent, TimerCreateComponent, FooterComponent],
+  declarations: [AppComponent, WelcomeComponent, TimerComponent, TimerCreateComponent, FooterComponent, IntervalComponent],
   imports: [CommonModule, BrowserModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule, MatInputModule, BrowserAnimationsModule, routes],
   providers: [],
   bootstrap: [AppComponent]
