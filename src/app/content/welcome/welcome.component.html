@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="align-self-center">
-      <div [@titleAnimation]="showButton">
+      <div [@titleAnimation]="slideTitle">
         <h3>WELCOME TO</h3>
         <img alt="Interval Logo" src="../../../assets/images/interval_icon.svg" />
         <p>Fitness timer by Intencity</p>
       </div>
 
-      <button mat-raised-button (click)="navigateToCreateTimer()" *ngIf="showButton" [@buttonAnimation]>
+      <button mat-raised-button [ngClass]="getButtonClass()" (click)="navigateToCreateTimer()">
         <mat-icon>timer</mat-icon>CREATE TIMER
       </button>
 
