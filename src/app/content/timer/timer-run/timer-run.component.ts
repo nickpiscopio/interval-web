@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Route } from '../../../constant/route.constant';
@@ -17,7 +17,7 @@ const MESSAGE_INTERVALS_FINISHED = 'FINISHED!';
   styleUrls: ['./timer-run.component.sass'],
   animations: [fade]
 })
-export class TimerComponent {
+export class TimerComponent implements OnDestroy {
   // This is the set of keys that we use to get from JSON objects.
   private objectKeys = Object.keys;
 
@@ -60,6 +60,12 @@ export class TimerComponent {
         this.runTimer(intervals, false);
       }
     }
+  }
+
+  ngOnDestroy() {
+    // We need to destroy all timers in case we go back to a different screen or navigate away for any reason.
+    clearInterval(this.intervalTimer);
+    clearInterval(this.pauseTimer);
   }
 
   /**
