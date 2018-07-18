@@ -1,8 +1,12 @@
+<div>
+  <button (click)="setTimerActivation()">
+    <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
+  </button>
+</div>
 <div class="container">
-  <div class="row">
-    <h1>{{timer.name}}</h1>
-    <p>{{getTime()}}</p>
-  </div>
+  <h3>{{timer.name}}</h3>
+  <h2>{{intervalName}}</h2>
+  <h1>{{getTime()}}</h1>
 </div>
 
 <app-footer></app-footer>

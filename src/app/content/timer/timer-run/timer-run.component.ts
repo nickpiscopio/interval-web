@@ -19,6 +19,8 @@ export class TimerComponent {
 
   private timer: Timer;
 
+  private intervalName: string;
+
   private time: number;
 
   private intervalTimer;
@@ -28,6 +30,9 @@ export class TimerComponent {
 
   private intervalNotification1;
   private intervalNotification2;
+
+  // Boolean value for if the timer is paused or not.
+  private paused = false;
 
   constructor(private route: ActivatedRoute) {
     this.intervalNotification1 = new Audio('assets/sounds/beep_1.mp3');
@@ -43,7 +48,7 @@ export class TimerComponent {
     if (this.timer !== undefined) {
       let intervals = this.timer.intervals;
       if (intervals !== undefined && this.objectKeys(intervals).length > 0) {
-        this.runTimer(intervals);
+        this.runTimer(intervals, false);
       }
     }
   }
@@ -52,8 +57,9 @@ export class TimerComponent {
    * Runs the timer.
    *
    * @param intervals   The intervals to display to the user.
+   * @param resuming    Boolean value for whether the user selected to resume the interval.
    */
-  runTimer(intervals: Interval[]) {
+  runTimer(intervals: Interval[], resuming: boolean) {
     // Remove the old interval timer if there is one.
     // We don't want to run into issues later.
     clearInterval(this.intervalTimer);
@@ -61,7 +67,13 @@ export class TimerComponent {
     let interval = intervals[this.intervalIndex];
     // If the interval is undefined, then we reached the end of the intervals, and we should finish.
     if (interval !== undefined) {
-      this.time = interval.duration;
+      this.intervalName = interval.name;
+
+      // We only set the time if we are resuming.
+      // We do this because we don't want the time to reset if the user clicks to pause then resume.
+      if (!resuming) {
+        this.time = interval.duration;
+      }
 
       this.intervalTimer = setInterval(() => {
         this.time -= TICK;
@@ -85,10 +97,32 @@ export class TimerComponent {
           // Increment the index so we can see the next interval timer.
           this.intervalIndex++;
 
-          this.runTimer(intervals);
+          this.runTimer(intervals, false);
         }
       }, TICK);
     }
+  }
+
+  /**
+   * Starts or stops the timer depending upon what was already done.
+   */
+  setTimerActivation() {
+    if (this.paused) {
+      this.runTimer(this.timer.intervals, true);
+    } else {
+      clearInterval(this.intervalTimer);
+    }
+
+    this.paused = !this.paused;
+  }
+
+  /**
+   * Gets the icon for the start/pause button.
+   *
+   * @return The icon for the start/pause button.
+   */
+  getStartPauseButtonIcon() {
+    return this.paused ? 'play_arrow' : 'pause';
   }
 
   /**
