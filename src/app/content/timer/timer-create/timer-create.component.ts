@@ -16,15 +16,13 @@ export class TimerCreateComponent {
   private timer: Timer;
 
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.timer = new Timer('', []);
-  }
-
-  ngOnInit() {
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
       this.timer = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
     } catch (err) {
       console.log(TimerCreateComponent.name + ' error: ', err);
+
+      this.timer = new Timer('', []);
     }
   }
 
