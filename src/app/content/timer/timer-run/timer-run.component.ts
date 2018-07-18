@@ -3,15 +3,19 @@ import { ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Route } from '../../../constant/route.constant';
 import { Interval } from '../interval/interval';
+import { fade } from '../../../animations/fade';
 
-// 1 second timer tick.
+// 1 second timer tick for the intervals.
 const TICK = 1000;
+const THRESHOLD_PAUSE_VISIBILTY = 2000;
+const MESSAGE_INTERVAL_PAUSED = 'INTERVAL PAUSED';
 const MESSAGE_INTERVALS_FINISHED = 'FINISHED!';
 
 @Component({
   selector: 'app-timer-run',
   templateUrl: './timer-run.component.html',
-  styleUrls: ['./timer-run.component.sass']
+  styleUrls: ['./timer-run.component.sass'],
+  animations: [fade]
 })
 export class TimerComponent {
   // This is the set of keys that we use to get from JSON objects.
@@ -20,10 +24,12 @@ export class TimerComponent {
   private timer: Timer;
 
   private intervalName: string;
+  private pauseState: string;
 
   private time: number;
 
   private intervalTimer;
+  private pauseTimer;
 
   // This is the current interval index that is being displayed.
   private intervalIndex = 0;
@@ -33,8 +39,11 @@ export class TimerComponent {
 
   // Boolean value for if the timer is paused or not.
   private paused = false;
+  private displayPause: boolean;
 
   constructor(private route: ActivatedRoute) {
+    this.displayPause = false;
+
     this.intervalNotification1 = new Audio('assets/sounds/beep_1.mp3');
     this.intervalNotification2 = new Audio('assets/sounds/beep_2.mp3');
 
@@ -60,8 +69,7 @@ export class TimerComponent {
    * @param resuming    Boolean value for whether the user selected to resume the interval.
    */
   runTimer(intervals: Interval[], resuming: boolean) {
-    // Remove the old interval timer if there is one.
-    // We don't want to run into issues later.
+    // Remove the old interval timer if there is one, so we don't run into issues creating a new one.
     clearInterval(this.intervalTimer);
 
     let interval = intervals[this.intervalIndex];
@@ -108,12 +116,47 @@ export class TimerComponent {
    */
   setTimerActivation() {
     if (this.paused) {
+      this.pauseState = '';
+
+      // The timer is started again, so create a new timer and resume where we left off.
       this.runTimer(this.timer.intervals, true);
     } else {
+      // The timer is paused, so clear the innterval timer so it doesn't continue.
       clearInterval(this.intervalTimer);
+
+      this.pauseState = MESSAGE_INTERVAL_PAUSED;
     }
 
     this.paused = !this.paused;
+  }
+
+  /**
+   * Switches the pause flag to true so we can see the play/pause button.
+   */
+  showPause() {
+    this.displayPause = true;
+
+    // Remove the old pause timer if there is one, so we don't run into issues creating a new one.
+    clearInterval(this.pauseTimer);
+
+    // We want to eventually hide the pause button, so we create a timeout.
+    // We do this because there isn't a mouse out event to accomplish this task.
+    this.pauseTimer = setTimeout(() => {
+      // Hides the pause button.
+      this.displayPause = false;
+
+      // Remove the pause timer since we are done using it.
+      clearInterval(this.pauseTimer);
+    }, THRESHOLD_PAUSE_VISIBILTY);
+  }
+
+  /**
+   * Returns whether the pause should be shown.
+   *
+   * @return Whether the pause should be shown.
+   */
+  shouldShowPause() {
+    return this.displayPause || this.paused;
   }
 
   /**

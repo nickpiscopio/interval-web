@@ -1,12 +1,17 @@
-<div>
-  <button (click)="setTimerActivation()">
-    <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
-  </button>
+<div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
+  <div id="wrapper-pause-action">
+    <p>{{pauseState}}</p>
+    <button mat-fab id="btn-pause">
+      <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
+    </button>
+  </div>
 </div>
-<div class="container">
-  <h3>{{timer.name}}</h3>
-  <h2>{{intervalName}}</h2>
-  <h1>{{getTime()}}</h1>
-</div>
+<div (mousemove)="showPause()">
+  <div class="container">
+    <h3>{{timer.name}}</h3>
+    <h2>{{intervalName}}</h2>
+    <h1>{{getTime()}}</h1>
+  </div>
 
-<app-footer></app-footer>
+  <app-footer></app-footer>
+</div>

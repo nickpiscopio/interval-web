@@ -1,7 +1,7 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { Route } from '../../constant/route.constant';
 import { trigger, style, transition, animate, state } from '@angular/animations';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { Class } from '../../constant/class.constant';
 
 const THRESHOLD_SHOW_BUTTON = 550;
