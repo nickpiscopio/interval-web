@@ -24,6 +24,7 @@ export class TimerComponent implements OnDestroy {
   private timer: Timer;
 
   private intervalName: string;
+  private nextIntervalName: string;
   private pauseState: string;
 
   private time: number;
@@ -83,6 +84,13 @@ export class TimerComponent implements OnDestroy {
     if (interval !== undefined) {
       this.intervalName = interval.name;
 
+      let nextInterval = intervals[this.intervalIndex + 1];
+      if (nextInterval !== undefined) {
+        this.nextIntervalName = nextInterval.name;
+      } else {
+        this.nextIntervalName = undefined;
+      }
+
       // We only set the time if we are resuming.
       // We do this because we don't want the time to reset if the user clicks to pause then resume.
       if (!resuming) {
@@ -115,6 +123,15 @@ export class TimerComponent implements OnDestroy {
         }
       }, TICK);
     }
+  }
+
+  /**
+   * Returns whether to display the next interval label.
+   *
+   * @return Boolean value on whether to display the next interval label.
+   */
+  displayNextIntervalLabel() {
+    return this.nextIntervalName !== undefined;
   }
 
   /**
