@@ -8,8 +8,8 @@
 </div>
 <div (mousemove)="showPause()">
   <div class="container">
-    <h3>{{timer.name}}</h3>
-    <h2>{{intervalName}}</h2>
+    <h4>{{timer.name}}</h4>
+    <h3>{{intervalName}}</h3>
     <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
     <h1>{{getTime()}}</h1>
   </div>
