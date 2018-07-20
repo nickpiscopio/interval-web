@@ -19,21 +19,22 @@
             <input matInput placeholder="How long would you like to exercise?" type="date">
           </mat-form-field>
         </div> -->
-
-        <div class="title-secondary">
-          <mat-icon>access_time</mat-icon>
-          <h3>TIMER BREAKDOWN</h3>
-        </div>
-
-        <div *ngIf="hasIntervals()">
-          <div *ngFor="let key of objectKeys(timer.intervals)">
-            <app-interval [index]="key" [interval]="timer.intervals[key]"></app-interval>
-          </div>
-        </div>
-        <button (click)="addInterval()">ADD</button>
-        <button (click)="start()" [disabled]="!hasIntervals()">START</button>
-
       </mat-card>
+
+      <div class="title-secondary">
+        <mat-icon>access_time</mat-icon>
+        <h3>INTERVALS</h3>
+      </div>
+
+      <div *ngIf="hasIntervals()">
+        <div *ngFor="let key of objectKeys(timer.intervals)">
+          <app-interval [index]="key" [interval]="timer.intervals[key]" (intervalUpdated)="updateIntervals($event)"></app-interval>
+        </div>
+      </div>
+
+      <button (click)="start()" [disabled]="!hasIntervals()">START</button>
+
+
     </div>
   </div>
   <app-footer></app-footer>

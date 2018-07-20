@@ -1,2 +1,3 @@
-<input placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" />
-<input placeholder="Interval duration" value="{{interval.duration}}" [(ngModel)]="interval.duration" />
+<input placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" (keyup)="onChange()" />
+<input placeholder="Interval duration " value="{{interval.duration}} " [(ngModel)]="interval.duration " (keyup)="onChange()"
+/>

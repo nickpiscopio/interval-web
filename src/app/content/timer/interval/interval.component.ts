@@ -11,4 +11,13 @@ export class IntervalComponent {
   @Input() index: number;
 
   @Input() interval: Interval;
+
+  @Output() intervalUpdated = new EventEmitter<number>();
+
+  /**
+   * Function that gets executed when the input values change.
+   */
+  onChange() {
+    this.intervalUpdated.emit(this.index);
+  }
 }

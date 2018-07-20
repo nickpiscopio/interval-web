@@ -24,6 +24,28 @@ export class TimerCreateComponent {
 
       this.timer = new Timer('', []);
     }
+
+    // We add an interval here because we always want at least 1.
+    this.addInterval();
+  }
+
+  /**
+   * Updates the intervals.
+   *
+   * @param index   The index of the interval that was updated.
+   */
+  updateIntervals(index: number) {
+    index = Number(index);
+    let intervals = this.timer.intervals;
+    let lastIntervalIndex = intervals.length - 1;
+    let currentIntervalContainsValues = this.doesIntervalContainValues(intervals[index]);
+
+    if (index === lastIntervalIndex && currentIntervalContainsValues) {
+      // We found that there is something in the last interval, so add a new one.
+      this.addInterval();
+    } else if (index === lastIntervalIndex - 1 && (!currentIntervalContainsValues && !this.doesIntervalContainValues(intervals[lastIntervalIndex]))) {
+      this.removeInterval(lastIntervalIndex);
+    }
   }
 
   /**
@@ -31,6 +53,25 @@ export class TimerCreateComponent {
    */
   addInterval() {
     this.timer.intervals.push(new Interval('', 0));
+  }
+
+  /**
+   * Removes and interval at a specifed index.
+   *
+   * @param index   The interval index to remove.
+   */
+  removeInterval(index: number) {
+    // Remove 1 index at the specifed index.
+    this.timer.intervals.splice(index, 1);
+  }
+
+  /**
+   * Checks to see if a specified interval contains any values.
+   *
+   * @param interval  The interval to check.
+   */
+  doesIntervalContainValues(interval: Interval) {
+    return (interval.name !== undefined && interval.name.trim() !== '') || (interval.duration !== undefined && interval.duration > 0);
   }
 
   /**
