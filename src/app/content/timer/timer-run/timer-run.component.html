@@ -11,7 +11,12 @@
     <h4>{{timer.name}}</h4>
     <h3>{{intervalName}}</h3>
     <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
-    <h1>{{getTime()}}</h1>
+    <h1>
+      <p *ngIf="displayHours > 0">{{displayHours}}<span>h </span></p>
+      <p *ngIf="displayMinutes > 0">{{displayMinutes}}<span>m </span></p>
+      <p *ngIf="!isTimerFinished()">{{displaySeconds}}<span>s</span></p>
+      <p *ngIf="isTimerFinished()">FINISHED!</p>
+    </h1>
   </div>
 
   <app-footer></app-footer>

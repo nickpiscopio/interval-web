@@ -32,7 +32,9 @@
         </div>
       </div>
 
-      <button (click)="start()" [disabled]="!hasIntervals()">START</button>
+      <button mat-button [disabled]="!hasIntervals()" (click)="start()">START
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
 
     </div>
   </div>

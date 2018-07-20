@@ -4,6 +4,14 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Interval duration" value="{{interval.duration}} " [(ngModel)]="interval.duration " (keyup)="onChange()">
+    <input matInput placeholder="Interval duration" value="{{interval.duration}}" [(ngModel)]="interval.duration" (keyup)="onChange()">
   </mat-form-field>
+  <!-- <div class="duration">
+    <input matInput type="number" min="0" oninput="validity.valid;" (keyup)="onChangeHours($event)" value="{{hours}}">
+    <p>h</p>
+    <input matInput type="number" min="0" oninput="validity.valid;" (keyup)="onChangeMinutes($event)" value="{{minutes}}">
+    <p>m</p>
+    <input matInput type="number" (keyup)="onChangeSeconds($event)" value="{{seconds}}" [(ngModel)]="seconds">
+    <p>s</p>
+  </div> -->
 </mat-card>

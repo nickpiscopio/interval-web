@@ -29,11 +29,15 @@ export class TimerComponent implements OnDestroy {
 
   private time: number;
 
-  private intervalTimer;
-  private pauseTimer;
+  private displayHours = 0;
+  private displayMinutes = 0;
+  private displaySeconds = 0;
 
   // This is the current interval index that is being displayed.
   private intervalIndex = 0;
+
+  private intervalTimer;
+  private pauseTimer;
 
   private intervalNotification1;
   private intervalNotification2;
@@ -100,6 +104,9 @@ export class TimerComponent implements OnDestroy {
       this.intervalTimer = setInterval(() => {
         this.time -= TICK;
 
+        // This parse time parses the time every tick.
+        this.parseTime();
+
         // This plays sounds for when the timer gets to 3 seconds and below.
         // It is to notify the user that the interval is about to finish or has finished.
         switch (this.time) {
@@ -123,6 +130,9 @@ export class TimerComponent implements OnDestroy {
         }
       }, TICK);
     }
+
+    // We need this parse time because we won't see the very first time without it.
+    this.parseTime();
   }
 
   /**
@@ -192,11 +202,32 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
-   * Gets the human readable time in seconds.
+   * Parses the time in to display in a human readable format.
    *
    * @return The time in seconds or a message saying the timer is finished.
    */
-  getTime() {
-    return this.time < 0 ? MESSAGE_INTERVALS_FINISHED : this.time / TICK;
+  parseTime() {
+    if (this.time > 0) {
+      // This is the time left in seconds.
+      let timeInSeconds = this.time / TICK;
+
+      this.displayHours = Math.floor(timeInSeconds / 3600);
+      this.displayMinutes = Math.floor((timeInSeconds % 3600) / 60);
+      this.displaySeconds = Math.floor((timeInSeconds % 3600) % 60);
+    } else {
+      this.displaySeconds = 0;
+    }
+  }
+
+  /**
+   * Checks to see if the timer has finished.
+   *
+   * @return Boolean value on whether or not the timer has finished.
+   */
+  isTimerFinished() {
+    return this.intervalIndex == this.timer.intervals.length &&
+           this.displayHours == 0 &&
+           this.displayMinutes == 0 &&
+           this.displaySeconds == 0;
   }
 }
