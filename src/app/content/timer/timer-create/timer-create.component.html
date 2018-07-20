@@ -1,37 +1,40 @@
-<div class="container">
-  <div class="row">
-    <div id="wrapper-logo">
-      <img alt="Interval Logo" src="../../../assets/images/interval_icon.svg" />
-    </div>
+<header class="z-depth-1-half">
+  <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_with.svg" />
+</header>
+<div id="body">
+  <div class="container">
+    <div class="row">
+      <h1>Create a timer</h1>
 
-    <mat-card>
-      <div class="layout">
-        <mat-icon>timer</mat-icon>
-        <input placeholder="New Timer" [(ngModel)]="timer.name" />
-      </div>
-
-      <!-- <div class="title-secondary">
-        <mat-icon>timelapse</mat-icon>
-        <h3>EXERCISE DURATION</h3>
-        <mat-form-field>
-          <input matInput placeholder="How long would you like to exercise?" type="date">
-        </mat-form-field>
-      </div> -->
-
-      <div class="title-secondary">
-        <mat-icon>access_time</mat-icon>
-        <h3>TIMER BREAKDOWN</h3>
-      </div>
-
-      <div *ngIf="hasIntervals()">
-        <div *ngFor="let key of objectKeys(timer.intervals)">
-          <app-interval [index]="key" [interval]="timer.intervals[key]"></app-interval>
+      <mat-card>
+        <div class="layout">
+          <mat-icon>timer</mat-icon>
+          <input placeholder="New Timer" [(ngModel)]="timer.name" />
         </div>
-      </div>
-      <button (click)="addInterval()">ADD</button>
-      <button (click)="start()" [disabled]="!hasIntervals()">START</button>
 
-    </mat-card>
+        <!-- <div class="title-secondary">
+          <mat-icon>timelapse</mat-icon>
+          <h3>EXERCISE DURATION</h3>
+          <mat-form-field>
+            <input matInput placeholder="How long would you like to exercise?" type="date">
+          </mat-form-field>
+        </div> -->
+
+        <div class="title-secondary">
+          <mat-icon>access_time</mat-icon>
+          <h3>TIMER BREAKDOWN</h3>
+        </div>
+
+        <div *ngIf="hasIntervals()">
+          <div *ngFor="let key of objectKeys(timer.intervals)">
+            <app-interval [index]="key" [interval]="timer.intervals[key]"></app-interval>
+          </div>
+        </div>
+        <button (click)="addInterval()">ADD</button>
+        <button (click)="start()" [disabled]="!hasIntervals()">START</button>
+
+      </mat-card>
+    </div>
   </div>
+  <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
