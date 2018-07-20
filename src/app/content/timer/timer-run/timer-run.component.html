@@ -14,7 +14,7 @@
     <h1>
       <p *ngIf="displayHours > 0">{{displayHours}}<span>h </span></p>
       <p *ngIf="displayMinutes > 0">{{displayMinutes}}<span>m </span></p>
-      <p *ngIf="!isTimerFinished()">{{displaySeconds}}<span>s</span></p>
+      <p *ngIf="shouldDisplaySeconds()">{{displaySeconds}}<span>s</span></p>
       <p *ngIf="isTimerFinished()">FINISHED!</p>
     </h1>
   </div>

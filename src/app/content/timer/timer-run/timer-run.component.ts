@@ -136,6 +136,24 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
+   * Parses the time in to display in a human readable format.
+   *
+   * @return The time in seconds or a message saying the timer is finished.
+   */
+  parseTime() {
+    if (this.time > 0) {
+      // This is the time left in seconds.
+      let timeInSeconds = this.time / TICK;
+
+      this.displayHours = Math.floor(timeInSeconds / 3600);
+      this.displayMinutes = Math.floor((timeInSeconds % 3600) / 60);
+      this.displaySeconds = Math.floor((timeInSeconds % 3600) % 60);
+    } else {
+      this.displaySeconds = 0;
+    }
+  }
+
+  /**
    * Returns whether to display the next interval label.
    *
    * @return Boolean value on whether to display the next interval label.
@@ -202,21 +220,15 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
-   * Parses the time in to display in a human readable format.
-   *
-   * @return The time in seconds or a message saying the timer is finished.
+   * Checks to see if seconds should be displayed.
+   * 
+   * @return Boolean value on whether or not the seconds should be displayed.
    */
-  parseTime() {
-    if (this.time > 0) {
-      // This is the time left in seconds.
-      let timeInSeconds = this.time / TICK;
-
-      this.displayHours = Math.floor(timeInSeconds / 3600);
-      this.displayMinutes = Math.floor((timeInSeconds % 3600) / 60);
-      this.displaySeconds = Math.floor((timeInSeconds % 3600) % 60);
-    } else {
-      this.displaySeconds = 0;
-    }
+  shouldDisplaySeconds() {
+    let isTimerFinished = this.isTimerFinished();
+    
+    return (this.displayHours == 0 && this.displayMinutes == 0 && !isTimerFinished) || 
+           (this.displaySeconds > 0 && !isTimerFinished);
   }
 
   /**
