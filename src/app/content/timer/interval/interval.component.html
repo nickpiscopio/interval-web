@@ -1,3 +1,9 @@
-<input placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" (keyup)="onChange()" />
-<input placeholder="Interval duration " value="{{interval.duration}} " [(ngModel)]="interval.duration " (keyup)="onChange()"
-/>
+<mat-card>
+  <mat-form-field>
+    <input matInput placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" (keyup)="onChange()">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Interval duration" value="{{interval.duration}} " [(ngModel)]="interval.duration " (keyup)="onChange()">
+  </mat-form-field>
+</mat-card>

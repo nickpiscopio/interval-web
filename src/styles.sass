@@ -1,6 +1,11 @@
 @import '~bootstrap/scss/bootstrap-reboot'
 @import '~bootstrap/scss/bootstrap-grid'
 
+// This makes the material elements act the way they are were intended.
+// To add a different theme, check out theme.sass in one of my previous projects.
+@import '~@angular/material/_theming.scss'
+@include mat-core()
+
 @import 'styles/color'
 @import 'styles/integer'
 
@@ -75,11 +80,8 @@ input
     margin-left: 2.222em
     width: 75%
 
-.z-depth-1-half
-  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2)
-
-.z-depth-2
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3)
+.mat-form-field-appearance-legacy .mat-form-field-wrapper
+  padding: 0
 
 #btn-pause span .mat-icon
     font-size: 2.5em

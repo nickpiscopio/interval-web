@@ -8,6 +8,7 @@ import { WelcomeComponent } from './content/welcome/welcome.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +21,7 @@ import { IntervalComponent } from './content/timer/interval/interval.component';
 
 @NgModule({
   declarations: [AppComponent, WelcomeComponent, TimerComponent, TimerCreateComponent, FooterComponent, IntervalComponent],
-  imports: [CommonModule, BrowserModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule, MatInputModule, BrowserAnimationsModule, routes],
+  imports: [CommonModule, BrowserModule, FormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, BrowserAnimationsModule, routes],
   providers: [],
   bootstrap: [AppComponent]
 })
