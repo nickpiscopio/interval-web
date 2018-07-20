@@ -16,7 +16,7 @@ const STATE_ISNT_SHOWN = 'false';
   animations: [
     trigger('titleAnimation', [
       state(STATE_IS_SHOWN, style({ transform: 'translateY(0)' })),
-      state(STATE_ISNT_SHOWN, style({ transform: 'translateY(50%)' })),
+      state(STATE_ISNT_SHOWN, style({ transform: 'translateY(22%)' })),
       transition(STATE_IS_SHOWN + ' <=> ' + STATE_ISNT_SHOWN, animate(THRESHOLD_SHOW_BUTTON / 2))
     ])
   ]
