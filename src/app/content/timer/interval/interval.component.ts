@@ -3,6 +3,7 @@ import { Interval } from './interval';
 import { Class } from '../../../constant/class.constant';
 
 const KEY_CODE_BACKSPACE = 8;
+const KEY_CODE_DELETE = 46;
 
 @Component({
   selector: 'app-interval',
@@ -19,18 +20,11 @@ export class IntervalComponent {
   @Output() duplicateInterval = new EventEmitter<number>();
   @Output() removeInterval = new EventEmitter<number>();
 
-  private hours = '';
-  private minutes = '';
-  private seconds = '';
-  private second1 = '';
+  private hours = '00';
+  private minutes = '00';
+  private seconds = '00';
 
   private time = ['0','0','0','0','0','0'];
-
-  // @ViewChild('seconds') secondsInput: ElementRef;
-
-  // private hours: number;
-  // private minutes: number;
-  // private seconds: number;
 
   /**
    * Emits that the interval was updated.
@@ -43,61 +37,6 @@ export class IntervalComponent {
     return this.time[index];
   }
 
-  getModel(index: number) {
-
-  }
-
-  validate(evt) {
-    var theEvent = evt || window.event;
-  
-    // Handle paste
-    // if (theEvent.type === 'paste') {
-    //     key = event.clipboardData.getData('text/plain');
-    // } else {
-    // Handle key press
-        var key = theEvent.keyCode || theEvent.which;
-        key = String.fromCharCode(key);
-    // }
-    var regex = /[0-9]|\./;
-    if( !regex.test(key) ) {
-      theEvent.returnValue = false;
-      if(theEvent.preventDefault) theEvent.preventDefault();
-    }
-  }
-
-  onChangeDuration(index: number) {
-    // This is the value at the index that was changed.
-    // We need to send this to the new index, and remove this to the index above.
-    let val0 = this.time[index][0];
-    let val1 = this.time[index][1];
-
-    if (val0 !== undefined && val1 !== undefined) {
-      this.time.splice(index+1, 0, val0)
-      this.time.splice(index+2, 0, val1)
-  
-      // Remove the first inex because we don't need it anymore.
-      this.time.shift();
-      this.time.shift();
-    }
-  }
-
-  // onChangeSeconds() {
-    // this.hours = Math.floor(this.hours * 3600);
-    // this.minutes = Math.floor(this.minutes * 60);
-
-    // this.interval.duration -= this.seconds * 1000;
-    // let time = this.interval.duration / 1000;
-
-    // let hours = Math.floor(time / 3600);
-    // let minutes = Math.floor((time % 3600) / 60);
-
-    // this.parseTime(hours + minutes + this.seconds)
-
-    // if (this.seconds.length > 2) {
-    //   this.
-    // }
-  // }
-
   parseTime(time: number) {
     // if (time > 0) {
     //   this.hours = Math.floor(time / 3600);
@@ -106,6 +45,48 @@ export class IntervalComponent {
 
     //   this.interval.duration = time * 1000
     // }   
+  }
+
+  onChangeDuration(event: KeyboardEvent) {
+    let tempArr = this.getTimeArray();
+
+    switch(event.keyCode) {
+        case KEY_CODE_BACKSPACE:
+        case KEY_CODE_DELETE:
+          // Adds a 0 to the first index because we removed an value.
+          tempArr.unshift("0");
+
+          break;
+        default:
+          // We only want 6 indecies in the array at a time, so we need to remove from the head since we are adding from the end. 
+          tempArr.splice(0, tempArr.length - 6);
+          
+          break;
+      }
+
+    this.time = tempArr;
+
+    this.setTime();
+  }
+
+  /**
+   * Sets the time to display to the user in the inputs.
+   * There are only allowed to be 6 indecies in the time array at any point in time.
+   */
+  setTime() {
+    // The first two indecies will always be the hours.
+    this.hours = this.time[0] + this.time[1];
+    // The second two indecies will always be the minutes.
+    this.minutes = this.time[2] + this.time[3];
+    // The third two indecies will always be the seconds.
+    this.seconds = this.time[4] + this.time[5];
+  }
+
+  /**
+   * Gets the time array.
+   */
+  getTimeArray() {
+    return this.hours.split("").concat(this.minutes.split("").concat(this.seconds.split("")));
   }
 
   /**
@@ -138,48 +119,5 @@ export class IntervalComponent {
   getClass() {
     return !this.hasValues() ? Class.INACTIVE + ' ': '';
   }
-
-  // onChangeHours() {}
-
-  // onChangeMinutes() {}
-
-  onChangeSeconds(event: KeyboardEvent) {
-    console.log('$event:', event);
-    console.log('seconds 1:', this.seconds);
-
-    let val = Number(event.key);
-    let keyCode = Number(event.keyCode);
-
-    if (!isNaN(val) || keyCode === KEY_CODE_BACKSPACE) {
-      switch(keyCode) {
-        case KEY_CODE_BACKSPACE:
-          // Adds a 0 to the first index because we removed the last index.
-          // There always needs to be 6 indexes to have this work properly.
-          this.time.unshift("0");
-
-          // We are only allowed to have 6 indexs in time, so we remove the other ones from the end of the array.
-          this.time.pop();
-          
-          break;
-        default:
-          // Add the key that was pressed to the time array.
-          this.time.push(val.toString());
-
-          // We are only allowed to have 6 indexs in time, so we remove the other ones from the beginning of the array.
-          this.time.splice(0, this.time.length - 6);
-          
-          break;
-      }
-
-      
-  
-      let secs = this.time[4] + this.time[5];
-      let mins = this.time[2] + this.time[3];
-      let hrs = this.time[0] + this.time[1];
-  
-      this.seconds = secs;
-      this.minutes = mins;
-      this.hours = hrs;
-    }   
   }
 }
