@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
+import { NgxMaskModule } from 'ngx-mask'
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -22,7 +24,19 @@ import { IntervalComponent } from './content/timer/interval/interval.component';
 
 @NgModule({
   declarations: [AppComponent, WelcomeComponent, TimerComponent, TimerCreateComponent, FooterComponent, IntervalComponent],
-  imports: [CommonModule, BrowserModule, FormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, BrowserAnimationsModule, routes],
+  imports: [CommonModule,
+            BrowserModule,
+            FormsModule,
+            TextMaskModule,
+            NgxMaskModule.forRoot(),
+            MatButtonModule,
+            MatCardModule,
+            MatFormFieldModule,
+            MatIconModule,
+            MatInputModule,
+            MatMenuModule,
+            BrowserAnimationsModule,
+            routes],
   providers: [],
   bootstrap: [AppComponent]
 })

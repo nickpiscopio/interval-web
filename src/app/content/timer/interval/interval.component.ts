@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Interval } from './interval';
 import { Class } from '../../../constant/class.constant';
 
@@ -17,17 +17,7 @@ export class IntervalComponent {
   @Output() duplicateInterval = new EventEmitter<number>();
   @Output() removeInterval = new EventEmitter<number>();
 
-  private hours = '';
-  private minutes = '';
-  private seconds = '';
-
-  private time = ['0','0','0','0','0','0'];
-
-  // @ViewChild('seconds') secondsInput: ElementRef;
-
-  // private hours: number;
-  // private minutes: number;
-  // private seconds: number;
+  private duration: number;
 
   /**
    * Emits that the interval was updated.
@@ -36,55 +26,18 @@ export class IntervalComponent {
     this.updateInterval.emit(this.index);
   }
 
-  getValue(index: number) {
-    return this.time[index];
-  }
-
-  getModel(index: number) {
-
-  }
-
-  onChangeDuration(index: number) {
-    // This is the value at the index that was changed.
-    // We need to send this to the new index, and remove this to the index above.
-    let val0 = this.time[index][0];
-    let val1 = this.time[index][1];
-
-    if (val0 !== undefined && val1 !== undefined) {
-      this.time.splice(index+1, 0, val0)
-      this.time.splice(index+2, 0, val1)
-  
-      // Remove the first inex because we don't need it anymore.
-      this.time.shift();
-      this.time.shift();
+  onChangeDuration(element) {
+    if(element.setSelectionRange){
+      element.setSelectionRange(0,0);
     }
+
+    console.log("duration: ", this.duration);
   }
 
-  onChangeSeconds() {
-    // this.hours = Math.floor(this.hours * 3600);
-    // this.minutes = Math.floor(this.minutes * 60);
-
-    // this.interval.duration -= this.seconds * 1000;
-    // let time = this.interval.duration / 1000;
-
-    // let hours = Math.floor(time / 3600);
-    // let minutes = Math.floor((time % 3600) / 60);
-
-    // this.parseTime(hours + minutes + this.seconds)
-
-    // if (this.seconds.length > 2) {
-    //   this.
-    // }
-  }
-
-  parseTime(time: number) {
-    // if (time > 0) {
-    //   this.hours = Math.floor(time / 3600);
-    //   this.minutes = Math.floor((time % 3600) / 60);
-    //   this.seconds = Math.floor((time % 3600) % 60);
-
-    //   this.interval.duration = time * 1000
-    // }   
+  rtl(element) {   
+    if(element.setSelectionRange){
+        element.setSelectionRange(0,0);
+    }
   }
 
   /**
@@ -117,21 +70,4 @@ export class IntervalComponent {
   getClass() {
     return !this.hasValues() ? Class.INACTIVE + ' ': '';
   }
-
-  // onChangeHours() {}
-
-  // onChangeMinutes() {}
-
-  // onChangeSeconds(event: KeyboardEvent) {
-  //   console.log('$event:', event);
-  //   console.log('seconds:', this.seconds);
-
-  //   try {
-  //     let typedVal = Number(this.secondsInput.nativeElement).toString();
-  //     if (typedVal !== 'NaN') {
-  //       let secondsString = this.seconds.toString + typedVal;
-  //       this.seconds = Number(secondsString);
-  //     }
-  //   } catch (err) {}
-  // }
 }

@@ -2,28 +2,9 @@
   <mat-form-field>
     <input matInput placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" (keyup)="onChange()">
   </mat-form-field>
-
-  <mat-form-field>
-    <input matInput [(ngModel)]="time[0]" (keyup)="onChangeDuration(0)">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [(ngModel)]="time[1]" (keyup)="onChangeDuration(1)"><span class="input-group-addon ">h</span>
-  </mat-form-field>
-  <!-- <mat-form-field>
-    <input matInput placeholder="Interval duration" value="{{minutes}}" [(ngModel)]="minutes" (keyup)="onChangeHours()"><span class="input-group-addon ">m</span>
-  </mat-form-field><mat-form-field>
-    <input matInput placeholder="Interval duration" value="{{seconds}}" [(ngModel)]="seconds" (keyup)="onChangeSeconds()"><span class="input-group-addon ">s</span>
-  </mat-form-field> -->
+  <input type='text' mask="00:00:00" [(ngModel)]="duration" (keyup)="onChangeDuration(this)" style="direction:RTL;">
 
   <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
-  <!-- <div class="duration">
-    <input matInput type="number" min="0" oninput="validity.valid;" (keyup)="onChangeHours($event)" value="{{hours}}">
-    <p>h</p>
-    <input matInput type="number" min="0" oninput="validity.valid;" (keyup)="onChangeMinutes($event)" value="{{minutes}}">
-    <p>m</p>
-    <input matInput type="number" (keyup)="onChangeSeconds($event)" value="{{seconds}}" [(ngModel)]="seconds">
-    <p>s</p>
-  </div> -->
 </mat-card>
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="duplicate()"><mat-icon>file_copy</mat-icon>Duplicate</button>
