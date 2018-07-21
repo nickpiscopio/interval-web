@@ -27,26 +27,31 @@ export class IntervalComponent {
   private time = ['0','0','0','0','0','0'];
 
   /**
+   * Emits to duplicate the interval.
+   */
+  duplicate() {
+    this.duplicateInterval.emit(this.index);
+  }
+
+  /**
+   * Emits to remove the interval.
+   */
+  remove() {
+    this.removeInterval.emit(this.index);
+  }
+
+  /**
    * Emits that the interval was updated.
    */
   onChange() {
     this.updateInterval.emit(this.index);
   }
 
-  getValue(index: number) {
-    return this.time[index];
-  }
-
-  parseTime(time: number) {
-    // if (time > 0) {
-    //   this.hours = Math.floor(time / 3600);
-    //   this.minutes = Math.floor((time % 3600) / 60);
-    //   this.seconds = Math.floor((time % 3600) % 60);
-
-    //   this.interval.duration = time * 1000
-    // }   
-  }
-
+  /**
+   * Executes when the user changes the duration.
+   * 
+   * @param event   The KeyboardEvent that references the keys taht were pressed by the user.
+   */
   onChangeDuration(event: KeyboardEvent) {
     let tempArr = this.getTimeArray();
 
@@ -80,6 +85,22 @@ export class IntervalComponent {
     this.minutes = this.time[2] + this.time[3];
     // The third two indecies will always be the seconds.
     this.seconds = this.time[4] + this.time[5];
+
+    // Now that the time has been changed by the user, parse it to be millis.
+    this.convertTimeToMillis();
+  }
+
+  /**
+   * Converts the time to milliseconds and then notifies the change the user made to the duration.
+   */
+  convertTimeToMillis() {
+    let hoursInSeconds = Math.floor(Number(this.hours) * 3600);
+    let minutesInSeconds = Math.floor((Number(this.minutes) * 60));
+    let seconds = Number(this.seconds);
+
+    this.interval.duration = (hoursInSeconds + minutesInSeconds + seconds) * 1000
+
+    this.onChange();
   }
 
   /**
@@ -87,20 +108,6 @@ export class IntervalComponent {
    */
   getTimeArray() {
     return this.hours.split("").concat(this.minutes.split("").concat(this.seconds.split("")));
-  }
-
-  /**
-   * Emits to duplicate the interval.
-   */
-  duplicate() {
-    this.duplicateInterval.emit(this.index);
-  }
-
-  /**
-   * Emits to remove the interval.
-   */
-  remove() {
-    this.removeInterval.emit(this.index);
   }
 
   /**
