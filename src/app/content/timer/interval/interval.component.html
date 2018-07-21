@@ -1,18 +1,32 @@
 <mat-card [ngClass]="getClass()">
   <mat-form-field>
-    <input matInput placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" (keyup)="onChange()">
+    <input matInput
+           placeholder="Interval name"
+           value="{{interval.name}}"
+           [(ngModel)]="interval.name"
+           (keyup)="onChange()">
   </mat-form-field>
 
-  
   <div class="duration">
-    <input matInput type="text" oninput="validity.valid;" (keyup)="onChangeDuration($event)" value="{{hours}}" [(ngModel)]="hours">
+    <input matInput
+           type="text"
+           value="{{hours}}"
+           [(ngModel)]="hours"
+           (keydown)="isNumber($event)"
+           (keyup)="onChangeDuration($event)" >
     <p>h</p>
-    <input matInput type="text" oninput="validity.valid;" (keyup)="onChangeDuration($event)" value="{{minutes}}" [(ngModel)]="minutes">
+    <input matInput
+           type="text"
+           value="{{minutes}}"
+           [(ngModel)]="minutes"
+           (keydown)="isNumber($event)"
+           (keyup)="onChangeDuration($event)" >
     <p>m</p>
     <input matInput
            type="text"
            value="{{seconds}}"
            [(ngModel)]="seconds"
+           (keydown)="isNumber($event)"
            (keyup)="onChangeDuration($event)">
     <p>s</p>
 

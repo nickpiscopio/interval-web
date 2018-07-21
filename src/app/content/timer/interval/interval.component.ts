@@ -48,9 +48,25 @@ export class IntervalComponent {
   }
 
   /**
+   * Checks to see if the value entered in the input is numberic.
+   * 
+   * @param event   The KeyboardEvent that references the keys that were pressed by the user.
+   * 
+   * @return Boolean value on whether or not the key that was pressed was numberic.
+   */
+  isNumber(event: KeyboardEvent) {
+    var charCode = event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }      
+
+    return true;
+  }
+
+  /**
    * Executes when the user changes the duration.
    * 
-   * @param event   The KeyboardEvent that references the keys taht were pressed by the user.
+   * @param event   The KeyboardEvent that references the keys that were pressed by the user.
    */
   onChangeDuration(event: KeyboardEvent) {
     let tempArr = this.getTimeArray();
