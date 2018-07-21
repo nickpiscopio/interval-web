@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@
 import { Interval } from './interval';
 import { Class } from '../../../constant/class.constant';
 
+const KEY_CODE_BACKSPACE = 8;
+
 @Component({
   selector: 'app-interval',
   templateUrl: './interval.component.html',
@@ -20,6 +22,7 @@ export class IntervalComponent {
   private hours = '';
   private minutes = '';
   private seconds = '';
+  private second1 = '';
 
   private time = ['0','0','0','0','0','0'];
 
@@ -44,6 +47,24 @@ export class IntervalComponent {
 
   }
 
+  validate(evt) {
+    var theEvent = evt || window.event;
+  
+    // Handle paste
+    // if (theEvent.type === 'paste') {
+    //     key = event.clipboardData.getData('text/plain');
+    // } else {
+    // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+    // }
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+
   onChangeDuration(index: number) {
     // This is the value at the index that was changed.
     // We need to send this to the new index, and remove this to the index above.
@@ -60,7 +81,7 @@ export class IntervalComponent {
     }
   }
 
-  onChangeSeconds() {
+  // onChangeSeconds() {
     // this.hours = Math.floor(this.hours * 3600);
     // this.minutes = Math.floor(this.minutes * 60);
 
@@ -75,7 +96,7 @@ export class IntervalComponent {
     // if (this.seconds.length > 2) {
     //   this.
     // }
-  }
+  // }
 
   parseTime(time: number) {
     // if (time > 0) {
@@ -122,16 +143,43 @@ export class IntervalComponent {
 
   // onChangeMinutes() {}
 
-  // onChangeSeconds(event: KeyboardEvent) {
-  //   console.log('$event:', event);
-  //   console.log('seconds:', this.seconds);
+  onChangeSeconds(event: KeyboardEvent) {
+    console.log('$event:', event);
+    console.log('seconds 1:', this.seconds);
 
-  //   try {
-  //     let typedVal = Number(this.secondsInput.nativeElement).toString();
-  //     if (typedVal !== 'NaN') {
-  //       let secondsString = this.seconds.toString + typedVal;
-  //       this.seconds = Number(secondsString);
-  //     }
-  //   } catch (err) {}
-  // }
+    let val = Number(event.key);
+    let keyCode = Number(event.keyCode);
+
+    if (!isNaN(val) || keyCode === KEY_CODE_BACKSPACE) {
+      switch(keyCode) {
+        case KEY_CODE_BACKSPACE:
+          // Adds a 0 to the first index because we removed the last index.
+          // There always needs to be 6 indexes to have this work properly.
+          this.time.unshift("0");
+
+          // We are only allowed to have 6 indexs in time, so we remove the other ones from the end of the array.
+          this.time.pop();
+          
+          break;
+        default:
+          // Add the key that was pressed to the time array.
+          this.time.push(val.toString());
+
+          // We are only allowed to have 6 indexs in time, so we remove the other ones from the beginning of the array.
+          this.time.splice(0, this.time.length - 6);
+          
+          break;
+      }
+
+      
+  
+      let secs = this.time[4] + this.time[5];
+      let mins = this.time[2] + this.time[3];
+      let hrs = this.time[0] + this.time[1];
+  
+      this.seconds = secs;
+      this.minutes = mins;
+      this.hours = hrs;
+    }   
+  }
 }
