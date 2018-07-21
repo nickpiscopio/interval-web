@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Interval } from './interval';
+import { Class } from '../../../constant/class.constant';
 
 @Component({
   selector: 'app-interval',
@@ -12,35 +13,68 @@ export class IntervalComponent {
 
   @Input() interval: Interval;
 
-  @Output() intervalUpdated = new EventEmitter<number>();
+  @Output() updateInterval = new EventEmitter<number>();
+  @Output() duplicateInterval = new EventEmitter<number>();
+  @Output() removeInterval = new EventEmitter<number>();
 
-  @ViewChild('seconds') secondsInput: ElementRef;
+  // @ViewChild('seconds') secondsInput: ElementRef;
 
-  private hours: number;
-  private minutes: number;
-  private seconds: number;
+  // private hours: number;
+  // private minutes: number;
+  // private seconds: number;
 
   /**
-   * Function that gets executed when the input values change.
+   * Emits that the interval was updated.
    */
   onChange() {
-    this.intervalUpdated.emit(this.index);
+    this.updateInterval.emit(this.index);
   }
 
-  onChangeHours() {}
-
-  onChangeMinutes() {}
-
-  onChangeSeconds(event: KeyboardEvent) {
-    console.log('$event:', event);
-    console.log('seconds:', this.seconds);
-
-    try {
-      let typedVal = Number(this.secondsInput.nativeElement).toString();
-      if (typedVal !== 'NaN') {
-        let secondsString = this.seconds.toString + typedVal;
-        this.seconds = Number(secondsString);
-      }
-    } catch (err) {}
+  /**
+   * Emits to duplicate the interval.
+   */
+  duplicate() {
+    this.duplicateInterval.emit(this.index);
   }
+
+  /**
+   * Emits to remove the interval.
+   */
+  remove() {
+    this.removeInterval.emit(this.index);
+  }
+
+  /**
+   * Checks to see if the interval has any values.
+   */
+  hasValues() {
+    let name = this.interval.name;
+    let duration = this.interval.duration;
+    return (name !== undefined && name.trim() !== '') ||
+           (duration !== undefined && duration > 0);
+  }
+
+  /**
+   * Gets the class for the interval card that will change the way it is displayed to the user.
+   */
+  getClass() {
+    return !this.hasValues() ? Class.INACTIVE + ' ': '';
+  }
+
+  // onChangeHours() {}
+
+  // onChangeMinutes() {}
+
+  // onChangeSeconds(event: KeyboardEvent) {
+  //   console.log('$event:', event);
+  //   console.log('seconds:', this.seconds);
+
+  //   try {
+  //     let typedVal = Number(this.secondsInput.nativeElement).toString();
+  //     if (typedVal !== 'NaN') {
+  //       let secondsString = this.seconds.toString + typedVal;
+  //       this.seconds = Number(secondsString);
+  //     }
+  //   } catch (err) {}
+  // }
 }

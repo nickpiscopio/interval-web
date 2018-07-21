@@ -28,7 +28,11 @@
 
       <div *ngIf="hasIntervals()">
         <div *ngFor="let key of objectKeys(timer.intervals)">
-          <app-interval [index]="key" [interval]="timer.intervals[key]" (intervalUpdated)="updateIntervals($event)"></app-interval>
+          <app-interval [index]="key"
+                        [interval]="timer.intervals[key]"
+                        (updateInterval)="updateIntervals($event)"
+                        (duplicateInterval)="duplicateInterval($event)"
+                        (removeInterval)="removeInterval($event)"></app-interval>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [ngClass]="getClass()">
   <mat-form-field>
     <input matInput placeholder="Interval name" value="{{interval.name}}" [(ngModel)]="interval.name" (keyup)="onChange()">
   </mat-form-field>
@@ -6,6 +6,7 @@
   <mat-form-field>
     <input matInput placeholder="Interval duration" value="{{interval.duration}}" [(ngModel)]="interval.duration" (keyup)="onChange()">
   </mat-form-field>
+  <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
   <!-- <div class="duration">
     <input matInput type="number" min="0" oninput="validity.valid;" (keyup)="onChangeHours($event)" value="{{hours}}">
     <p>h</p>
@@ -15,3 +16,7 @@
     <p>s</p>
   </div> -->
 </mat-card>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="duplicate()"><mat-icon>file_copy</mat-icon>Duplicate</button>
+  <button mat-menu-item (click)="remove()"><mat-icon>close</mat-icon>Remove</button>
+</mat-menu>
