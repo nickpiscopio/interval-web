@@ -4,9 +4,8 @@ import { Timer } from '../timer';
 import { Route } from '../../../constant/route.constant';
 import { Interval } from '../interval/interval';
 import { fade } from '../../../animations/fade';
+import { Time } from '../../../utility/time.utility';
 
-// 1 second timer tick for the intervals.
-const TICK = 1000;
 const THRESHOLD_PAUSE_VISIBILTY = 2000;
 const MESSAGE_INTERVAL_PAUSED = 'INTERVAL PAUSED';
 const MESSAGE_INTERVALS_FINISHED = 'FINISHED!';
@@ -45,6 +44,8 @@ export class TimerComponent implements OnDestroy {
   // Boolean value for if the timer is paused or not.
   private paused = false;
   private displayPause: boolean;
+
+  private timeUtil = new Time();
 
   constructor(private route: ActivatedRoute) {
     this.displayPause = false;
@@ -102,7 +103,7 @@ export class TimerComponent implements OnDestroy {
       }
 
       this.intervalTimer = setInterval(() => {
-        this.time -= TICK;
+        this.time -= Time.SECOND;
 
         // This parse time parses the time every tick.
         this.parseTime();
@@ -128,7 +129,7 @@ export class TimerComponent implements OnDestroy {
 
           this.runTimer(intervals, false);
         }
-      }, TICK);
+      }, Time.SECOND);
     }
 
     // We need this parse time because we won't see the very first time without it.
@@ -141,16 +142,11 @@ export class TimerComponent implements OnDestroy {
    * @return The time in seconds or a message saying the timer is finished.
    */
   parseTime() {
-    if (this.time > 0) {
-      // This is the time left in seconds.
-      let timeInSeconds = this.time / TICK;
+    this.timeUtil.parseTime(this.time);
 
-      this.displayHours = Math.floor(timeInSeconds / 3600);
-      this.displayMinutes = Math.floor((timeInSeconds % 3600) / 60);
-      this.displaySeconds = Math.floor((timeInSeconds % 3600) % 60);
-    } else {
-      this.displaySeconds = 0;
-    }
+    this.displayHours = this.timeUtil.hours;
+    this.displayMinutes = this.timeUtil.minutes;
+    this.displaySeconds = this.timeUtil.seconds;
   }
 
   /**
