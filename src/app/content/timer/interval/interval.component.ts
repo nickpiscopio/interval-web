@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Interval } from './interval';
 import { Class } from '../../../constant/class.constant';
+import { Time } from '../../../utility/time.utility';
 
 const KEY_CODE_BACKSPACE = 8;
 const KEY_CODE_DELETE = 46;
@@ -10,7 +11,7 @@ const KEY_CODE_DELETE = 46;
   templateUrl: './interval.component.html',
   styleUrls: ['./interval.component.sass']
 })
-export class IntervalComponent {
+export class IntervalComponent  implements OnInit {
   // This is the index of the interval in the intervals array in the timer.
   @Input() index: number;
 
@@ -25,6 +26,15 @@ export class IntervalComponent {
   private seconds = '00';
 
   private time = ['0','0','0','0','0','0'];
+
+  ngOnInit() {
+    let timeUtil = new Time();
+    timeUtil.parseTime(this.interval.duration);
+
+    this.hours = timeUtil.hours.toString();
+    this.minutes = timeUtil.minutes.toString();
+    this.seconds = timeUtil.seconds.toString();
+  }
 
   /**
    * Emits to duplicate the interval.
