@@ -119,5 +119,4 @@ export class IntervalComponent {
   getClass() {
     return !this.hasValues() ? Class.INACTIVE + ' ': '';
   }
-  }
 }
