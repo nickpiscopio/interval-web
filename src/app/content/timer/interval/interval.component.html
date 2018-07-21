@@ -4,8 +4,17 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Interval duration" value="{{interval.duration}}" [(ngModel)]="interval.duration" (keyup)="onChange()">
+    <input matInput [(ngModel)]="time[0]" (keyup)="onChangeDuration(0)">
   </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="time[1]" (keyup)="onChangeDuration(1)"><span class="input-group-addon ">h</span>
+  </mat-form-field>
+  <!-- <mat-form-field>
+    <input matInput placeholder="Interval duration" value="{{minutes}}" [(ngModel)]="minutes" (keyup)="onChangeHours()"><span class="input-group-addon ">m</span>
+  </mat-form-field><mat-form-field>
+    <input matInput placeholder="Interval duration" value="{{seconds}}" [(ngModel)]="seconds" (keyup)="onChangeSeconds()"><span class="input-group-addon ">s</span>
+  </mat-form-field> -->
+
   <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
   <!-- <div class="duration">
     <input matInput type="number" min="0" oninput="validity.valid;" (keyup)="onChangeHours($event)" value="{{hours}}">
