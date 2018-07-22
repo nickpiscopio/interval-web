@@ -19,6 +19,8 @@ export class Time {
       this.minutes = Math.floor((timeInSeconds % 3600) / 60);
       this.seconds = Math.floor((timeInSeconds % 3600) % 60);
     } else {
+      this.hours = 0;
+      this.minutes = 0;
       this.seconds = 0;
     }
   }

@@ -1,4 +1,4 @@
-<mat-card [ngClass]="getMatCardClass()">
+<mat-card [ngClass]="getMatCardClass()" [@fade]>
   <div class="container">
     <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
     <div class="row">

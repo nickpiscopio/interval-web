@@ -39,7 +39,8 @@ export class TimerCreateComponent {
    * @param index   The index of the interval to duplicate.
    */
   duplicateInterval(index: number) {
-    this.timer.duplicateInterval(index);
+    // We need to convert the index to a number because an event will send it as a string.
+    this.timer.duplicateInterval(Number(index));
   }
 
 /**
@@ -48,7 +49,8 @@ export class TimerCreateComponent {
    * @param index   The index of the interval that was updated.
    */
   updateInterval(index: number) {
-    this.timer.updateInterval(index);
+    // We need to convert the index to a number because an event will send it as a string.
+    this.timer.updateInterval(Number(index));
   }
 
   /**
@@ -57,7 +59,8 @@ export class TimerCreateComponent {
    * @param index   The interval index to remove.
    */
   removeInterval(index: number) {
-    this.timer.removeInterval(index);
+    // We need to convert the index to a number because an event will send it as a string.
+    this.timer.removeInterval(Number(index));
   }
 
   /**

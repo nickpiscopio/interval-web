@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, Renderer2, OnChanges } from '@angular/core';
 import { Interval } from './interval';
 import { Class } from '../../../constant/class.constant';
 import { Time } from '../../../utility/time.utility';
+import { fade } from '../../../animations/fade';
 
 const KEY_CODE_BACKSPACE = 8;
 const KEY_CODE_DELETE = 46;
@@ -12,9 +13,10 @@ const DEFAULT_TIME = DEFAULT_TIME_DIGIT + DEFAULT_TIME_DIGIT;
 @Component({
   selector: 'app-interval',
   templateUrl: './interval.component.html',
-  styleUrls: ['./interval.component.sass']
+  styleUrls: ['./interval.component.sass'],
+  animations: [fade]
 })
-export class IntervalComponent  implements OnInit {
+export class IntervalComponent  implements OnChanges {
   @ViewChild('hoursInput') hoursInput: ElementRef;
   @ViewChild('minutesInput') minutesInput: ElementRef;
   @ViewChild('secondsInput') secondsInput: ElementRef;
@@ -37,22 +39,26 @@ export class IntervalComponent  implements OnInit {
   // Boolean value to tell whether the input was selected or not.
   private selected = false;
 
+  private timeUtil = new Time();
+
   constructor(private renderer: Renderer2) { }
 
-  ngOnInit() {
-    let timeUtil = new Time();
-    timeUtil.parseTime(this.interval.duration);
+  ngOnChanges(changes) {
+    if (changes.interval !== undefined && changes.interval.currentValue !== undefined) {
+      // Parses the time in to display in a human readable format
+      this.timeUtil.parseTime(this.interval.duration);
 
-    if (timeUtil.hours !== undefined) {
-      this.hours = this.getTimeDigits(timeUtil.hours.toString());
-    }
+      if (this.timeUtil.hours !== undefined) {
+        this.hours = this.getTimeDigits(this.timeUtil.hours.toString());
+      }
 
-    if (timeUtil.minutes !== undefined) {
-      this.minutes = this.getTimeDigits(timeUtil.minutes.toString());
-    }
+      if (this.timeUtil.minutes !== undefined) {
+        this.minutes = this.getTimeDigits(this.timeUtil.minutes.toString());
+      }
 
-    if (timeUtil.seconds !== undefined) {
-      this.seconds = this.getTimeDigits(timeUtil.seconds.toString());
+      if (this.timeUtil.seconds !== undefined) {
+        this.seconds = this.getTimeDigits(this.timeUtil.seconds.toString());
+      }
     }
   }
 

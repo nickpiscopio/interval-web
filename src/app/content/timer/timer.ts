@@ -31,6 +31,10 @@ export class Timer {
    *                  If an index isn't specified, then the interval will be inserted as a new index at the end of the array.
    */
   addInterval(interval: Interval, index?: number) {
+    // We need to create a new object for this to work properly.
+    // If we don't, then the objects will be linked.
+    interval = new Interval(interval.name, interval.duration);
+
     if (index === undefined) {
       this.intervals.push(interval);
     } else {
@@ -46,9 +50,6 @@ export class Timer {
    * @param index   The index of the interval to duplicate.
    */
   duplicateInterval(index: number) {
-    // We need to convert this to a number because an event will send it as a string.
-    index = Number(index);
-
     this.addInterval(this.intervals[index], index + 1);
 
     this.calculateTotalDuration();
@@ -60,9 +61,6 @@ export class Timer {
    * @param index   The index of the interval that was updated.
    */
   updateInterval(index: number) {
-    // We need to convert this to a number because an event will send it as a string.
-    index = Number(index);
-
     let intervals = this.intervals;
     let lastIntervalIndex = intervals.length - 1;
     let currentIntervalContainsValues = this.doesIntervalContainValues(intervals[index]);
@@ -83,10 +81,10 @@ export class Timer {
    * @param index   The interval index to remove.
    */
   removeInterval(index: number) {
-    // We need to convert this to a number because an event will send it as a string.
-    index = Number(index);
     // Remove 1 index at the specifed index.
     this.intervals.splice(index, 1);
+
+    console.log("intervalse: ", this.intervals);
 
     this.calculateTotalDuration();
   }
