@@ -31,9 +31,9 @@ export class IntervalComponent  implements OnInit {
     let timeUtil = new Time();
     timeUtil.parseTime(this.interval.duration);
 
-    this.hours = timeUtil.hours.toString();
-    this.minutes = timeUtil.minutes.toString();
-    this.seconds = timeUtil.seconds.toString();
+    this.hours = this.getTimeDigits(timeUtil.hours.toString());
+    this.minutes = this.getTimeDigits(timeUtil.minutes.toString());
+    this.seconds = this.getTimeDigits(timeUtil.seconds.toString());
   }
 
   /**
@@ -55,6 +55,15 @@ export class IntervalComponent  implements OnInit {
    */
   onChange() {
     this.updateInterval.emit(this.index);
+  }
+
+  /**
+   * Gets the digits for a specified time. We always want there to be a leading zero for time.
+   * 
+   * @param time  The string time that is checking the digits.
+   */
+  getTimeDigits(time: string) {
+    return time.length > 1 ? time : '0' + time;
   }
 
   /**
