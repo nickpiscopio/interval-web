@@ -249,7 +249,7 @@ export class IntervalComponent  implements OnInit {
    * @return The class for the minutes.
    */
   getMinutesClass() {
-    return this.getHoursClass && this.getDurationEnablementClass(this.minutes);
+    return this.getHoursClass() && this.getDurationEnablementClass(this.minutes);
   }
 
   /**
@@ -258,7 +258,7 @@ export class IntervalComponent  implements OnInit {
    * @return The class for the seconds.
    */
   getSecondsClass() {
-    return this.getDurationEnablementClass(this.minutes) && this.getDurationEnablementClass(this.seconds);
+    return this.getMinutesClass() && this.getDurationEnablementClass(this.seconds);
   }
 
   /**
