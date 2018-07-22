@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Interval } from './interval';
 import { Class } from '../../../constant/class.constant';
 import { Time } from '../../../utility/time.utility';
@@ -12,6 +12,10 @@ const KEY_CODE_DELETE = 46;
   styleUrls: ['./interval.component.sass']
 })
 export class IntervalComponent  implements OnInit {
+  @ViewChild('hoursInput') hoursInput: ElementRef;
+  @ViewChild('minutesInput') minutesInput: ElementRef;
+  @ViewChild('secondsInput') secondsInput: ElementRef;
+
   // This is the index of the interval in the intervals array in the timer.
   @Input() index: number;
 
@@ -27,6 +31,11 @@ export class IntervalComponent  implements OnInit {
   private seconds = this.defaultTime;
 
   private time = ['0','0','0','0','0','0'];
+
+  // Boolean value to tell whether the input was selected or not.
+  private selected = false;
+
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
     let timeUtil = new Time();
@@ -119,6 +128,49 @@ export class IntervalComponent  implements OnInit {
   }
 
   /**
+   * Function to tell whether the duration input was selected.
+   */
+  onSelect() {
+    this.selected = true;
+  }
+
+  /**
+   * Function to tell whether the duration input was unselected.
+   */
+  onBlur() {
+    this.selected = false;
+  }
+
+  /**
+   * Focuses the hours input if there is a value in it.
+   */
+  focusHours() {
+    if (this.isDurationEnabled(this.hours)) {
+      this.hoursInput.nativeElement.focus();
+    } else {
+      this.focusMinutes()
+    }
+  }
+
+  /**
+   * Focuses the minutes input if there is a value in it.
+   */
+  focusMinutes() {
+    if (this.isDurationEnabled(this.minutes)) {
+      this.minutesInput.nativeElement.focus();
+    } else {
+      this.focusSeconds();
+    }
+  }
+
+  /**
+   * Focuses the seconds input.
+   */
+  focusSeconds() {
+    this.secondsInput.nativeElement.focus();
+  }
+
+  /**
    * Sets the time to display to the user in the inputs.
    * There are only allowed to be 6 indecies in the time array at any point in time.
    */
@@ -179,7 +231,7 @@ export class IntervalComponent  implements OnInit {
    * @return The class for the hours.
    */
   getHoursClass() {
-    return this.getDurationClass(this.hours);
+    return this.getDurationEnablementClass(this.hours);
   }
 
   /**
@@ -188,7 +240,7 @@ export class IntervalComponent  implements OnInit {
    * @return The class for the minutes.
    */
   getMinutesClass() {
-    return this.getHoursClass && this.getDurationClass(this.minutes);
+    return this.getHoursClass && this.getDurationEnablementClass(this.minutes);
   }
 
   /**
@@ -197,17 +249,37 @@ export class IntervalComponent  implements OnInit {
    * @return The class for the seconds.
    */
   getSecondsClass() {
-    return this.getDurationClass(this.minutes) && this.getDurationClass(this.seconds);
+    return this.getDurationEnablementClass(this.minutes) && this.getDurationEnablementClass(this.seconds);
   }
 
   /**
-   * Gets the class for the duration depending upon if there are values or not.
+   * Gets the class for the duration enablement depending upon if there are values or not.
    * 
    * @param model   The duration model to check if there is a value.
    * 
    * @return The class for the duration.
    */
-  getDurationClass(model: string) {
-    return model === this.defaultTime ? Class.INACTIVE + ' ': '';
+  getDurationEnablementClass(model: string) {
+    return this.isDurationEnabled(model) ? '' : Class.INACTIVE + ' ';
+  }
+
+  /**
+   * Checks to see if the duration is enabled or not.
+   * 
+   * @param model   The duration model to check if there is a value.
+   * 
+   * @return Boolean value for whether the duration input is enabled.
+   */
+  isDurationEnabled(model: string) {
+    return model !== this.defaultTime
+  }
+
+  /**
+   * Gets the class for the duration selection.
+   * 
+   * @return The class for whether the duration is active or not.
+   */
+  getDurationSelectionClass() {
+    return this.selected ? Class.ACTIVE + ' ' : '';
   }
 }

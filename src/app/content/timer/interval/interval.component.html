@@ -1,57 +1,68 @@
-  <mat-card [ngClass]="getMatCardClass()">
+<mat-card [ngClass]="getMatCardClass()">
+  <div class="container">
     <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
-<div class="row">
-
-    <div>
-      <mat-form-field class="col-6">
-        <input matInput
-                placeholder="Interval name"
-                value="{{interval.name}}"
-                [(ngModel)]="interval.name"
-                (keyup)="onChange()">
-      </mat-form-field>
-      
-      <div class="duration col">
-        <div [ngClass]="getHoursClass()">
+    <div class="row">
+      <div class="col-sm">
+        <mat-form-field>
+          <input matInput
+                  placeholder="INTERVAL NAME"
+                  value="{{interval.name}}"
+                  [(ngModel)]="interval.name"
+                  (keyup)="onChange()">
+        </mat-form-field>
+      </div>
+      <div class="duration col-sm-auto" [ngClass]="getDurationSelectionClass()">
+        <div [ngClass]="getHoursClass()" (click)="focusHours()">
           <span>
-            <input matInput
-                    type="text"
-                    value="{{hours}}"
-                    [(ngModel)]="hours"
-                    (keydown)="isNumber($event)"
-                    (keyup)="onChangeDuration($event)" >
+            <input #hoursInput
+                   matInput
+                   type="text"
+                   size="2"
+                   value="{{hours}}"
+                   [(ngModel)]="hours"
+                   (blur)="onBlur()"
+                   (focus)="onSelect()"
+                   (keydown)="isNumber($event)"
+                   (keyup)="onChangeDuration($event)">
           </span>
-          <span class="middle">h</span>
+          <span class="suffix middle">h</span>
         </div>
         
-        <div [ngClass]="getMinutesClass()">
+        <div [ngClass]="getMinutesClass()" (click)="focusMinutes()">
           <span>
-              <input matInput
-                      type="text"
-                      value="{{minutes}}"
-                      [(ngModel)]="minutes"
-                      (keydown)="isNumber($event)"
-                      (keyup)="onChangeDuration($event)" >
+              <input #minutesInput 
+                     matInput
+                     type="text"
+                     size="2"
+                     value="{{minutes}}"
+                     (blur)="onBlur()"
+                     (focus)="onSelect()"
+                     [(ngModel)]="minutes"
+                     (keydown)="isNumber($event)"
+                     (keyup)="onChangeDuration($event)">
           </span>
-          <span class="middle">m</span>
+          <span class="suffix middle">m</span>
         </div>
         
-        <div [ngClass]="getSecondsClass()">
+        <div [ngClass]="getSecondsClass()" (click)="focusSeconds()">
           <span>
-              <input matInput
-                      type="text"
-                      value="{{seconds}}"
-                      [(ngModel)]="seconds"
-                      (keydown)="isNumber($event)"
-                      (keyup)="onChangeDuration($event)">
+              <input #secondsInput
+                     matInput
+                     type="text"
+                     size="2"
+                     value="{{seconds}}"
+                     (blur)="onBlur()"
+                     (focus)="onSelect()"
+                     [(ngModel)]="seconds"
+                     (keydown)="isNumber($event)"
+                     (keyup)="onChangeDuration($event)">
           </span>
-          <span>s</span>
+          <span class="suffix end">s</span>
         </div>
       </div>
     </div>
-</div>
-
-  </mat-card>
+  </div>
+</mat-card>
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="duplicate()"><mat-icon>file_copy</mat-icon>Duplicate</button>

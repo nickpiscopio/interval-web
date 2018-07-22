@@ -9,14 +9,27 @@ mat-card
     box-shadow: none
     border: 1px solid $color-grey
 
+mat-form-field
+  width: 100%
+  
+  input
+    font-size: $font-size-large
+
 .menu
-  float: right
+  position: absolute
+  top: $margin-xxxx-small
+  right: $margin-xxxx-small
 
 .duration
-  border-width: 2px
-  border-bottom-width: 2px
-  border-bottom-color: $color1
-  border-bottom-style: solid
+  margin-right: $margin-small
+  align-self: flex-end
+
+  &.active
+    border-width: 2px
+    border-bottom-width: 2px
+    border-bottom-color: $color1
+    border-bottom-style: solid
+    transition: border-width 75ms linear
 
   > div
     display: inline-block
@@ -28,10 +41,14 @@ mat-card
       display: inline-block
 
   input
-    font-size: $font-size-medium
+    font-size: $font-size-large
+    text-align: center
+    margin-left: -8px
+    margin-bottom: -4px
+    
+  .suffix
+    margin-left: -6px
+    font-size: $font-size-large / 2
 
-  .middle
-    margin-right: $margin-normal
-  
-  p
-    margin: 0
+    &.middle
+      margin-right: 16px
