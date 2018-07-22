@@ -6,6 +6,9 @@ import { Time } from '../../../utility/time.utility';
 const KEY_CODE_BACKSPACE = 8;
 const KEY_CODE_DELETE = 46;
 
+const DEFAULT_TIME_DIGIT = '0';
+const DEFAULT_TIME = DEFAULT_TIME_DIGIT + DEFAULT_TIME_DIGIT;
+
 @Component({
   selector: 'app-interval',
   templateUrl: './interval.component.html',
@@ -25,10 +28,9 @@ export class IntervalComponent  implements OnInit {
   @Output() duplicateInterval = new EventEmitter<number>();
   @Output() removeInterval = new EventEmitter<number>();
 
-  private defaultTime = '00';
-  private hours = this.defaultTime;
-  private minutes = this.defaultTime;
-  private seconds = this.defaultTime;
+  private hours = DEFAULT_TIME;
+  private minutes = DEFAULT_TIME;
+  private seconds = DEFAULT_TIME;
 
   private time = ['0','0','0','0','0','0'];
 
@@ -112,12 +114,19 @@ export class IntervalComponent  implements OnInit {
         case KEY_CODE_BACKSPACE:
         case KEY_CODE_DELETE:
           // Adds a 0 to the first index because we removed an value.
-          tempArr.unshift("0");
+          tempArr.unshift(DEFAULT_TIME_DIGIT);
 
           break;
         default:
-          // We only want 6 indecies in the array at a time, so we need to remove from the head since we are adding from the end. 
-          tempArr.splice(0, tempArr.length - 6);
+          let maxTimeLength = 6;
+          let arrLength = tempArr.length;
+
+          // We only want 6 indecies in the array at a time, so we need to remove from the head since we are adding from the end.
+          if (arrLength > maxTimeLength) {
+            tempArr.splice(0, arrLength - maxTimeLength);
+          } else if (arrLength < maxTimeLength) {
+            tempArr.unshift(DEFAULT_TIME_DIGIT);
+          }
           
           break;
       }
@@ -271,7 +280,7 @@ export class IntervalComponent  implements OnInit {
    * @return Boolean value for whether the duration input is enabled.
    */
   isDurationEnabled(model: string) {
-    return model !== this.defaultTime
+    return model !== DEFAULT_TIME
   }
 
   /**
