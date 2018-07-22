@@ -22,7 +22,7 @@
                    [(ngModel)]="hours"
                    (blur)="onBlur()"
                    (focus)="onSelect()"
-                   (keydown)="isNumber($event)"
+                   (keydown)="isKeyAllowed($event)"
                    (keyup)="onChangeDuration($event)">
           </span>
           <span class="suffix middle">h</span>
@@ -38,7 +38,7 @@
                      (blur)="onBlur()"
                      (focus)="onSelect()"
                      [(ngModel)]="minutes"
-                     (keydown)="isNumber($event)"
+                     (keydown)="isKeyAllowed($event)"
                      (keyup)="onChangeDuration($event)">
           </span>
           <span class="suffix middle">m</span>
@@ -54,7 +54,7 @@
                      (blur)="onBlur()"
                      (focus)="onSelect()"
                      [(ngModel)]="seconds"
-                     (keydown)="isNumber($event)"
+                     (keydown)="isKeyAllowed($event)"
                      (keyup)="onChangeDuration($event)">
           </span>
           <span class="suffix end">s</span>

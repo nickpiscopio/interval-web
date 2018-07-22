@@ -5,6 +5,7 @@ import { Time } from '../../../utility/time.utility';
 import { fade } from '../../../animations/fade';
 
 const KEY_CODE_BACKSPACE = 8;
+const KEY_CODE_SHIFT = 16;
 const KEY_CODE_DELETE = 46;
 
 const DEFAULT_TIME_DIGIT = '0';
@@ -93,17 +94,19 @@ export class IntervalComponent  implements OnChanges {
   }
 
   /**
-   * Checks to see if the value entered in the input is numberic.
+   * Checks to see if the value entered in the input is valid.
    * 
    * @param event   The KeyboardEvent that references the keys that were pressed by the user.
    * 
    * @return Boolean value on whether or not the key that was pressed was numberic.
    */
-  isNumber(event: KeyboardEvent) {
-    var charCode = event.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+  isKeyAllowed(event: KeyboardEvent) {
+    var charCode = event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != KEY_CODE_DELETE ||
+        event.shiftKey ||
+        event.altKey) {
       return false;
-    }      
+    }
 
     return true;
   }
@@ -114,23 +117,32 @@ export class IntervalComponent  implements OnChanges {
    * @param event   The KeyboardEvent that references the keys that were pressed by the user.
    */
   onChangeDuration(event: KeyboardEvent) {
+    let maxTimeLength = 6;
+
     let tempArr = this.getTimeArray();
 
     switch(event.keyCode) {
         case KEY_CODE_BACKSPACE:
         case KEY_CODE_DELETE:
-          // Adds a 0 to the first index because we removed an value.
-          tempArr.unshift(DEFAULT_TIME_DIGIT);
+          // We create an array that is the exact number of missing indecies.
+          // We always need 6 indecies in the duration for it to display properly.
+          let prefixArr = new Array(maxTimeLength - tempArr.length);
+          // We set each index to be the default digit.
+          prefixArr.fill(DEFAULT_TIME_DIGIT);
+
+          // Concatinate the arrays.
+          tempArr = prefixArr.concat(tempArr);
 
           break;
         default:
-          let maxTimeLength = 6;
           let arrLength = tempArr.length;
 
           // We only want 6 indecies in the array at a time, so we need to remove from the head since we are adding from the end.
           if (arrLength > maxTimeLength) {
             tempArr.splice(0, arrLength - maxTimeLength);
           } else if (arrLength < maxTimeLength) {
+            // Add to the array since we selected both values and inserted 1 new one already.
+            // We unshift to get back to 6 indecies.
             tempArr.unshift(DEFAULT_TIME_DIGIT);
           }
           
