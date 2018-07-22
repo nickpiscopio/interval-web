@@ -21,9 +21,10 @@ export class IntervalComponent  implements OnInit {
   @Output() duplicateInterval = new EventEmitter<number>();
   @Output() removeInterval = new EventEmitter<number>();
 
-  private hours = '00';
-  private minutes = '00';
-  private seconds = '00';
+  private defaultTime = '00';
+  private hours = this.defaultTime;
+  private minutes = this.defaultTime;
+  private seconds = this.defaultTime;
 
   private time = ['0','0','0','0','0','0'];
 
@@ -31,9 +32,17 @@ export class IntervalComponent  implements OnInit {
     let timeUtil = new Time();
     timeUtil.parseTime(this.interval.duration);
 
-    this.hours = this.getTimeDigits(timeUtil.hours.toString());
-    this.minutes = this.getTimeDigits(timeUtil.minutes.toString());
-    this.seconds = this.getTimeDigits(timeUtil.seconds.toString());
+    if (timeUtil.hours !== undefined) {
+      this.hours = this.getTimeDigits(timeUtil.hours.toString());
+    }
+
+    if (timeUtil.minutes !== undefined) {
+      this.minutes = this.getTimeDigits(timeUtil.minutes.toString());
+    }
+
+    if (timeUtil.seconds !== undefined) {
+      this.seconds = this.getTimeDigits(timeUtil.seconds.toString());
+    }
   }
 
   /**
@@ -156,9 +165,49 @@ export class IntervalComponent  implements OnInit {
   }
 
   /**
-   * Gets the class for the interval card that will change the way it is displayed to the user.
+   * Gets the class for the interval card that will change the way it is displayed to the user depending upon if there are values or not.
+   * 
+   * @return The class for the mat card.
    */
-  getClass() {
+  getMatCardClass() {
     return !this.hasValues() ? Class.INACTIVE + ' ': '';
+  }
+
+  /**
+   * Gets the class for the hours depending upon if there are values or not.
+   * 
+   * @return The class for the hours.
+   */
+  getHoursClass() {
+    return this.getDurationClass(this.hours);
+  }
+
+  /**
+   * Gets the class for the minutes depending upon if there are values or not.
+   * 
+   * @return The class for the minutes.
+   */
+  getMinutesClass() {
+    return this.getHoursClass && this.getDurationClass(this.minutes);
+  }
+
+  /**
+   * Gets the class for the seconds depending upon if there are values or not.
+   * 
+   * @return The class for the seconds.
+   */
+  getSecondsClass() {
+    return this.getDurationClass(this.minutes) && this.getDurationClass(this.seconds);
+  }
+
+  /**
+   * Gets the class for the duration depending upon if there are values or not.
+   * 
+   * @param model   The duration model to check if there is a value.
+   * 
+   * @return The class for the duration.
+   */
+  getDurationClass(model: string) {
+    return model === this.defaultTime ? Class.INACTIVE + ' ': '';
   }
 }

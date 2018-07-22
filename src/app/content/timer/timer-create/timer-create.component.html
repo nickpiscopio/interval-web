@@ -20,27 +20,26 @@
           </mat-form-field>
         </div> -->
       </mat-card>
-
-      <div class="title-secondary">
-        <mat-icon>access_time</mat-icon>
-        <h3>INTERVALS</h3>
-      </div>
-
-      <div *ngIf="hasIntervals()">
-        <div *ngFor="let key of objectKeys(timer.intervals)">
-          <app-interval [index]="key"
-                        [interval]="timer.intervals[key]"
-                        (updateInterval)="updateIntervals($event)"
-                        (duplicateInterval)="duplicateInterval($event)"
-                        (removeInterval)="removeInterval($event)"></app-interval>
-        </div>
-      </div>
-
-      <button mat-button [disabled]="!hasIntervals()" (click)="start()">START
-        <mat-icon>arrow_forward</mat-icon>
-      </button>
-
     </div>
+
+    <div class="title-secondary">
+      <mat-icon>access_time</mat-icon>
+      <h3>INTERVALS</h3>
+    </div>
+
+    <div *ngIf="hasIntervals()">
+      <div *ngFor="let key of objectKeys(timer.intervals)">
+        <app-interval [index]="key"
+                      [interval]="timer.intervals[key]"
+                      (updateInterval)="updateIntervals($event)"
+                      (duplicateInterval)="duplicateInterval($event)"
+                      (removeInterval)="removeInterval($event)"></app-interval>
+      </div>
+    </div>
+
+    <button mat-button [disabled]="!hasIntervals()" (click)="start()">START
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
   </div>
   <app-footer></app-footer>
 </div>

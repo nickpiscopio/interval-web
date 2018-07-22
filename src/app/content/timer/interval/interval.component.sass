@@ -13,11 +13,19 @@ mat-card
   float: right
 
 .duration
-  display: inline-flex
   border-width: 2px
   border-bottom-width: 2px
   border-bottom-color: $color1
   border-bottom-style: solid
+
+  > div
+    display: inline-block
+
+    &.inactive span
+      color: $color-grey-light
+    
+    span 
+      display: inline-block
 
   input
     font-size: $font-size-medium
