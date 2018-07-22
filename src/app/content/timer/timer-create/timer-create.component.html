@@ -31,15 +31,21 @@
       <div *ngFor="let key of objectKeys(timer.intervals)">
         <app-interval [index]="key"
                       [interval]="timer.intervals[key]"
-                      (updateInterval)="updateIntervals($event)"
+                      (updateInterval)="updateInterval($event)"
                       (duplicateInterval)="duplicateInterval($event)"
                       (removeInterval)="removeInterval($event)"></app-interval>
       </div>
     </div>
 
-    <button mat-button [disabled]="!hasIntervals()" (click)="start()">START
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
+    <div id="overview">
+      <p>DURATION</p>
+      <app-clock-display [time]="timer.totalDuration"></app-clock-display>
+
+      <button mat-button [disabled]="!hasIntervals()" (click)="start()">START
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    
   </div>
   <app-footer></app-footer>
 </div>

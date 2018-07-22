@@ -28,10 +28,6 @@ export class TimerComponent implements OnDestroy {
 
   private time: number;
 
-  private displayHours = 0;
-  private displayMinutes = 0;
-  private displaySeconds = 0;
-
   // This is the current interval index that is being displayed.
   private intervalIndex = 0;
 
@@ -55,7 +51,8 @@ export class TimerComponent implements OnDestroy {
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
-      this.timer = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
+      let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
+      this.timer = new Timer(urlObj.name, urlObj.intervals);
     } catch (err) {
       console.log(TimerComponent.name + ' error: ', err);
     }
@@ -105,9 +102,6 @@ export class TimerComponent implements OnDestroy {
       this.intervalTimer = setInterval(() => {
         this.time -= Time.SECOND;
 
-        // This parse time parses the time every tick.
-        this.parseTime();
-
         // This plays sounds for when the timer gets to 3 seconds and below.
         // It is to notify the user that the interval is about to finish or has finished.
         switch (this.time) {
@@ -131,22 +125,6 @@ export class TimerComponent implements OnDestroy {
         }
       }, Time.SECOND);
     }
-
-    // We need this parse time because we won't see the very first time without it.
-    this.parseTime();
-  }
-
-  /**
-   * Parses the time in to display in a human readable format.
-   *
-   * @return The time in seconds or a message saying the timer is finished.
-   */
-  parseTime() {
-    this.timeUtil.parseTime(this.time);
-
-    this.displayHours = this.timeUtil.hours;
-    this.displayMinutes = this.timeUtil.minutes;
-    this.displaySeconds = this.timeUtil.seconds;
   }
 
   /**
@@ -216,26 +194,11 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
-   * Checks to see if seconds should be displayed.
-   * 
-   * @return Boolean value on whether or not the seconds should be displayed.
-   */
-  shouldDisplaySeconds() {
-    let isTimerFinished = this.isTimerFinished();
-    
-    return (this.displayHours == 0 && this.displayMinutes == 0 && !isTimerFinished) || 
-           (this.displaySeconds > 0 && !isTimerFinished);
-  }
-
-  /**
    * Checks to see if the timer has finished.
    *
    * @return Boolean value on whether or not the timer has finished.
    */
   isTimerFinished() {
-    return this.intervalIndex == this.timer.intervals.length &&
-           this.displayHours == 0 &&
-           this.displayMinutes == 0 &&
-           this.displaySeconds == 0;
+    return this.intervalIndex == this.timer.intervals.length && this.timer.totalDuration == 0;
   }
 }

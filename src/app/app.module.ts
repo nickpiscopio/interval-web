@@ -19,9 +19,10 @@ import { TimerComponent } from './content/timer/timer-run/timer-run.component';
 import { TimerCreateComponent } from './content/timer/timer-create/timer-create.component';
 import { FooterComponent } from './fragments/footer/footer.component';
 import { IntervalComponent } from './content/timer/interval/interval.component';
+import { ClockDisplayComponent } from './fragments/clock-display/clock-display.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, TimerComponent, TimerCreateComponent, FooterComponent, IntervalComponent],
+  declarations: [AppComponent, WelcomeComponent, TimerComponent, TimerCreateComponent, FooterComponent, IntervalComponent, ClockDisplayComponent],
   imports: [CommonModule, BrowserModule, FormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, BrowserAnimationsModule, routes],
   providers: [],
   bootstrap: [AppComponent]

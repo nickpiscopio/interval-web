@@ -12,9 +12,8 @@
     <h3>{{intervalName}}</h3>
     <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
     <h1>
-      <p *ngIf="displayHours > 0">{{displayHours}}<span>h </span></p>
-      <p *ngIf="displayMinutes > 0">{{displayMinutes}}<span>m </span></p>
-      <p *ngIf="shouldDisplaySeconds()">{{displaySeconds}}<span>s</span></p>
+      <app-clock-display [time]="time"
+                         [isTimerFinished]="isTimerFinished()"></app-clock-display>
       <p *ngIf="isTimerFinished()">FINISHED!</p>
     </h1>
   </div>

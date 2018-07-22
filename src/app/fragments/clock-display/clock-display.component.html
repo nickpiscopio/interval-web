@@ -1,0 +1,3 @@
+<p *ngIf="timeUtil.hours > 0">{{timeUtil.hours}}<span>h </span></p>
+<p *ngIf="timeUtil.minutes > 0">{{timeUtil.minutes}}<span>m </span></p>
+<p *ngIf="shouldDisplaySeconds()">{{timeUtil.seconds}}<span>s</span></p>

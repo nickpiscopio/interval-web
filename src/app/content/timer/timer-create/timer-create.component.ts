@@ -15,10 +15,14 @@ export class TimerCreateComponent {
 
   private timer: Timer;
 
+  // Flag to tell the clock-display to parse the time.
+  private parseTime = true;
+
   constructor(private route: ActivatedRoute, private router: Router) {
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
-      this.timer = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
+      let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
+      this.timer = new Timer(urlObj.name, urlObj.intervals);
     } catch (err) {
       console.log(TimerCreateComponent.name + ' error: ', err);
 
@@ -26,44 +30,7 @@ export class TimerCreateComponent {
     }
 
     // We add an interval here because we always want at least 1.
-    this.addInterval(new Interval('', 0));
-  }
-
-  /**
-   * Updates the intervals.
-   *
-   * @param index   The index of the interval that was updated.
-   */
-  updateIntervals(index: number) {
-    // We need to convert this to a number because an event will send it as a string.
-    index = Number(index);
-
-    let intervals = this.timer.intervals;
-    let lastIntervalIndex = intervals.length - 1;
-    let currentIntervalContainsValues = this.doesIntervalContainValues(intervals[index]);
-
-    if (index === lastIntervalIndex && currentIntervalContainsValues) {
-      // We found that there is something in the last interval, so add a new one.
-      this.addInterval(new Interval('', 0));
-    } else if (index === lastIntervalIndex - 1 && (!currentIntervalContainsValues && !this.doesIntervalContainValues(intervals[lastIntervalIndex]))) {
-      this.removeInterval(lastIntervalIndex);
-    }
-  }
-
-  /**
-   * Adds an interval to the timer.
-   * 
-   * @param interval  The interval to add to the timer.
-   * @param index     The index in which to insert the interval.
-   *                  This is an optional value.
-   *                  If an index isn't specified, then the interval will be inserted as a new index at the end of the array.
-   */
-  addInterval(interval: Interval, index?: number) {
-    if (index === undefined) {
-      this.timer.intervals.push(interval);
-    } else {
-      this.timer.intervals.splice(index, 0, interval);
-    }
+    this.timer.addInterval(new Interval('', 0));
   }
 
   /**
@@ -72,10 +39,16 @@ export class TimerCreateComponent {
    * @param index   The index of the interval to duplicate.
    */
   duplicateInterval(index: number) {
-    // We need to convert this to a number because an event will send it as a string.
-    index = Number(index);
+    this.timer.duplicateInterval(index);
+  }
 
-    this.addInterval(this.timer.intervals[index], index + 1)
+/**
+   * Updates a soecified interval.
+   *
+   * @param index   The index of the interval that was updated.
+   */
+  updateInterval(index: number) {
+    this.timer.updateInterval(index);
   }
 
   /**
@@ -84,19 +57,7 @@ export class TimerCreateComponent {
    * @param index   The interval index to remove.
    */
   removeInterval(index: number) {
-    // We need to convert this to a number because an event will send it as a string.
-    index = Number(index);
-    // Remove 1 index at the specifed index.
-    this.timer.intervals.splice(index, 1);
-  }
-
-  /**
-   * Checks to see if a specified interval contains any values.
-   *
-   * @param interval  The interval to check.
-   */
-  doesIntervalContainValues(interval: Interval) {
-    return (interval.name !== undefined && interval.name.trim() !== '') || (interval.duration !== undefined && interval.duration > 0);
+    this.timer.removeInterval(index);
   }
 
   /**
@@ -112,7 +73,7 @@ export class TimerCreateComponent {
   start() {
     let timer = JSON.stringify(this.timer);
 
-    console.log('Timer: ', timer);
+    console.info('Timer: ', timer);
 
     this.router.navigate([Route.getTimerRoute(timer, true)]);
   }
