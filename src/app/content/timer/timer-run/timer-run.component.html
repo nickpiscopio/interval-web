@@ -1,22 +1,47 @@
-<div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
-  <div id="wrapper-pause-action">
-    <p>{{pauseState}}</p>
-    <button mat-fab id="btn-pause">
-      <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
-    </button>
-  </div>
-</div>
-<div id="wrapper" (mousemove)="showPause()">
-  <div class="container">
+<!-- <mat-drawer-container class="example-container" [hasBackdrop]="hasBackdrop.value">
+  
+  <mat-drawer #drawer [mode]="mode.value">I'm a drawer</mat-drawer>
+
+  <mat-drawer-content>
+    <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
+    
+  </mat-drawer-content>
+
+</mat-drawer-container> -->
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="side" opened="true">
     <h4>{{timer.name}}</h4>
-    <h3>{{intervalName}}</h3>
-    <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
-    <h1>
-      <app-clock-display [time]="time"
-                         [isTimerFinished]="isTimerFinished()"></app-clock-display>
-      <p *ngIf="isTimerFinished()">FINISHED!</p>
-    </h1>
+  </mat-drawer>
+
+  <div>
+    <div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
+      <div id="wrapper-pause-action">
+        <p>{{pauseState}}</p>
+        <button mat-fab id="btn-pause">
+          <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div id="wrapper" (mousemove)="showPause()">
+      
+      <button mat-icon-button mat-flat-button id="btn-menu" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
+
+      <div class="container">
+        <h3>{{intervalName}}</h3>
+        <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
+        <h1>
+          <app-clock-display [time]="time"
+                              [isTimerFinished]="isTimerFinished()"></app-clock-display>
+          <p *ngIf="isTimerFinished()">FINISHED!</p>
+        </h1>
+      </div>
+    
+      <app-footer></app-footer>
+    </div>
   </div>
 
-  <app-footer></app-footer>
-</div>
+</mat-drawer-container>
