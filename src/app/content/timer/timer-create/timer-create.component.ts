@@ -4,19 +4,16 @@ import { Timer } from '../timer';
 import { Interval } from '../interval/interval';
 import { Route } from '../../../constant/route.constant';
 
+  // This is the group to allow reordering intervals by dragging.
+  const GROUP_INTERVALS = 0;
+
 @Component({
   selector: 'app-timer-create',
   templateUrl: './timer-create.component.html',
   styleUrls: ['./timer-create.component.sass']
 })
 export class TimerCreateComponent {
-  // This is the set of keys that we use to get from JSON objects.
-  private objectKeys = Object.keys;
-
   private timer: Timer;
-
-  // Flag to tell the clock-display to parse the time.
-  private parseTime = true;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
@@ -67,7 +64,7 @@ export class TimerCreateComponent {
    * Checks to make sure the timer has proper intervals.
    */
   hasIntervals() {
-    return this.timer.intervals !== undefined && this.objectKeys(this.timer.intervals).length > 0;
+    return this.timer.intervals !== undefined && this.timer.intervals.length > 0;
   }
 
   /**
