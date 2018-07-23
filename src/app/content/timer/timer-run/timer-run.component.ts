@@ -7,8 +7,6 @@ import { fade } from '../../../animations/fade';
 import { Time } from '../../../utility/time.utility';
 
 const THRESHOLD_PAUSE_VISIBILTY = 2000;
-const MESSAGE_INTERVAL_PAUSED = 'INTERVAL PAUSED';
-const MESSAGE_INTERVALS_FINISHED = 'FINISHED!';
 
 @Component({
   selector: 'app-timer-run',
@@ -24,7 +22,6 @@ export class TimerComponent implements OnDestroy {
 
   private intervalName: string;
   private nextIntervalName: string;
-  private pauseState: string;
 
   private time: number;
 
@@ -128,6 +125,22 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
+   * Selects the interval to switch to.
+   * 
+   * @param index   The interval of the index in which to switch.
+   */
+  selectInterval(index: number) {
+    // We need to convert the index to a number because an event will send it as a string.
+    index = Number(index);
+
+    this.intervalIndex = index;
+
+    this.paused = false;
+
+    this.runTimer(this.timer.intervals, false)
+  }
+
+  /**
    * Returns whether to display the next interval label.
    *
    * @return Boolean value on whether to display the next interval label.
@@ -141,15 +154,11 @@ export class TimerComponent implements OnDestroy {
    */
   setTimerActivation() {
     if (this.paused) {
-      this.pauseState = '';
-
       // The timer is started again, so create a new timer and resume where we left off.
       this.runTimer(this.timer.intervals, true);
     } else {
       // The timer is paused, so clear the innterval timer so it doesn't continue.
       clearInterval(this.intervalTimer);
-
-      this.pauseState = MESSAGE_INTERVAL_PAUSED;
     }
 
     this.paused = !this.paused;

@@ -1,0 +1,9 @@
+<hr>
+<div class="row align-items-end" [ngClass]="getClass()" (click)="selectInterval()">
+  <div class="col-sm">
+    <p>{{interval.name}}</p>
+  </div>
+  <div class="duration col-sm-auto">
+    <app-clock-display [time]="interval.duration"></app-clock-display>
+  </div>
+</div>

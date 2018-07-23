@@ -1,23 +1,19 @@
-<!-- <mat-drawer-container class="example-container" [hasBackdrop]="hasBackdrop.value">
-  
-  <mat-drawer #drawer [mode]="mode.value">I'm a drawer</mat-drawer>
-
-  <mat-drawer-content>
-    <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
-    
-  </mat-drawer-content>
-
-</mat-drawer-container> -->
-
-<mat-drawer-container autosize>
+<mat-drawer-container>
   <mat-drawer #drawer mode="side" opened="true">
     <h4>{{timer.name}}</h4>
+
+    <div *ngFor="let interval of timer.intervals; let i = index">
+      <app-interval-display [index]="i"
+                            [interval]="interval"
+                            [currentIndex]="intervalIndex"
+                            (intervalSelected)="selectInterval($event)"></app-interval-display>
+    </div>
   </mat-drawer>
 
   <div>
     <div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
       <div id="wrapper-pause-action">
-        <p>{{pauseState}}</p>
+        <p *ngIf="paused">INTERVAL PAUSED</p>
         <button mat-fab id="btn-pause">
           <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
         </button>

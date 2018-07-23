@@ -26,7 +26,8 @@ import { WelcomeComponent } from './content/welcome/welcome.component';
 import { TimerComponent } from './content/timer/timer-run/timer-run.component';
 import { TimerCreateComponent } from './content/timer/timer-create/timer-create.component';
 import { FooterComponent } from './fragments/footer/footer.component';
-import { IntervalComponent } from './content/timer/interval/interval.component';
+import { IntervalCreateComponent } from './content/timer/interval/item-create/interval.component';
+import { IntervalDisplayComponent } from './content/timer/interval/item-display/interval.component';
 import { ClockDisplayComponent } from './fragments/clock-display/clock-display.component';
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ClockDisplayComponent } from './fragments/clock-display/clock-display.c
     TimerComponent,
     TimerCreateComponent,
     FooterComponent,
-    IntervalComponent,
+    IntervalCreateComponent,
+    IntervalDisplayComponent,
     ClockDisplayComponent
   ],
   imports: [

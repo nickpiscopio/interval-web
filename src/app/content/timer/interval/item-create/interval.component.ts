@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, Renderer2, OnChanges } from '@angular/core';
-import { Interval } from './interval';
-import { Class } from '../../../constant/class.constant';
-import { Time } from '../../../utility/time.utility';
-import { fade } from '../../../animations/fade';
+import { Interval } from '../interval';
+import { Class } from '../../../../constant/class.constant';
+import { Time } from '../../../../utility/time.utility';
+import { fade } from '../../../../animations/fade';
 
 const KEY_CODE_BACKSPACE = 8;
 const KEY_CODE_SHIFT = 16;
@@ -12,12 +12,12 @@ const DEFAULT_TIME_DIGIT = '0';
 const DEFAULT_TIME = DEFAULT_TIME_DIGIT + DEFAULT_TIME_DIGIT;
 
 @Component({
-  selector: 'app-interval',
+  selector: 'app-interval-create',
   templateUrl: './interval.component.html',
   styleUrls: ['./interval.component.sass'],
   animations: [fade]
 })
-export class IntervalComponent  implements OnChanges {
+export class IntervalCreateComponent implements OnChanges {
   @ViewChild('hoursInput') hoursInput: ElementRef;
   @ViewChild('minutesInput') minutesInput: ElementRef;
   @ViewChild('secondsInput') secondsInput: ElementRef;
