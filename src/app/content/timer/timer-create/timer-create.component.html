@@ -32,6 +32,7 @@
         <li *ngFor="let interval of timer.intervals; let i = index">
           <app-interval [index]="i"
                         [interval]="interval"
+                        [color]="color.getIntervalColor(interval.name)"
                         (updateInterval)="updateInterval($event)"
                         (duplicateInterval)="duplicateInterval($event)"
                         (removeInterval)="removeInterval($event)"></app-interval>

@@ -7,10 +7,11 @@
           <mat-icon class="icon-drag" *ngIf="hasValues()">drag_indicator</mat-icon>
           <mat-form-field>
             <input matInput
-                    placeholder="INTERVAL NAME"
-                    value="{{interval.name}}"
-                    [(ngModel)]="interval.name"
-                    (keyup)="onChange()">
+                   placeholder="INTERVAL NAME"
+                   value="{{interval.name}}"
+                   [style.color]="color"
+                   [(ngModel)]="interval.name"
+                   (keyup)="onChange()">
           </mat-form-field>
         </div>
       </div>

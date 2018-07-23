@@ -26,6 +26,10 @@ export class IntervalComponent  implements OnChanges {
   @Input() index: number;
 
   @Input() interval: Interval;
+  // This is the color of the interval name.
+  // We do this so we can have the same colors for every interval that is named the same.
+  // It is so we can show easily which intervals are the same.
+  @Input() color: string;
 
   @Output() updateInterval = new EventEmitter<number>();
   @Output() duplicateInterval = new EventEmitter<number>();

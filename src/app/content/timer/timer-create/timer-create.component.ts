@@ -3,9 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Interval } from '../interval/interval';
 import { Route } from '../../../constant/route.constant';
+import { Color } from '../../../utility/color.utility';
 
-  // This is the group to allow reordering intervals by dragging.
-  const GROUP_INTERVALS = 0;
+// This is the group to allow reordering intervals by dragging.
+const GROUP_INTERVALS = 0;
 
 @Component({
   selector: 'app-timer-create',
@@ -14,12 +15,23 @@ import { Route } from '../../../constant/route.constant';
 })
 export class TimerCreateComponent {
   private timer: Timer;
-
+  
+  private color: Color;
+ 
   constructor(private route: ActivatedRoute, private router: Router) {
+    this.color = new Color();
+
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
       let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
       this.timer = new Timer(urlObj.name, urlObj.intervals);
+
+      let intervals = this.timer.intervals;
+      let length = intervals.length;
+      for (let i = 0; i < length; i++) {
+        // Generate a color for each interval since we start off with intervals.
+        this.color.generateColor(intervals[i].name)
+      }
     } catch (err) {
       console.log(TimerCreateComponent.name + ' error: ', err);
 
@@ -47,7 +59,11 @@ export class TimerCreateComponent {
    */
   updateInterval(index: number) {
     // We need to convert the index to a number because an event will send it as a string.
-    this.timer.updateInterval(Number(index));
+    index = Number(index);
+
+    this.color.generateColor(this.timer.intervals[index].name)
+    
+    this.timer.updateInterval(index);
   }
 
   /**
