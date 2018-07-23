@@ -118,6 +118,9 @@ export class TimerComponent implements OnDestroy {
           // Increment the index so we can see the next interval timer.
           this.intervalIndex++;
 
+          // Scroll to the interval because it just changed.
+          this.scrollToInterval();
+
           this.runTimer(intervals, false);
         }
       }, Time.SECOND);
@@ -137,7 +140,17 @@ export class TimerComponent implements OnDestroy {
 
     this.paused = false;
 
+    // Scroll to the interval because the user has selected it.
+    this.scrollToInterval();
+
     this.runTimer(this.timer.intervals, false)
+  }
+
+  /**
+   * Smoothly scrolls to the current interval.
+   */
+  scrollToInterval() {
+    document.getElementById(this.intervalIndex.toString()).scrollIntoView({ behavior: 'smooth' });
   }
 
   /**
@@ -209,5 +222,12 @@ export class TimerComponent implements OnDestroy {
    */
   isTimerFinished() {
     return this.intervalIndex == this.timer.intervals.length && this.timer.totalDuration == 0;
+  }
+
+  /**
+   * Gets the remaining duration from the timer.
+   */
+  getRemainingDuration() {
+    return this.timer.getRemainingDuration(this.intervalIndex, this.time);
   }
 }

@@ -1,9 +1,6 @@
 @import '../../../../styles/color'
 @import '../../../../styles/integer'
 
-mat-drawer
-  max-width: 400px
-   
 h1
   font-size: 15em
 
@@ -17,12 +14,18 @@ h3
 h4
   padding: $margin-normal
 
-mat-drawer
-  color: $color4
-
 img
   margin: $margin-normal
   width: $size-icon-interval
+
+.mat-drawer
+  max-width: 400px
+  color: $color4
+  overflow: unset
+
+.layout
+  height: 100%
+  flex-direction: column
 
 .container
   text-align: center
@@ -38,6 +41,22 @@ img
   width: 100px
   height: 100px
 
+#wrapper-intervals
+  overflow: auto
+  border-top: 1px solid $color-grey-light
+
+#wrapper-duration
+  margin: 0
+  padding: $margin-normal $margin-x-small
+  background-color: $color4
+  color: $color-text
+  font-size: $font-size-x-large
+
+  #title
+    font-size: .5em
+    margin-bottom: 5px
+    letter-spacing: 1px    
+
 #wrapper-pause
   position: fixed
   height: 100vh
@@ -52,7 +71,7 @@ img
     top: 42%
 
     p
-      letter-spacing: .1em
+      letter-spacing: 1px
     
 #wrapper
   height: 100vh

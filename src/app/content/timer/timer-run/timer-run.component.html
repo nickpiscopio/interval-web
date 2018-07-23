@@ -1,13 +1,26 @@
 <mat-drawer-container>
   <mat-drawer #drawer mode="side" opened="true">
-    <h4>{{timer.name}}</h4>
 
-    <div *ngFor="let interval of timer.intervals; let i = index">
-      <app-interval-display [index]="i"
-                            [interval]="interval"
-                            [currentIndex]="intervalIndex"
-                            (intervalSelected)="selectInterval($event)"></app-interval-display>
+    <div class="layout">
+        <h4>{{timer.name}}</h4>
+        <div id="wrapper-intervals" class="match-parent">
+          <div *ngFor="let interval of timer.intervals; let i = index">
+            <app-interval-display [index]="i"
+                                  [interval]="interval"
+                                  [currentIndex]="intervalIndex"
+                                  (intervalSelected)="selectInterval($event)"></app-interval-display>
+          </div>
+        </div>
+        <div id="wrapper-duration" class="row align-items-end">
+          <div id="title" class="col-sm">
+            <p>REMAINING DURATION</p>
+          </div>
+          <div class="col-sm-auto">
+            <app-clock-display [time]="getRemainingDuration()"></app-clock-display>
+          </div>
+        </div>
     </div>
+   
   </mat-drawer>
 
   <div>

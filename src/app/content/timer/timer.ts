@@ -84,22 +84,45 @@ export class Timer {
     // Remove 1 index at the specifed index.
     this.intervals.splice(index, 1);
 
-    console.log("intervalse: ", this.intervals);
-
     this.calculateTotalDuration();
   }
 
   /**
-   * Loops through the durations of the intervals and calculates the total time for the timer.
+   * Gets the remaining duration from the timer.
+   * 
+   * @param index     The index of the current interval.
+   * @param timeLeft  The amount of time left in the current interval.
    */
-  private calculateTotalDuration() {
-    this.totalDuration = 0;
+  getRemainingDuration(index: number, timeLeft: number): number {
+    return this.calculateDuration(index) - (this.intervals[index].duration - timeLeft);
+  }
+
+   /**
+   * Loops through the durations of the intervals and calculates the total time for the timer.
+   * 
+   * @param index   The index in which to start the calculation.
+   *
+   * @return The calculated duration.
+   */
+  calculateDuration(index: number): number {
+    let duration = 0;
 
     let length = this.intervals.length;
-    for(let i = 0; i < length; i++) {
+    for(let i = index; i < length; i++) {
       // Converts the duration in the specified interval to a number and then adds it to the total duration.
-      this.totalDuration += Number(this.intervals[i].duration);
+      duration += Number(this.intervals[i].duration);
     }
+
+    return duration;
+  }
+
+  /**
+   * Loops through the durations of the intervals and calculates the total time for the timer.
+   * 
+   * @param index   The index in which to start the calculation.
+   */
+  private calculateTotalDuration() {
+    this.totalDuration = this.calculateDuration(0);
   }
 
   /**
