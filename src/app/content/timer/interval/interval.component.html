@@ -3,13 +3,16 @@
     <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
     <div class="row">
       <div class="col-sm">
-        <mat-form-field>
-          <input matInput
-                  placeholder="INTERVAL NAME"
-                  value="{{interval.name}}"
-                  [(ngModel)]="interval.name"
-                  (keyup)="onChange()">
-        </mat-form-field>
+        <div class="layout">
+          <mat-icon class="icon-drag" *ngIf="hasValues()">drag_indicator</mat-icon>
+          <mat-form-field>
+            <input matInput
+                    placeholder="INTERVAL NAME"
+                    value="{{interval.name}}"
+                    [(ngModel)]="interval.name"
+                    (keyup)="onChange()">
+          </mat-form-field>
+        </div>
       </div>
       <div class="duration col-sm-auto" [ngClass]="getDurationSelectionClass()">
         <div [ngClass]="getHoursClass()" (click)="focusHours()">
