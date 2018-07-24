@@ -34,7 +34,7 @@ button
   h3
     display: inline-block
     margin-left: $margin-x-small
-    margin-bottom: -3px
+    margin-bottom: -2px
 
 #body
   height: 100vh
@@ -43,5 +43,42 @@ button
   overflow: auto
 
 #overview
-  position: relative
-  background-color: $color3
+  color: $color-grey
+  background-color: #fff
+  text-align: right
+  padding: 0
+
+  mat-icon
+    margin-top: -3px
+    margin-right: 1px
+  
+  textarea
+    overflow: hidden
+
+  mat-form-field, textarea
+    text-align: right
+
+  p, app-clock-display
+    font-size: $font-size-x-large
+
+  .title
+    margin: $margin-normal
+
+  #description
+    margin: $margin-normal
+
+  #title-intervals
+    margin-top: $margin-normal
+
+  #wrapper-name
+    margin-top: -10px
+    border-style: solid
+    border-width: 1px 0
+    border-color: $color-grey-light
+    padding: $margin-normal
+
+  #title-duration, #title-name
+    margin-top: $margin-x-small
+
+  #title-intervals, #title-duration
+    margin-bottom: -$margin-x-small

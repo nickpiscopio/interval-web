@@ -33,26 +33,37 @@
           </div>
       </div>
     </div>
-    <mat-card id="overview" class="col-md-auto">
+    <div id="overview" class="col-md-auto mat-elevation-z2">
         <div class="title">
-            <mat-icon>description</mat-icon>
-            <h3>OVERVIEW</h3>
-          </div>
+          <mat-icon>description</mat-icon>
+          <h3>OVERVIEW</h3>
+        </div>
 
-        <div>
-          <p>DURATION</p>
+        <div id="description">
+          <h3 id="title-intervals">TOTAL INTERVALS</h3>
+          <p>{{getTotalIntervals()}}<p>
+  
+          <h3 id="title-duration">TIMER DURATION</h3>
           <app-clock-display [time]="timer.totalDuration"></app-clock-display>
-    
-          <button mat-button [disabled]="!hasIntervals()" (click)="start()">START
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
+        </div>
+      
+        <div id="wrapper-name">
+          <mat-form-field>
+          <mat-label>TIMER NAME</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      [(ngModel)]="timer.name"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
         </div>
 
-        <div class="col-xs-12 layout">
-          <mat-icon>timer</mat-icon>
-          <input class="match-parent" placeholder="New Timer" [(ngModel)]="timer.name" />
-        </div>
-    </mat-card> 
+        <button mat-button [disabled]="!isValidTimer()" (click)="start()" color="primary">
+          START
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div> 
 
     <!-- <mat-card> 
       <div class="title-secondary">

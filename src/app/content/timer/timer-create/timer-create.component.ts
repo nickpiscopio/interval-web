@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Interval } from '../interval/interval';
 import { Route } from '../../../constant/route.constant';
 import { Color } from '../../../utility/color.utility';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import {take} from 'rxjs/operators';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 0;
@@ -14,11 +16,13 @@ const GROUP_INTERVALS = 0;
   styleUrls: ['./timer-create.component.sass']
 })
 export class TimerCreateComponent {
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  
   private timer: Timer;
   
   private color: Color;
  
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private ngZone: NgZone) {
     this.color = new Color();
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
@@ -40,6 +44,15 @@ export class TimerCreateComponent {
 
     // We add an interval here because we always want at least 1.
     this.timer.addInterval(new Interval('', 0));
+  }
+
+  /**
+   * Triggers a resize of the textarea if needed.
+   */
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this.ngZone.onStable.pipe(take(1))
+        .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   /**
@@ -77,20 +90,41 @@ export class TimerCreateComponent {
   }
 
   /**
-   * Checks to make sure the timer has proper intervals.
+   * Starts the timer.
+   */
+  start() {
+    let timer = JSON.stringify(this.timer);
+
+    console.info('Timer: ', timer);
+
+    this.router.navigate([Route.getTimerRoute(timer, true)]);
+  }
+
+  /**
+   * Gets the total intervals from the timer.
+   */
+  getTotalIntervals() {
+    return this.timer.getTotalIntervals();
+  }
+  
+  /**
+   * Checks to make sure the timer has intervals.
+   * 
+   * This function is different than isValidTimer() because the intervals.length is checked
+   * to display the intervals to the user regardless of if they are valid intervals or not.
    */
   hasIntervals() {
     return this.timer.intervals !== undefined && this.timer.intervals.length > 0;
   }
 
   /**
-   * Starts the timer.
+   * Checks to make sure the timer has valid intervals to enable or disable the start button.
+   * 
+   * This function is different than hasIntervals() because the hasIntervals()
+   * returns true even if all the intervals have 0 seconds as their duration.
+   * That is fine for that function, but that doesn't mean the timer is valid.
    */
-  start() {   
-    let timer = JSON.stringify(this.timer);
-
-    console.info('Timer: ', timer);
-
-    this.router.navigate([Route.getTimerRoute(timer, true)]);
+  isValidTimer() {
+    return this.getTotalIntervals() > 0;
   }
 }

@@ -40,6 +40,25 @@ export class Timer {
   }
 
   /**
+   * Gets the total number of valid intervals.
+   * 
+   * @return The total number of intervals.
+   */
+  getTotalIntervals() {
+    let totalIntervals = 0;
+    let length = this.intervals.length;
+    for (let i = 0; i < length; i++) {
+      let interval = this.intervals[i];
+      if (interval !== undefined && interval.duration > 0) {
+        // We found a valid interval, so increment the total.
+        totalIntervals++;
+      }
+    }
+
+    return totalIntervals;
+  }
+
+  /**
    * Adds an interval to the timer.
    * 
    * @param interval  The interval to add to the timer.

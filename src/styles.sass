@@ -3,11 +3,7 @@
 
 // This makes the material elements act the way they are were intended.
 // To add a different theme, check out theme.sass in one of my previous projects.
-@import '~@angular/material/_theming.scss'
-@include mat-core()
-
-@import 'styles/color'
-@import 'styles/integer'
+@import 'theme'
 
 @font-face
   font-family: "Open Sans Light" !important
@@ -46,6 +42,12 @@ body
 
 h1
   font-weight: 300
+
+h3
+  font-size: $font-size-normal
+
+h3, h4
+  margin-bottom: 0
 
 p
   margin-bottom: 0
@@ -103,8 +105,12 @@ mat-card
     margin-left: 44px
     width: 75%
 
-.mat-form-field-appearance-legacy .mat-form-field-wrapper
-  padding: 0
+.mat-form-field-appearance-legacy
+  .mat-form-field-wrapper
+    // padding: 0
+
+  .mat-form-field-underline
+    height: 0 !important
 
 #btn-pause span .mat-icon
   font-size: 48px
