@@ -14,6 +14,9 @@ mat-card
   &.active
     padding: $margin-normal
     font-size: $font-size-large
+
+    .indicator
+      margin-left: -$margin-normal
   
     .icon-drag
       margin-top: 7px
@@ -38,8 +41,12 @@ mat-card
 
 .layout input
   margin-top: 0
-  // margin-bottom: -4px
   align-self: flex-end
+
+.indicator
+  width: 10px
+  margin-left: -$margin-x-small
+  margin-right: $margin-x-small
 
 .icon-drag
   margin-top: 3px
@@ -58,7 +65,6 @@ mat-card
   padding-left: 3px 
   padding-right: 7px
   margin-right: 12px
-  // transition: all $duration-transition ease
   
   &.active
     border-width: 2px

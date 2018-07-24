@@ -28,9 +28,10 @@ export class Color {
    */
   generateColor(intervalName: string) {
     // We don't care about case when storing the color.
-    intervalName = intervalName.toLowerCase();
-    // Only add a new color if there isn't one already.
-    if (this.intervalColors[intervalName] === undefined) {
+    intervalName = intervalName.toLowerCase().trim();
+    // Only add a new color if the interval name exists and if there isn't a color associated with it already.
+    if (intervalName !== undefined && intervalName.length > 0 &&
+        this.intervalColors[intervalName] === undefined) {
       let color;
       
       let approveColorLength = this.approvedColors.length;

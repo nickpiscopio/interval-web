@@ -1,70 +1,73 @@
 <mat-card [ngClass]="getMatCardClass()" [@fade]>
   <button *ngIf="hasValues()" mat-icon-button class="menu" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
   <div class="row">
-    <div class="col-sm">
-      <div class="layout">
-        <mat-icon class="icon-drag transition" *ngIf="hasValues()">drag_indicator</mat-icon>
-        <input matInput
-                placeholder="Interval Name"
-                value="{{interval.name}}"
-                [style.color]="color"
-                [(ngModel)]="interval.name"
-                (focus)="onNameSelected()"
-                (blur)="onNameBlur()"
-                (keyup)="onChange()">
+    <div *ngIf="hasColor()"
+      class="indicator"
+      [style.backgroundColor]="color"
+      [@fade]></div>
+      <div class="col-sm">
+        <div class="layout">
+          <mat-icon class="icon-drag transition" *ngIf="hasValues()">drag_indicator</mat-icon>
+          <input matInput
+                  placeholder="Interval Name"
+                  value="{{interval.name}}"
+                  [(ngModel)]="interval.name"
+                  (focus)="onNameSelected()"
+                  (blur)="onNameBlur()"
+                  (keyup)="onChange()">
+        </div>
       </div>
-    </div>
-    <div class="duration col-sm-auto" [ngClass]="getDurationSelectionClass()">
-      <div [ngClass]="getHoursClass()" (click)="focusHours()">
-        <span>
-          <input #hoursInput
-                  matInput
-                  type="text"
-                  size="2"
-                  value="{{hours}}"
-                  [(ngModel)]="hours"
-                  (focus)="onDurationSelected()"
-                  (blur)="onDurationBlur()"
-                  (keydown)="isKeyAllowed($event)"
-                  (keyup)="onChangeDuration($event)">
-        </span>
-        <span class="suffix">h</span>
-      </div>
-      
-      <div [ngClass]="getMinutesClass()" (click)="focusMinutes()">
-        <span>
-            <input #minutesInput 
+      <div class="duration col-sm-auto" [ngClass]="getDurationSelectionClass()">
+        <div [ngClass]="getHoursClass()" (click)="focusHours()">
+          <span>
+            <input #hoursInput
                     matInput
                     type="text"
                     size="2"
-                    class="middle"
-                    value="{{minutes}}"
+                    value="{{hours}}"
+                    [(ngModel)]="hours"
                     (focus)="onDurationSelected()"
                     (blur)="onDurationBlur()"
-                    [(ngModel)]="minutes"
                     (keydown)="isKeyAllowed($event)"
                     (keyup)="onChangeDuration($event)">
-        </span>
-        <span class="suffix">m</span>
+          </span>
+          <span class="suffix">h</span>
+        </div>
+        
+        <div [ngClass]="getMinutesClass()" (click)="focusMinutes()">
+          <span>
+              <input #minutesInput 
+                      matInput
+                      type="text"
+                      size="2"
+                      class="middle"
+                      value="{{minutes}}"
+                      (focus)="onDurationSelected()"
+                      (blur)="onDurationBlur()"
+                      [(ngModel)]="minutes"
+                      (keydown)="isKeyAllowed($event)"
+                      (keyup)="onChangeDuration($event)">
+          </span>
+          <span class="suffix">m</span>
+        </div>
+        
+        <div [ngClass]="getSecondsClass()" (click)="focusSeconds()">
+          <span>
+              <input #secondsInput
+                      matInput
+                      type="text"
+                      size="2"
+                      class="middle"
+                      value="{{seconds}}"
+                      (focus)="onDurationSelected()"
+                      (blur)="onDurationBlur()"
+                      [(ngModel)]="seconds"
+                      (keydown)="isKeyAllowed($event)"
+                      (keyup)="onChangeDuration($event)">
+          </span>
+          <span class="suffix">s</span>
+        </div>
       </div>
-      
-      <div [ngClass]="getSecondsClass()" (click)="focusSeconds()">
-        <span>
-            <input #secondsInput
-                    matInput
-                    type="text"
-                    size="2"
-                    class="middle"
-                    value="{{seconds}}"
-                    (focus)="onDurationSelected()"
-                    (blur)="onDurationBlur()"
-                    [(ngModel)]="seconds"
-                    (keydown)="isKeyAllowed($event)"
-                    (keyup)="onChangeDuration($event)">
-        </span>
-        <span class="suffix">s</span>
-      </div>
-    </div>
   </div>
 </mat-card>
 

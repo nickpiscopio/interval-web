@@ -338,4 +338,11 @@ export class IntervalCreateComponent implements OnChanges {
   getDurationSelectionClass() {
     return this.durationSelected ? Class.ACTIVE + ' ' : '';
   }
+
+  /**
+   * Checks to see if the interval has a color.
+   */
+  hasColor() {
+    return this.color !== undefined;
+  }
 }
