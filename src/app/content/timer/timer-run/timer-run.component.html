@@ -1,7 +1,7 @@
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="side" opened="true" class="transition">
 
-    <div class="layout">
+    <div class="layout column">
         <h4>{{timer.name}}</h4>
         <div id="wrapper-intervals" class="match-parent">
           <div *ngFor="let interval of timer.intervals; let i = index">

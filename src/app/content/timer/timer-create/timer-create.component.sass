@@ -10,26 +10,38 @@ header
 
 h1
   margin-top: $margin-normal
-  margin-bottom: $margin-xxxx-small
+  margin-bottom: $margin-normal
   color: $color4
+
+ul
+  overflow-y: auto
 
 button
   margin-top: $margin-normal
-  float: right
-  // This may be removed later depending upon where the start button is placed.
-  margin-bottom: 50px
-  
-.row
-  display: block
+  float: right  
 
-.layout
-  mat-icon, input
-    font-size: $font-size-large
-    color: $color4
-  
-  mat-icon
-    width: auto
-    margin: 7px $margin-x-small 0 0
+.row 
+  margin: 0
+  height: 100%
+
+.title
+  color: $color-grey
+  margin-bottom: $margin-small
+
+  h3, mat-icon
+    vertical-align: bottom
+
+  h3
+    display: inline-block
+    margin-left: $margin-x-small
+    margin-bottom: -3px
+
+#body
+  height: 100vh
+
+#wrapper-intervals
+  overflow: auto
 
 #overview
+  position: relative
   background-color: $color3
