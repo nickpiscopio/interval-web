@@ -73,7 +73,7 @@ export class TimerCreateComponent {
    */
   removeInterval(index: number) {
     // We need to convert the index to a number because an event will send it as a string.
-    this.timer.removeInterval(Number(index));
+    this.timer.removeIntervalAndCalculateDuration(Number(index));
   }
 
   /**
@@ -86,7 +86,7 @@ export class TimerCreateComponent {
   /**
    * Starts the timer.
    */
-  start() {
+  start() {   
     let timer = JSON.stringify(this.timer);
 
     console.info('Timer: ', timer);

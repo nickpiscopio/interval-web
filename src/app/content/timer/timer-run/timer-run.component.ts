@@ -50,6 +50,7 @@ export class TimerComponent implements OnDestroy {
     try {
       let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
       this.timer = new Timer(urlObj.name, urlObj.intervals);
+      this.timer.finalize();
     } catch (err) {
       console.log(TimerComponent.name + ' error: ', err);
     }

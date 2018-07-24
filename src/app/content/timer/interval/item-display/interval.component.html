@@ -1,8 +1,8 @@
-<div id="{{index}}" class="row align-items-end" [ngClass]="getClass()" (click)="selectInterval()">
+<div id="{{index}}" class="row align-items-end transition" [ngClass]="getClass()" (click)="selectInterval()">
   <div class="col-sm">
-    <p>{{interval.name}}</p>
+    <p class="transition">{{interval.name}}</p>
   </div>
-  <div class="duration col-sm-auto">
+  <div class="duration transition col-sm-auto">
     <app-clock-display [time]="interval.duration"></app-clock-display>
   </div>
 </div>

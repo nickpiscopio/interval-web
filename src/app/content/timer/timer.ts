@@ -23,6 +23,23 @@ export class Timer {
   }
 
   /**
+   * Finalizes the timer by removing any intervals that don't have a duration.
+   */
+  finalize() {
+    let length = this.intervals.length;
+    // We need to loop backwards so then we can remove the proper indecies when removing intervals.
+    for (let i = length - 1; i >= 0; i--) {
+      let interval = this.intervals[i];
+      if (interval === undefined || interval.duration <= 0) {
+        // We found a duration that isn't valid, so remove it.
+        this.removeInterval(i);
+      }
+    }
+
+    this.calculateTotalDuration();
+  }
+
+  /**
    * Adds an interval to the timer.
    * 
    * @param interval  The interval to add to the timer.
@@ -83,6 +100,16 @@ export class Timer {
   removeInterval(index: number) {
     // Remove 1 index at the specifed index.
     this.intervals.splice(index, 1);
+  }
+
+  /**
+   * Removes and interval at a specifed index and recalculates the total duration.
+   *
+   * @param index   The interval index to remove.
+   */
+  removeIntervalAndCalculateDuration(index: number) {
+    // Remove 1 index at the specifed index.
+    this.removeInterval(index)
 
     this.calculateTotalDuration();
   }
