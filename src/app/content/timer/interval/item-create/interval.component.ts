@@ -41,8 +41,9 @@ export class IntervalCreateComponent implements OnChanges {
 
   private time = ['0','0','0','0','0','0'];
 
-  // Boolean value to tell whether the input was selected or not.
-  private selected = false;
+  // Boolean value to tell whether the inputs were selected or not.
+  private nameSelected = false;
+  private durationSelected = false;
 
   private timeUtil = new Time();
 
@@ -159,17 +160,31 @@ export class IntervalCreateComponent implements OnChanges {
   }
 
   /**
+   * Function to tell whether the name input was selected.
+   */
+  onNameSelected() {
+    this.nameSelected = true;
+  }
+
+  /**
+   * Function to tell whether the name input was unselected.
+   */
+  onNameBlur() {
+    this.nameSelected = false;
+  }
+
+    /**
    * Function to tell whether the duration input was selected.
    */
-  onSelect() {
-    this.selected = true;
+  onDurationSelected() {
+    this.durationSelected = true;
   }
 
   /**
    * Function to tell whether the duration input was unselected.
    */
-  onBlur() {
-    this.selected = false;
+  onDurationBlur() {
+    this.durationSelected = false;
   }
 
   /**
@@ -253,7 +268,17 @@ export class IntervalCreateComponent implements OnChanges {
    * @return The class for the mat card.
    */
   getMatCardClass() {
-    return !this.hasValues() ? Class.INACTIVE + ' ': '';
+    let matClass = '';
+
+    if (this.hasValues()) {
+      matClass += Class.DIRTY + ' ';
+    }
+
+    if (this.nameSelected || this.durationSelected) {
+      matClass += Class.ACTIVE + ' ';
+    }
+
+    return matClass;
   }
 
   /**
@@ -271,7 +296,7 @@ export class IntervalCreateComponent implements OnChanges {
    * @return The class for the minutes.
    */
   getMinutesClass() {
-    return this.getHoursClass() && this.getDurationEnablementClass(this.minutes);
+    return this.getHoursClass() || this.getDurationEnablementClass(this.minutes);
   }
 
   /**
@@ -280,7 +305,7 @@ export class IntervalCreateComponent implements OnChanges {
    * @return The class for the seconds.
    */
   getSecondsClass() {
-    return this.getMinutesClass() && this.getDurationEnablementClass(this.seconds);
+    return this.getMinutesClass() || this.getDurationEnablementClass(this.seconds);
   }
 
   /**
@@ -291,7 +316,7 @@ export class IntervalCreateComponent implements OnChanges {
    * @return The class for the duration.
    */
   getDurationEnablementClass(model: string) {
-    return this.isDurationEnabled(model) ? '' : Class.INACTIVE + ' ';
+    return this.isDurationEnabled(model) ? Class.ACTIVE + ' ' : '';
   }
 
   /**
@@ -311,6 +336,6 @@ export class IntervalCreateComponent implements OnChanges {
    * @return The class for whether the duration is active or not.
    */
   getDurationSelectionClass() {
-    return this.selected ? Class.ACTIVE + ' ' : '';
+    return this.durationSelected ? Class.ACTIVE + ' ' : '';
   }
 }

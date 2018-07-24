@@ -1,22 +1,48 @@
 @import '../../../../../styles/color'
 @import '../../../../../styles/integer'
-  
+
 mat-card
   margin-bottom: $margin-x-small
+  background-color: $color-background
+  box-shadow: none !important
+  border: 1px solid $color-grey
+  padding: $margin-x-small
+  transition: all $duration-transition ease
+  font-size: $font-size-medium
 
-  &.inactive
-    background-color: $color-background
-    box-shadow: none
-    border: 1px solid $color-grey
-
-mat-form-field
-  width: 100%
-  
-  input
+  // The user is actively on this card.
+  &.active
+    padding: $margin-normal
     font-size: $font-size-large
+  
+    .icon-drag
+      margin-top: 7px
+
+  // Values have been added.
+  &.dirty
+    border: 0
+    background-color: $color-card
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) !important
+
+    .duration
+      margin-right: $margin-medium
+
+      input &.middle
+        margin-left: 2px
+        
+      .suffix
+        font-size: .5em
+
+.row
+  margin: 0
+
+.layout input
+  margin-top: 0
+  // margin-bottom: -4px
+  align-self: flex-end
 
 .icon-drag
-  margin-top: 15px
+  margin-top: 3px
   margin-left: -20px
   margin-right: 16px
   color: $color-disabled
@@ -28,9 +54,12 @@ mat-form-field
   right: $margin-xxxx-small
 
 .duration
-  margin-right: $margin-small
   align-self: flex-end
-
+  padding-left: 3px 
+  padding-right: 7px
+  margin-right: 12px
+  // transition: all $duration-transition ease
+  
   &.active
     border-width: 2px
     border-bottom-width: 2px
@@ -41,21 +70,19 @@ mat-form-field
   > div
     display: inline-block
 
-    &.inactive span
-      color: $color-grey-light
+    &.active span
+      color: $color4
     
     span 
       display: inline-block
+      color: $color-grey-light
 
   input
-    font-size: $font-size-large
     text-align: center
-    margin-left: -8px
-    margin-bottom: -4px
+    
+    &.middle
+      margin-left: 2px
     
   .suffix
-    margin-left: -6px
-    font-size: $font-size-large / 2
-
-    &.middle
-      margin-right: 16px
+    font-size: .5em
+    margin-left: -1px
