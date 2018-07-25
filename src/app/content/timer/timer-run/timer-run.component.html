@@ -32,11 +32,8 @@
         </button>
       </div>
     </div>
-    <div id="wrapper" (mousemove)="showPause()">
+    <div id="wrapper">
       
-      <button mat-icon-button mat-flat-button id="btn-menu" (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
       <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
 
       <div class="container">
@@ -47,6 +44,18 @@
                               [isTimerFinished]="isTimerFinished()"></app-clock-display>
           <p *ngIf="isTimerFinished()">FINISHED!</p>
         </h1>
+      </div>
+
+      <div id="wrapper-controls">
+        <button *ngIf="!paused"mat-icon-button
+                (click)="setTimerActivation(false)">
+          <mat-icon>pause</mat-icon>
+        </button>
+
+        <button mat-icon-button
+                (click)="setVolume()">
+          <mat-icon>{{getVolumeIcon()}}</mat-icon>
+        </button>
       </div>
     
       <app-footer></app-footer>

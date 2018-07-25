@@ -8,6 +8,17 @@ import { Time } from '../../../utility/time.utility';
 
 const THRESHOLD_PAUSE_VISIBILTY = 2000;
 
+const VOLUME_LOWEST = 0;
+const VOLUME_HIGHEST = 1;
+const VOLUME_DEFAULT = 0.65;
+
+const ICON_VOLUME_DOWN = 'volume_down';
+const ICON_VOLUME_OFF = 'volume_off';
+const ICON_VOLUME_UP = 'volume_up';
+
+const ICON_PLAY = 'play_arrow';
+const ICON_PAUSE = 'pause';
+
 @Component({
   selector: 'app-timer-run',
   templateUrl: './timer-run.component.html',
@@ -34,17 +45,24 @@ export class TimerComponent implements OnDestroy {
   private intervalNotification1;
   private intervalNotification2;
 
+  private displayPause: boolean;
   // Boolean value for if the timer is paused or not.
   private paused = false;
-  private displayPause: boolean;
+  private volumeVisible = false;
 
   private timeUtil = new Time();
+
+  // We default the volumne to 70%.
+  private volume = VOLUME_DEFAULT;
 
   constructor(private route: ActivatedRoute) {
     this.displayPause = false;
 
     this.intervalNotification1 = new Audio('assets/sounds/beep_1.mp3');
     this.intervalNotification2 = new Audio('assets/sounds/beep_2.mp3');
+
+    this.intervalNotification1.volume = this.volume;
+    this.intervalNotification2.volume = this.volume;
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
@@ -213,7 +231,7 @@ export class TimerComponent implements OnDestroy {
    * @return The icon for the start/pause button.
    */
   getStartPauseButtonIcon() {
-    return this.paused ? 'play_arrow' : 'pause';
+    return this.paused ? ICON_PLAY : ICON_PAUSE;
   }
 
   /**
@@ -230,5 +248,37 @@ export class TimerComponent implements OnDestroy {
    */
   getRemainingDuration() {
     return this.timer.getRemainingDuration(this.intervalIndex, this.time);
+  }
+
+  /**
+   * Sets the volume of the notifications.
+   */
+  setVolume() {
+    if (this.volume > VOLUME_LOWEST) {
+      this.volume = VOLUME_LOWEST;
+    } else {
+      this.volume = VOLUME_DEFAULT
+    }
+  }
+
+  /**
+   * Gets the icon of the volumne button
+   */
+  getVolumeIcon() {
+    let icon;
+
+    switch(this.volume) {
+      case VOLUME_LOWEST:
+        icon = ICON_VOLUME_OFF;
+        break;
+      case VOLUME_HIGHEST:
+        icon = ICON_VOLUME_UP
+        break;
+      default:
+        icon = ICON_VOLUME_DOWN
+        break;
+    }
+    
+    return icon;
   }
 }

@@ -25,10 +25,16 @@ img
 .container
   text-align: center
 
-#btn-menu
-  margin-left: $margin-normal
-  background: transparent
-  color: $color-text
+#wrapper-controls
+  position: absolute
+  right: $margin-normal
+  bottom: $margin-normal
+  
+  mat-icon
+    color: $color-button-transparent
+
+    &:hover
+      color: $color-button-opaque
   
 #btn-pause
   color: $color-background-timer-run
