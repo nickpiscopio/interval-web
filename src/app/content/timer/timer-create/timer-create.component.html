@@ -13,7 +13,6 @@
                 <mat-icon>access_time</mat-icon>
                 <h3>INTERVALS</h3>
               </div>
-              <!-- <hr> -->
               <div *ngIf="hasIntervals()" id="wrapper-intervals" class="match-parent">
                 <ul dragula="GROUP_INTERVALS" [(dragulaModel)]="timer.intervals">
                   <li *ngFor="let interval of timer.intervals; let i = index">
