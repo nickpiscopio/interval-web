@@ -2,23 +2,32 @@
  
   <div id="wrapper-intervals" class="transition mat-elevation-z2 col-sm-12 col-sm-pull-12 col-md-auto">
     <div class="layout column">
-        <h4>{{timer.name}}</h4>
-        <div id="wrapper-intervals" class="match-parent">
-          <div *ngFor="let interval of timer.intervals; let i = index">
-            <app-interval-display [index]="i"
-                                  [interval]="interval"
-                                  [currentIndex]="intervalIndex"
-                                  (intervalSelected)="selectInterval($event)"></app-interval-display>
-          </div>
+      <h4>{{timer.name}}</h4>
+
+      <div id="wrapper-title-intervals" class="row align-items-end">
+        <div id="title" class="col-sm">
+          <h5>INTERVALS</h5>
         </div>
-        <div id="wrapper-duration" class="row align-items-end">
-          <div id="title" class="col-sm">
-            <p>REMAINING DURATION</p>
-          </div>
-          <div class="col-sm-auto">
-            <app-clock-display [time]="getRemainingDuration()"></app-clock-display>
-          </div>
+        <div class="col-sm-auto">
+          <p><span>{{getCurrentIntervalNumber()}}</span>/{{getIntervalTotal()}}</p>
         </div>
+      </div>
+      <div id="wrapper-intervals" class="match-parent">
+        <div *ngFor="let interval of timer.intervals; let i = index">
+          <app-interval-display [index]="i"
+                                [interval]="interval"
+                                [currentIndex]="intervalIndex"
+                                (intervalSelected)="selectInterval($event)"></app-interval-display>
+        </div>
+      </div>
+      <div id="wrapper-duration" class="row align-items-end">
+        <div id="title" class="col-sm">
+          <p>REMAINING DURATION</p>
+        </div>
+        <div class="col-sm-auto">
+          <app-clock-display [time]="getRemainingDuration()"></app-clock-display>
+        </div>
+      </div>
     </div>
   </div>
 

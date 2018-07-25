@@ -251,6 +251,20 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
+   * Gets the current interval number.
+   */
+  getCurrentIntervalNumber() {
+    return this.intervalIndex + 1;
+  }
+
+  /**
+   * Gets the interval total.
+   */
+  getIntervalTotal() {
+    return this.timer.intervals.length;
+  }
+
+  /**
    * Sets the volume of the notifications.
    */
   setVolume() {
