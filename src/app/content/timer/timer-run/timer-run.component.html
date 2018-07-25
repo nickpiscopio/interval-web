@@ -1,6 +1,6 @@
-<mat-drawer-container autosize>
-  <mat-drawer #drawer mode="side" opened="true" class="transition">
-
+<div id="body" class="row">
+ 
+  <div id="wrapper-intervals" class="transition mat-elevation-z2 col-sm-12 col-sm-pull-12 col-md-auto">
     <div class="layout column">
         <h4>{{timer.name}}</h4>
         <div id="wrapper-intervals" class="match-parent">
@@ -20,46 +20,43 @@
           </div>
         </div>
     </div>
-   
-  </mat-drawer>
-
-  <div>
-    <div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
-      <div id="wrapper-pause-action">
-        <p *ngIf="paused">INTERVAL PAUSED</p>
-        <button mat-fab id="btn-pause">
-          <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div id="wrapper">
-      
-      <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
-
-      <div class="container">
-        <h3>{{intervalName}}</h3>
-        <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
-        <h1>
-          <app-clock-display [time]="time"
-                              [isTimerFinished]="isTimerFinished()"></app-clock-display>
-          <p *ngIf="isTimerFinished()">FINISHED!</p>
-        </h1>
-      </div>
-
-      <div id="wrapper-controls">
-        <button *ngIf="!paused"mat-icon-button
-                (click)="setTimerActivation(false)">
-          <mat-icon>pause</mat-icon>
-        </button>
-
-        <button mat-icon-button
-                (click)="setVolume()">
-          <mat-icon>{{getVolumeIcon()}}</mat-icon>
-        </button>
-      </div>
-    
-      <app-footer></app-footer>
-    </div>
   </div>
 
-</mat-drawer-container>
+  <div id="wrapper" class="col">
+    
+    <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
+
+    <div class="container">
+      <h3>{{intervalName}}</h3>
+      <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
+      <h1>
+        <app-clock-display [time]="time"
+                            [isTimerFinished]="isTimerFinished()"></app-clock-display>
+        <p *ngIf="isTimerFinished()">FINISHED!</p>
+      </h1>
+    </div>
+
+    <div id="wrapper-controls">
+      <button *ngIf="!paused"mat-icon-button
+              (click)="setTimerActivation(false)">
+        <mat-icon>pause</mat-icon>
+      </button>
+
+      <button mat-icon-button
+              (click)="setVolume()">
+        <mat-icon>{{getVolumeIcon()}}</mat-icon>
+      </button>
+    </div>
+  
+    <app-footer></app-footer>
+  </div>
+
+</div>
+<div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
+  <div id="wrapper-pause-action">
+    <p *ngIf="paused">INTERVAL PAUSED</p>
+    <button mat-fab id="btn-pause">
+      <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
+    </button>
+  </div>
+</div>

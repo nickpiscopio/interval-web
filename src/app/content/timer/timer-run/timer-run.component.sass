@@ -18,12 +18,19 @@ img
   margin: $margin-normal
   width: $size-icon-interval
 
-.mat-drawer
-  color: $color4
-  overflow: unset
+.col, .col-sm-12, .col-sm-auto
+  padding: 0
 
 .container
   text-align: center
+
+#body
+  margin: 0
+  overflow: unset
+  height: 100vh
+
+#wrapper-intervals
+  color: $color4
 
 #wrapper-controls
   position: absolute
@@ -48,7 +55,7 @@ img
 
 #wrapper-duration
   margin: 0
-  padding: $margin-normal $margin-x-small
+  padding: $margin-normal
   background-color: $color4
   color: $color-text
   font-size: $font-size-x-large
@@ -56,15 +63,16 @@ img
   #title
     font-size: .5em
     margin-bottom: 5px
-    letter-spacing: 1px    
+    letter-spacing: 1px
 
 #wrapper-pause
   position: fixed
-  height: 100vh
+  top: 0
+  height: 100%
   width: 100%
   text-align: center
   background-color: rgba(0, 0, 0, 0.45)
-
+    
   #wrapper-pause-action
     width: 100%
     position: absolute
@@ -72,8 +80,14 @@ img
     top: 42%
 
     p
+      margin-bottom: $margin-small
       letter-spacing: 1px
+      text-shadow: 1px 1px $color-grey
     
 #wrapper
   height: 100vh
   background-color: $color-background-timer-run
+
+@media (max-width: 767px)
+  #wrapper-intervals, #wrapper
+    height: 50vh
