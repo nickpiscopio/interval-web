@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Interval } from './../interval';
+import { Interval } from '../interval';
 import { Class } from '../../../../constant/class.constant';
 import { Time } from '../../../../utility/time.utility';
 

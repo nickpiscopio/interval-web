@@ -1,10 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Route } from '../../../constant/route.constant';
 import { Interval } from '../interval/interval';
 import { fade } from '../../../animations/fade';
 import { Time } from '../../../utility/time.utility';
+import { KeyCode } from '../../../constant/key-code.constant.1';
 
 const THRESHOLD_PAUSE_VISIBILTY = 2000;
 
@@ -197,23 +198,16 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
-   * Switches the pause flag to true so we can see the play/pause button.
+   * This is a hotlistener that listens for whenever a key was pressed.
+   * 
+   * @param event The KeyboardEvent that was executed.
    */
-  showPause() {
-    this.displayPause = true;
-
-    // Remove the old pause timer if there is one, so we don't run into issues creating a new one.
-    clearInterval(this.pauseTimer);
-
-    // We want to eventually hide the pause button, so we create a timeout.
-    // We do this because there isn't a mouse out event to accomplish this task.
-    this.pauseTimer = setTimeout(() => {
-      // Hides the pause button.
-      this.displayPause = false;
-
-      // Remove the pause timer since we are done using it.
-      clearInterval(this.pauseTimer);
-    }, THRESHOLD_PAUSE_VISIBILTY);
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    // We want to listent to the space bar being hit to pause and start the timer.    
+    if (event.keyCode === KeyCode.KEY_CODE_SPACE) {
+      this.setTimerActivation()
+    }
   }
 
   /**

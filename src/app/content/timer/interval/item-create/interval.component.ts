@@ -3,10 +3,7 @@ import { Interval } from '../interval';
 import { Class } from '../../../../constant/class.constant';
 import { Time } from '../../../../utility/time.utility';
 import { fade } from '../../../../animations/fade';
-
-const KEY_CODE_BACKSPACE = 8;
-const KEY_CODE_SHIFT = 16;
-const KEY_CODE_DELETE = 46;
+import { KeyCode } from '../../../../constant/key-code.constant.1';
 
 const DEFAULT_TIME_DIGIT = '0';
 const DEFAULT_TIME = DEFAULT_TIME_DIGIT + DEFAULT_TIME_DIGIT;
@@ -107,7 +104,7 @@ export class IntervalCreateComponent implements OnChanges {
    */
   isKeyAllowed(event: KeyboardEvent) {
     var charCode = event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != KEY_CODE_DELETE ||
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != KeyCode.KEY_CODE_DELETE ||
         event.shiftKey ||
         event.altKey) {
       return false;
@@ -127,8 +124,8 @@ export class IntervalCreateComponent implements OnChanges {
     let tempArr = this.getTimeArray();
 
     switch(event.keyCode) {
-        case KEY_CODE_BACKSPACE:
-        case KEY_CODE_DELETE:
+        case KeyCode.KEY_CODE_BACKSPACE:
+        case KeyCode.KEY_CODE_DELETE:
           // We create an array that is the exact number of missing indecies.
           // We always need 6 indecies in the duration for it to display properly.
           let prefixArr = new Array(maxTimeLength - tempArr.length);

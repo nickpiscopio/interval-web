@@ -2,6 +2,7 @@
 @import '../../../../styles/integer'
 
 header
+  z-index: 1
   background-color: #fff
 
   img
@@ -13,12 +14,11 @@ h1
   margin-bottom: $margin-normal
   color: $color4
 
-ul
-  overflow-y: auto
-
 button
-  margin-top: $margin-normal
-  float: right  
+  float: right
+  margin: $margin-small
+  padding-top: 2px
+  padding-right: 9px
 
 .row 
   margin: 0
@@ -39,7 +39,7 @@ button
 #body
   height: 100vh
 
-#wrapper-intervals
+#wrapper
   overflow: auto
 
 #overview
@@ -75,7 +75,10 @@ button
     border-style: solid
     border-width: 1px 0
     border-color: $color-grey-light
-    padding: $margin-normal
+    padding-top: $margin-normal
+    padding-right: $margin-normal
+    padding-bottom: 0
+    padding-left: $margin-normal
 
   #title-duration, #title-name
     margin-top: $margin-x-small
