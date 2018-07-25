@@ -6,6 +6,7 @@ import { Route } from '../../../constant/route.constant';
 import { Color } from '../../../utility/color.utility';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
+import { EncryptUtility } from '../../../utility/encrypt.utility';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 0;
@@ -27,8 +28,9 @@ export class TimerCreateComponent {
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
-      let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
-      this.timer = new Timer(urlObj.name, urlObj.intervals);
+      let encryptedTimer = this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM);
+      let decryptedTimer = JSON.parse(EncryptUtility.decode(encryptedTimer));
+      this.timer = new Timer(decryptedTimer.name, decryptedTimer.intervals);
 
       let intervals = this.timer.intervals;
       let length = intervals.length;
@@ -93,11 +95,13 @@ export class TimerCreateComponent {
    * Starts the timer.
    */
   start() {
-    let timer = JSON.stringify(this.timer);
+    let timer = EncryptUtility.encode(JSON.stringify(this.timer));
+    // timer = timer.replace(/%2F/g, "/").replace(/%3D/g, "=")
 
     console.info('Timer: ', timer);
 
-    this.router.navigate([Route.getTimerRoute(timer, true)]);
+
+    this.router.navigate([Route.getTimerRoute(timer, false)]);
   }
 
   /**

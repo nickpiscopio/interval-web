@@ -5,6 +5,7 @@ import { Route } from '../../../constant/route.constant';
 import { Interval } from '../interval/interval';
 import { fade } from '../../../animations/fade';
 import { Time } from '../../../utility/time.utility';
+import { EncryptUtility } from '../../../utility/encrypt.utility';
 
 const THRESHOLD_PAUSE_VISIBILTY = 2000;
 
@@ -48,8 +49,9 @@ export class TimerComponent implements OnDestroy {
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
-      let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
-      this.timer = new Timer(urlObj.name, urlObj.intervals);
+      let encryptedTimer = this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM);
+      let decryptedTimer = JSON.parse(EncryptUtility.decode(encryptedTimer));
+      this.timer = new Timer(decryptedTimer.name, decryptedTimer.intervals);
       this.timer.finalize();
     } catch (err) {
       console.log(TimerComponent.name + ' error: ', err);
