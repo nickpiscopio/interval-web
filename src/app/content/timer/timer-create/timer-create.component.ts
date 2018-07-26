@@ -92,7 +92,7 @@ export class TimerCreateComponent {
   }
 
   share() {
-    let timer = encodeURI(JSON.stringify(this.timer));
+    let timer = JSON.stringify(this.timer);
 
     let url = Route.DOMAIN + Route.getTimerRoute(timer, true)
 
