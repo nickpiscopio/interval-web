@@ -1,6 +1,37 @@
 <div id="body" class="row" (keyup)="onKeyEvent($event)">
- 
-  <div id="wrapper-intervals" class="transition mat-elevation-z2 col-sm-12 col-sm-pull-12 col-md-auto">
+
+  
+
+  <div id="wrapper" class="col-md-9 order-md-2">
+    
+    <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
+
+    <div class="container">
+      <h3>{{intervalName}}</h3>
+      <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
+      <h1>
+        <app-clock-display [time]="time"
+                            [isTimerFinished]="isTimerFinished()"></app-clock-display>
+        <p *ngIf="isTimerFinished()">FINISHED!</p>
+      </h1>
+    </div>
+
+    <div id="wrapper-controls">
+      <button *ngIf="!paused"mat-icon-button
+              (click)="setTimerActivation(false)">
+        <mat-icon>pause</mat-icon>
+      </button>
+
+      <button mat-icon-button
+              (click)="setVolume()">
+        <mat-icon>{{getVolumeIcon()}}</mat-icon>
+      </button>
+    </div>
+  
+    <app-footer></app-footer>
+  </div>
+
+<div id="wrapper-intervals" class="col-md-3 order-md-1">
     <div class="layout column">
       <h4>{{timer.name}}</h4>
 
@@ -29,35 +60,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div id="wrapper" class="col">
-    
-    <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
-
-    <div class="container">
-      <h3>{{intervalName}}</h3>
-      <h2 *ngIf="displayNextIntervalLabel()">Next Interval: {{nextIntervalName}}</h2>
-      <h1>
-        <app-clock-display [time]="time"
-                            [isTimerFinished]="isTimerFinished()"></app-clock-display>
-        <p *ngIf="isTimerFinished()">FINISHED!</p>
-      </h1>
-    </div>
-
-    <div id="wrapper-controls">
-      <button *ngIf="!paused"mat-icon-button
-              (click)="setTimerActivation(false)">
-        <mat-icon>pause</mat-icon>
-      </button>
-
-      <button mat-icon-button
-              (click)="setVolume()">
-        <mat-icon>{{getVolumeIcon()}}</mat-icon>
-      </button>
-    </div>
-  
-    <app-footer></app-footer>
   </div>
 
 </div>
