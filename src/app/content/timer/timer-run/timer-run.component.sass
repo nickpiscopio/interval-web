@@ -2,26 +2,25 @@
 @import '../../../../styles/integer'
 
 h1
-  font-size: 15em
+  margin: 0 auto
+  font-size: 225px
 
 h2
-  font-size: 3em
+  font-size: $font-size-normal
   color: $color1
 
 h3
-  font-size: 3em
+  font-size: $font-size-normal
 
 h4
   padding: $margin-normal
 
 img
-  margin: $margin-normal
+  margin: $margin-normal $margin-normal $margin-normal ($margin-normal - $bootstrap-padding)
   width: $size-icon-interval
 
-.col, .col-sm, .col-sm-12, .col-sm-auto
-  padding: 0
-
 .container
+  height: 100%
   text-align: center
 
 #body
@@ -50,6 +49,9 @@ img
   margin: 0
   padding: 0 $margin-normal $margin-xxx-small $margin-normal
 
+  #title
+    padding-left: 0
+
   h5
     margin-bottom: 6px
 
@@ -69,8 +71,9 @@ img
   font-size: $font-size-x-large
 
   #title
-    font-size: .5em
+    padding-left: 0
     margin-bottom: 5px
+    font-size: .5em
     letter-spacing: 1px
 
 #wrapper-pause
@@ -93,9 +96,38 @@ img
       text-shadow: 1px 1px $color-grey
     
 #wrapper
-  // height: 100vh
+  height: 100vh
   background-color: $color-background-timer-run
 
-@media (max-width: 767px)
+@media (max-width: $screen-size-medium)
+  img
+    margin: $margin-small $margin-small $margin-small ($margin-small - $bootstrap-padding)
+    width: $size-icon-interval-small
+
+  h1
+    font-size: 75px
+
+  h3
+    font-size: $font-size-normal
+
+  h4
+    text-align: center
+    font-size: $font-size-normal-small
+    padding-top: $margin-small
+    padding-bottom: $margin-x-small
+
+  #interval-current, #wrapper-interval-next
+    display: none
+
   #wrapper-intervals, #wrapper
     height: 50vh
+
+  #wrapper-duration
+    font-size: $font-size-large
+
+  #wrapper-title-intervals
+    h5
+      margin-bottom: 5px
+
+    span
+      font-size: $font-size-medium
