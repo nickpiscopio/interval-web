@@ -2,31 +2,28 @@
 @import '../../../../styles/integer'
 
 h1
-  margin: 0 auto
   font-size: 225px
-
-h2
-  font-size: $font-size-normal
-  color: $color1
-
-h3
-  font-size: $font-size-normal
 
 h4
   padding: $margin-normal
 
 img
-  margin: $margin-normal $margin-normal $margin-normal ($margin-normal - $bootstrap-padding)
-  width: $size-icon-interval
-
-.container
-  height: 100%
-  text-align: center
+  margin: $margin-normal
+  width: $size-icon-interval  
 
 #body
   margin: 0
   overflow: unset
-  height: 100vh  
+  height: 100vh
+
+#interval-current
+  font-size: $font-size-large
+
+#wrapper-interval-next
+  color: $color2
+  
+  h2 
+    font-size: $font-size-xx-large
 
 #wrapper-controls
   position: absolute
@@ -76,6 +73,9 @@ img
     font-size: .5em
     letter-spacing: 1px
 
+#wrapper-timer
+  margin: 0 auto
+
 #wrapper-pause
   position: fixed
   top: 0
@@ -98,6 +98,7 @@ img
 #wrapper
   height: 100vh
   background-color: $color-background-timer-run
+  text-align: center
 
 @media (min-width: 360px) and (orientation: landscape)
   .col-md-3
@@ -110,14 +111,11 @@ img
 
 @media (max-width: $screen-size-medium), (max-width: 813px) and (max-height: 376px), (max-width: 824px) and (max-height: 412px)
   img
-    margin: $margin-small $margin-small $margin-small ($margin-small - $bootstrap-padding)
+    margin: $margin-small
     width: $size-icon-interval-small
 
   h1
     font-size: 75px
-
-  h3
-    font-size: $font-size-normal
 
   h4
     font-size: $font-size-normal-small

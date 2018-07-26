@@ -1,22 +1,26 @@
 <div id="body" class="row" (keyup)="onKeyEvent($event)">
 
   <div id="wrapper" class="padding-none col-md-9 order-md-2">
-    
-    <div class="container">
-      <div class="layout column">
-          <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
-          <h3 id="interval-current">{{intervalName}}</h3>
-          <div *ngIf="displayNextIntervalLabel()" id="wrapper-interval-next">
-              <p>NEXT INTERVAL</p>
-              <h2>{{nextIntervalName}}</h2>
-          </div>
-          <h1 class="match-parent d-flex align-items-center">
+    <div class="layout column">
+      <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
+      <div id="wrapper-timer" class="match-parent d-flex align-items-center">
+        <div>
+          <h2 id="interval-current">{{intervalName}}</h2>
+
+          <h1>
             <app-clock-display [time]="time"
-                               [isTimerFinished]="isTimerFinished()"></app-clock-display>
+                                [isTimerFinished]="isTimerFinished()"></app-clock-display>
             <!-- <p *ngIf="isTimerFinished()">FINISHED!</p> -->
           </h1>
-          <app-footer></app-footer>
-      </div>       
+          <div *ngIf="displayNextIntervalLabel()" id="wrapper-interval-next">
+            <p>NEXT INTERVAL</p>
+            <h2>{{nextIntervalName}}</h2>
+          </div>
+        </div>
+        
+      </div>
+      
+      <app-footer></app-footer>
     </div>
 
     <div id="wrapper-controls">
