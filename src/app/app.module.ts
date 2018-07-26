@@ -11,6 +11,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -30,6 +31,9 @@ import { IntervalCreateComponent } from './content/timer/interval/item-create/in
 import { IntervalDisplayComponent } from './content/timer/interval/item-display/interval.component';
 import { ClockDisplayComponent } from './fragments/clock-display/clock-display.component';
 
+// Dialogs
+import { ShareComponent } from './content/share/share.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +43,8 @@ import { ClockDisplayComponent } from './fragments/clock-display/clock-display.c
     FooterComponent,
     IntervalCreateComponent,
     IntervalDisplayComponent,
-    ClockDisplayComponent
+    ClockDisplayComponent,
+    ShareComponent
   ],
   imports: [
     CommonModule,
@@ -49,12 +54,16 @@ import { ClockDisplayComponent } from './fragments/clock-display/clock-display.c
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatMenuModule,
     MatSidenavModule,
     routes
+  ],
+  entryComponents: [
+    ShareComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

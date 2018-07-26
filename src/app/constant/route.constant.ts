@@ -1,4 +1,5 @@
 export class Route {
+  public static readonly DOMAIN = window.location.hostname + ":4200/";
   // Internal routes.
   private static readonly ROOT = '/';
   private static readonly PREFIX_PARAM = ':';

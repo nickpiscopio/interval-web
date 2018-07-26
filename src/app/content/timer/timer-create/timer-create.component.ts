@@ -6,6 +6,8 @@ import { Route } from '../../../constant/route.constant';
 import { Color } from '../../../utility/color.utility';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
+import { MatDialog } from '../../../../../node_modules/@angular/material';
+import { ShareComponent } from '../../share/share.component';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 0;
@@ -22,7 +24,7 @@ export class TimerCreateComponent {
   
   private color: Color;
  
-  constructor(private route: ActivatedRoute, private router: Router, private ngZone: NgZone) {
+  constructor(private route: ActivatedRoute, private router: Router, private ngZone: NgZone, private dialog: MatDialog) {
     this.color = new Color();
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
@@ -87,6 +89,16 @@ export class TimerCreateComponent {
   removeInterval(index: number) {
     // We need to convert the index to a number because an event will send it as a string.
     this.timer.removeIntervalAndCalculateDuration(Number(index));
+  }
+
+  share() {
+    let timer = encodeURI(JSON.stringify(this.timer));
+
+    let url = Route.DOMAIN + Route.getTimerRoute(timer, true)
+
+    this.dialog.open(ShareComponent, {
+      data: { url: url }
+    });
   }
 
   /**

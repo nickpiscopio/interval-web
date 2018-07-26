@@ -63,9 +63,14 @@
         </mat-form-field>
       </div>
 
-      <button mat-button [disabled]="!isValidTimer()" (click)="start()" color="primary">
+      <button id="btn-start" mat-button [disabled]="!isValidTimer()" (click)="start()" color="primary">
         START
         <mat-icon>arrow_forward</mat-icon>
+      </button>
+
+      <button id="btn-share" mat-button [disabled]="!isValidTimer()" (click)="share()" color="secondary">
+        <mat-icon>share</mat-icon>
+        SHARE
       </button>
     </div>
 
