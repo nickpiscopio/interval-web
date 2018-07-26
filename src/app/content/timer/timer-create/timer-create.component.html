@@ -1,10 +1,10 @@
-
 <div id="body" class="layout column">
-  <header class="mat-elevation-z2">
-    <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_with.svg" />
-  </header>
-  <div class="row match-parent">
-    <div id="wrapper" class="col">
+
+  <div class="row">
+    <div id="wrapper" class="match-parent col-md-9">
+      <header class="mat-elevation-z2">
+        <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_with.svg" />
+      </header>
       <div class="container">
         <div class="row">
           <div class="col">
@@ -34,47 +34,40 @@
         </div>
       </div>
     </div>
-    <div id="overview" class="col-sm-auto mat-elevation-z2">
-        <div class="title">
-          <mat-icon>description</mat-icon>
-          <h3>OVERVIEW</h3>
-        </div>
+    <div id="overview" class="col-md-3 mat-elevation-z2">
+      <div class="title">
+        <mat-icon>description</mat-icon>
+        <h3>TIMER OVERVIEW</h3>
+      </div>
 
-        <div id="description">
-          <h3 id="title-intervals">TOTAL INTERVALS</h3>
-          <p>{{getTotalIntervals()}}<p>
-  
-          <h3 id="title-duration">TIMER DURATION</h3>
-          <app-clock-display [time]="timer.totalDuration"></app-clock-display>
+      <div id="description">
+        <div>
+          <p>INTERVALS</p>
+          <h3>{{getTotalIntervals()}}</h3>
         </div>
-      
-        <div id="wrapper-name">
-          <mat-form-field>
-          <mat-label>TIMER NAME</mat-label>
-            <textarea matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      [(ngModel)]="timer.name"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5"></textarea>
-          </mat-form-field>
+        <div>
+          <p>DURATION</p>
+          <h3><app-clock-display [time]="timer.totalDuration"></app-clock-display></h3>
         </div>
-
-        <button mat-button [disabled]="!isValidTimer()" (click)="start()" color="primary">
-          START
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </div> 
-
-    <!-- <mat-card> 
-      <div class="title-secondary">
-        <mat-icon>timelapse</mat-icon>
-        <h3>EXERCISE DURATION</h3>
+      </div>
+    
+      <div id="wrapper-name">
         <mat-form-field>
-          <input matInput placeholder="How long would you like to exercise?" type="date">
+        <mat-label>TIMER NAME</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    [(ngModel)]="timer.name"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"></textarea>
         </mat-form-field>
       </div>
-    </mat-card> -->
+
+      <button mat-button [disabled]="!isValidTimer()" (click)="start()" color="primary">
+        START
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
 
   </div>
   
