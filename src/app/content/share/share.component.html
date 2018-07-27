@@ -1,4 +1,9 @@
 <div class="dialog">
-  <button #close mat-button class="right btn-close" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button>
-  <p>{{url}}</p>
+  <button #close mat-icon-button class="right btn-close" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button>
+  <h1>Share <input [(ngModel)]="timer.name" (blur)="getUrl()"/></h1>
+  <p>Use the link below to save your timer or to share it with friends:</p>
+  <div class="layout">
+    <mat-card class="match-parent"><input [(ngModel)]="url" readonly="readonly"/></mat-card>
+    <button mat-raised-button ngxClipboard [cbContent]="url" (click)="copyUrl()"><mat-icon>file_copy</mat-icon></button>
+  </div>
 </div>

@@ -92,12 +92,8 @@ export class TimerCreateComponent {
   }
 
   share() {
-    let timer = JSON.stringify(this.timer);
-
-    let url = Route.DOMAIN + Route.getTimerRoute(timer, true)
-
     this.dialog.open(ShareComponent, {
-      data: { url: url }
+      data: { timer: this.timer }
     });
   }
 

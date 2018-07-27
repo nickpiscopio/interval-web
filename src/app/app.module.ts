@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 // Libraries
 // Documentation: https://github.com/valor-software/ng2-dragula
 import { DragulaModule } from 'ng2-dragula';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Router
 import { routes } from './app.router';
@@ -51,6 +53,7 @@ import { ShareComponent } from './content/share/share.component';
     BrowserModule,
     FormsModule,
     DragulaModule.forRoot(),
+    ClipboardModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
@@ -60,6 +63,7 @@ import { ShareComponent } from './content/share/share.component';
     MatInputModule,
     MatMenuModule,
     MatSidenavModule,
+    MatSnackBarModule,
     routes
   ],
   entryComponents: [
