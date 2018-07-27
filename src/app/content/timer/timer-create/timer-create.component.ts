@@ -6,7 +6,7 @@ import { Route } from '../../../constant/route.constant';
 import { Color } from '../../../utility/color.utility';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
-import { MatDialog } from '../../../../../node_modules/@angular/material';
+import { MatDialog } from '@angular/material';
 import { ShareComponent } from '../../share/share.component';
 
 // This is the group to allow reordering intervals by dragging.

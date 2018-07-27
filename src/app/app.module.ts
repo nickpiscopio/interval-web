@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 // Documentation: https://github.com/valor-software/ng2-dragula
 import { DragulaModule } from 'ng2-dragula';
 import { ClipboardModule } from 'ngx-clipboard';
+
 // Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';

@@ -35,43 +35,56 @@
       </div>
     </div>
     <div id="overview" class="col-md-3 mat-elevation-z2">
-      <div class="title">
-        <mat-icon>description</mat-icon>
-        <h3>TIMER OVERVIEW</h3>
-      </div>
-
-      <div id="description">
-        <div>
-          <p>INTERVALS</p>
-          <h3>{{getTotalIntervals()}}</h3>
+      <div id="top">
+        <div class="title">
+          <mat-icon>description</mat-icon>
+          <h3>TIMER OVERVIEW</h3>
         </div>
-        <div>
-          <p>DURATION</p>
-          <h3><app-clock-display [time]="timer.totalDuration"></app-clock-display></h3>
+  
+        <div id="description" class="row">
+          <div class="col">
+            <p>INTERVALS</p>
+            <h3>{{getTotalIntervals()}}</h3>
+          </div>
+          <div class="col">
+            <p>DURATION</p>
+            <h3><app-clock-display [time]="timer.totalDuration"></app-clock-display></h3>
+          </div>
         </div>
-      </div>
-    
-      <div id="wrapper-name">
-        <mat-form-field>
-        <mat-label>TIMER NAME</mat-label>
-          <textarea matInput
-                    cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize"
-                    [(ngModel)]="timer.name"
-                    cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"></textarea>
-        </mat-form-field>
-      </div>
+        
+        <div id="wrapper-name">
+          <mat-form-field>
+          <mat-label>TIMER NAME</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      [(ngModel)]="timer.name"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
+        </div>
+      </div>  
 
-      <button id="btn-start" mat-button [disabled]="!isValidTimer()" (click)="start()" color="primary">
-        START
-        <mat-icon>arrow_forward</mat-icon>
-      </button>
-
-      <button id="btn-share" mat-button [disabled]="!isValidTimer()" (click)="share()">
-        <mat-icon>share</mat-icon>
-        SHARE
-      </button>
+      <div class="row"> 
+        <button id="btn-share"
+                class="col"
+                mat-button
+                (click)="share()"
+                [disabled]="!isValidTimer()">
+          <mat-icon>share</mat-icon>
+          SHARE
+        </button>
+        <button id="btn-start"
+                mat-button
+                class="col"
+                color="primary"
+                (click)="start()" 
+                [disabled]="!isValidTimer()">
+          START
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      
     </div>
 
   </div>
