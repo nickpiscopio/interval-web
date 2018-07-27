@@ -1,6 +1,8 @@
 @import '../../../styles/color'
 @import '../../../styles/integer'
 
+$social-icon-width: 40px
+
 div
   text-align: center
 
@@ -30,5 +32,23 @@ mat-card
     margin-left: $margin-xx-small
     padding: $margin-xxx-small 14px
     color: $color4
+
+#wrapper-social
+  margin-top: $margin-normal
+
+.social [class*="fa fa-"]
+  background-color: $color3
+  border-radius: $social-icon-width
+  color: $color-text
+  display: inline-block
+  height: $social-icon-width
+  line-height: $social-icon-width
+  margin: auto ($margin-normal / 2)
+  width: $social-icon-width
+  font-size: 18px
+  text-align: center
+
+.social [class*="fa fa-"]:hover
+  background-color: $color1
   
    

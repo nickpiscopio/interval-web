@@ -7,14 +7,13 @@ import { NgModule } from '@angular/core';
 // Documentation: https://github.com/valor-software/ng2-dragula
 import { DragulaModule } from 'ng2-dragula';
 import { ClipboardModule } from 'ngx-clipboard';
-
 // Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -72,4 +71,10 @@ import { ShareComponent } from './content/share/share.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  // Documentation on how to use fontawesome: https://stackoverflow.com/questions/38796541/how-to-add-font-awesome-to-angular-2-cli-project
+  // Scroll to 'There are 3 parts to using Font-Awesome in Angular Projects'
+  constructor(matIconRegistry: MatIconRegistry) {
+    matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+  }
+}
