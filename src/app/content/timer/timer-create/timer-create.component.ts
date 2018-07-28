@@ -19,21 +19,21 @@ const GROUP_INTERVALS = 0;
 })
 export class TimerCreateComponent {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
-  
+
   private timer: Timer;
-  
+
   private color: Color;
- 
+
   constructor(private route: ActivatedRoute, private router: Router, private ngZone: NgZone, private dialog: MatDialog) {
     this.color = new Color();
 
     // Tries to parse the timer that comes in the URL, if it can, then we set it.
     try {
-      let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
+      const urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
       this.timer = new Timer(urlObj.name, urlObj.intervals);
 
-      let intervals = this.timer.intervals;
-      let length = intervals.length;
+      const intervals = this.timer.intervals;
+      const length = intervals.length;
       for (let i = 0; i < length; i++) {
         // Generate a color for each interval since we start off with intervals.
         this.color.generateColor(intervals[i].name)
@@ -44,8 +44,20 @@ export class TimerCreateComponent {
       this.timer = new Timer('', []);
     }
 
-    // We add an interval here because we always want at least 1.
-    this.timer.addInterval(new Interval('', 0));
+    const intervals = this.timer.intervals;
+    const lastInterval = intervals[intervals.length - 1];
+    if (lastInterval !== undefined) {
+      const name = lastInterval.name;
+      const duration = lastInterval.duration;
+      if ((name !== undefined && name.trim() !== '') ||
+        (duration !== undefined && duration > 0)) {
+        // We saw that the last interval has some sort of value in it, so we add an interval here because we always want at least 1.
+        this.timer.addDefaultInterval();
+      }
+    } else {
+      // We saw that the last interval didn't exist, so we add an interval here because we always want at least 1.
+      this.timer.addDefaultInterval();
+    }
   }
 
   /**
@@ -59,7 +71,7 @@ export class TimerCreateComponent {
 
   /**
    * Duplicates an interval and places it at the lat index.
-   * 
+   *
    * @param index   The index of the interval to duplicate.
    */
   duplicateInterval(index: number) {
@@ -76,8 +88,8 @@ export class TimerCreateComponent {
     // We need to convert the index to a number because an event will send it as a string.
     index = Number(index);
 
-    this.color.generateColor(this.timer.intervals[index].name)
-    
+    this.color.generateColor(this.timer.intervals[index].name);
+
     this.timer.updateInterval(index);
   }
 
@@ -101,7 +113,7 @@ export class TimerCreateComponent {
    * Starts the timer.
    */
   start() {
-    let timer = JSON.stringify(this.timer);
+    const timer = JSON.stringify(this.timer);
 
     console.info('Timer: ', timer);
 
@@ -114,10 +126,10 @@ export class TimerCreateComponent {
   getTotalIntervals() {
     return this.timer.getTotalIntervals();
   }
-  
+
   /**
    * Checks to make sure the timer has intervals.
-   * 
+   *
    * This function is different than isValidTimer() because the intervals.length is checked
    * to display the intervals to the user regardless of if they are valid intervals or not.
    */
@@ -127,7 +139,7 @@ export class TimerCreateComponent {
 
   /**
    * Checks to make sure the timer has valid intervals to enable or disable the start button.
-   * 
+   *
    * This function is different than hasIntervals() because the hasIntervals()
    * returns true even if all the intervals have 0 seconds as their duration.
    * That is fine for that function, but that doesn't mean the timer is valid.

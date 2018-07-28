@@ -20,16 +20,25 @@ export class Timer {
     if (intervals === undefined) {
       intervals = [];
     }
+
+    this.calculateTotalDuration();
+  }
+
+  /**
+   * Adds a default interval.
+   */
+  addDefaultInterval() {
+    this.addInterval(new Interval('', 0));
   }
 
   /**
    * Finalizes the timer by removing any intervals that don't have a duration.
    */
   finalize() {
-    let length = this.intervals.length;
+    const length = this.intervals.length;
     // We need to loop backwards so then we can remove the proper indecies when removing intervals.
     for (let i = length - 1; i >= 0; i--) {
-      let interval = this.intervals[i];
+      const interval = this.intervals[i];
       if (interval === undefined || interval.duration <= 0) {
         // We found a duration that isn't valid, so remove it.
         this.removeInterval(i);
@@ -41,14 +50,14 @@ export class Timer {
 
   /**
    * Gets the total number of valid intervals.
-   * 
+   *
    * @return The total number of intervals.
    */
   getTotalIntervals() {
     let totalIntervals = 0;
-    let length = this.intervals.length;
+    const length = this.intervals.length;
     for (let i = 0; i < length; i++) {
-      let interval = this.intervals[i];
+      const interval = this.intervals[i];
       if (interval !== undefined && interval.duration > 0) {
         // We found a valid interval, so increment the total.
         totalIntervals++;
@@ -60,7 +69,7 @@ export class Timer {
 
   /**
    * Adds an interval to the timer.
-   * 
+   *
    * @param interval  The interval to add to the timer.
    * @param index     The index in which to insert the interval.
    *                  This is an optional value.
@@ -82,7 +91,7 @@ export class Timer {
 
   /**
    * Duplicates an interval and places it at the lat index.
-   * 
+   *
    * @param index   The index of the interval to duplicate.
    */
   duplicateInterval(index: number) {
@@ -97,13 +106,13 @@ export class Timer {
    * @param index   The index of the interval that was updated.
    */
   updateInterval(index: number) {
-    let intervals = this.intervals;
-    let lastIntervalIndex = intervals.length - 1;
-    let currentIntervalContainsValues = this.doesIntervalContainValues(intervals[index]);
+    const intervals = this.intervals;
+    const lastIntervalIndex = intervals.length - 1;
+    const currentIntervalContainsValues = this.doesIntervalContainValues(intervals[index]);
 
     if (index === lastIntervalIndex && currentIntervalContainsValues) {
       // We found that there is something in the last interval, so add a new one.
-      this.addInterval(new Interval('', 0));
+      this.addDefaultInterval();
     } else if (index === lastIntervalIndex - 1 && (!currentIntervalContainsValues && !this.doesIntervalContainValues(intervals[lastIntervalIndex]))) {
       this.removeInterval(lastIntervalIndex);
     }
@@ -117,7 +126,7 @@ export class Timer {
    * @param index   The interval index to remove.
    */
   removeInterval(index: number) {
-    // Remove 1 index at the specifed index.
+    // Remove 1 index at the specified index.
     this.intervals.splice(index, 1);
   }
 
@@ -128,14 +137,14 @@ export class Timer {
    */
   removeIntervalAndCalculateDuration(index: number) {
     // Remove 1 index at the specifed index.
-    this.removeInterval(index)
+    this.removeInterval(index);
 
     this.calculateTotalDuration();
   }
 
   /**
    * Gets the remaining duration from the timer.
-   * 
+   *
    * @param index     The index of the current interval.
    * @param timeLeft  The amount of time left in the current interval.
    */
@@ -145,7 +154,7 @@ export class Timer {
 
    /**
    * Loops through the durations of the intervals and calculates the total time for the timer.
-   * 
+   *
    * @param index   The index in which to start the calculation.
    *
    * @return The calculated duration.
@@ -153,8 +162,8 @@ export class Timer {
   calculateDuration(index: number): number {
     let duration = 0;
 
-    let length = this.intervals.length;
-    for(let i = index; i < length; i++) {
+    const length = this.intervals.length;
+    for (let i = index; i < length; i++) {
       // Converts the duration in the specified interval to a number and then adds it to the total duration.
       duration += Number(this.intervals[i].duration);
     }
@@ -164,7 +173,7 @@ export class Timer {
 
   /**
    * Loops through the durations of the intervals and calculates the total time for the timer.
-   * 
+   *
    * @param index   The index in which to start the calculation.
    */
   private calculateTotalDuration() {
