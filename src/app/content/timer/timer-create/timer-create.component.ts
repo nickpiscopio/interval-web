@@ -1,7 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
-import { Interval } from '../interval/interval';
 import { Route } from '../../../constant/route.constant';
 import { Color } from '../../../utility/color.utility';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -32,11 +31,14 @@ export class TimerCreateComponent {
       const urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
       this.timer = new Timer(urlObj.name, urlObj.intervals);
 
+      // We finalize the timer here just in case there are intervals that don't have anything in them.
+      this.timer.finalize();
+
       const intervals = this.timer.intervals;
       const length = intervals.length;
       for (let i = 0; i < length; i++) {
         // Generate a color for each interval since we start off with intervals.
-        this.color.generateColor(intervals[i].name)
+        this.color.generateColor(intervals[i].name);
       }
     } catch (err) {
       console.log(TimerCreateComponent.name + ' error: ', err);
@@ -44,20 +46,8 @@ export class TimerCreateComponent {
       this.timer = new Timer('', []);
     }
 
-    const intervals = this.timer.intervals;
-    const lastInterval = intervals[intervals.length - 1];
-    if (lastInterval !== undefined) {
-      const name = lastInterval.name;
-      const duration = lastInterval.duration;
-      if ((name !== undefined && name.trim() !== '') ||
-        (duration !== undefined && duration > 0)) {
-        // We saw that the last interval has some sort of value in it, so we add an interval here because we always want at least 1.
-        this.timer.addDefaultInterval();
-      }
-    } else {
-      // We saw that the last interval didn't exist, so we add an interval here because we always want at least 1.
+      // We add an interval here because we always want at least 1.
       this.timer.addDefaultInterval();
-    }
   }
 
   /**

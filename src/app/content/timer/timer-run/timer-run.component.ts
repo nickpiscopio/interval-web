@@ -7,11 +7,9 @@ import { fade } from '../../../animations/fade';
 import { Time } from '../../../utility/time.utility';
 import { KeyCode } from '../../../constant/key-code.constant.1';
 
-const THRESHOLD_PAUSE_VISIBILTY = 2000;
-
 const VOLUME_LOWEST = 0;
 const VOLUME_HIGHEST = 1;
-const VOLUME_DEFAULT = 0.65;
+const VOLUME_DEFAULT = 0.6;
 
 const ICON_VOLUME_DOWN = 'volume_down';
 const ICON_VOLUME_OFF = 'volume_off';
@@ -49,11 +47,8 @@ export class TimerComponent implements OnDestroy {
   private displayPause: boolean;
   // Boolean value for if the timer is paused or not.
   private paused = false;
-  private volumeVisible = false;
 
-  private timeUtil = new Time();
-
-  // We default the volumne to 70%.
+  // We default the volume to 70%.
   private volume = VOLUME_DEFAULT;
 
   constructor(private route: ActivatedRoute) {
@@ -149,7 +144,7 @@ export class TimerComponent implements OnDestroy {
 
   /**
    * Selects the interval to switch to.
-   * 
+   *
    * @param index   The interval of the index in which to switch.
    */
   selectInterval(index: number) {
@@ -199,14 +194,14 @@ export class TimerComponent implements OnDestroy {
 
   /**
    * This is a hotlistener that listens for whenever a key was pressed.
-   * 
+   *
    * @param event The KeyboardEvent that was executed.
    */
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    // We want to listent to the space bar being hit to pause and start the timer.    
+    // We want to listen to the space bar being hit to pause and start the timer.
     if (event.keyCode === KeyCode.KEY_CODE_SPACE) {
-      this.setTimerActivation()
+      this.setTimerActivation();
     }
   }
 
@@ -280,13 +275,13 @@ export class TimerComponent implements OnDestroy {
         icon = ICON_VOLUME_OFF;
         break;
       case VOLUME_HIGHEST:
-        icon = ICON_VOLUME_UP
+        icon = ICON_VOLUME_UP;
         break;
       default:
-        icon = ICON_VOLUME_DOWN
+        icon = ICON_VOLUME_DOWN;
         break;
     }
-    
+
     return icon;
   }
 }
