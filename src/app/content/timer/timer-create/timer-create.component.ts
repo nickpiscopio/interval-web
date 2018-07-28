@@ -46,8 +46,8 @@ export class TimerCreateComponent {
       this.timer = new Timer('', []);
     }
 
-      // We add an interval here because we always want at least 1.
-      this.timer.addDefaultInterval();
+    // We add an interval here because we always want at least 1.
+    this.timer.addDefaultInterval();
   }
 
   /**
