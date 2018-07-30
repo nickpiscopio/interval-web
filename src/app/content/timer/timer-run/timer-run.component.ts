@@ -7,6 +7,10 @@ import { Time } from '../../../utility/time.utility';
 import { KeyCode } from '../../../constant/key-code.constant.1';
 import {HttpClient} from '@angular/common/http';
 import {UrlUtility} from '../../../utility/url.utility';
+// This is a library that stops the device from sleeping.
+// We only have this enabled when the timer is running.
+// Once the timer stops running, we allow the device to sleep again.
+// Documentation: https://github.com/richtr/NoSleep.js?utm_source=recordnotfound.com
 import * as NoSleep from 'nosleep.js';
 
 const VOLUME_LOWEST = 0;
