@@ -149,7 +149,14 @@ export class Timer {
    * @param timeLeft  The amount of time left in the current interval.
    */
   getRemainingDuration(index: number, timeLeft: number): number {
-    return this.calculateDuration(index) - (this.intervals[index].duration - timeLeft);
+    let remainingDuration = 0;
+
+    const interval = this.intervals[index];
+    if (interval !== undefined) {
+      remainingDuration = this.calculateDuration(index) - (interval.duration - timeLeft);
+    }
+
+    return remainingDuration;
   }
 
    /**

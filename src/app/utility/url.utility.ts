@@ -26,15 +26,11 @@ export class UrlUtility {
       const id = Number(urlTimer);
 
       if (isNaN(id)) {
-        // this.initTimer(urlTimer);
-        // callback(urlTimer);
         this.initTimer(urlTimer, callback);
       } else {
         this.apiUtility.getTimer(Number(urlTimer), (data) => {
           const timer = data.timer;
           if (timer !== undefined && timer.length > 0) {
-            // this.initTimer(EncryptUtility.decode(timer));
-            // callback(EncryptUtility.decode(timer));
             this.initTimer(EncryptUtility.decode(timer), callback);
           }
         });

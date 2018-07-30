@@ -146,7 +146,7 @@ export class TimerCreateComponent {
    * to display the intervals to the user regardless of if they are valid intervals or not.
    */
   hasIntervals() {
-    return this.timer.intervals !== undefined && this.timer.intervals.length > 0;
+    return this.timer !== undefined && this.timer.intervals !== undefined && this.timer.intervals.length > 0;
   }
 
   /**

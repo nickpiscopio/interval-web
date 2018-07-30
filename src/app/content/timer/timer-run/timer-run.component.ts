@@ -1,13 +1,13 @@
 import { Component, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
-import { Route } from '../../../constant/route.constant';
 import { Interval } from '../interval/interval';
 import { fade } from '../../../animations/fade';
 import { Time } from '../../../utility/time.utility';
 import { KeyCode } from '../../../constant/key-code.constant.1';
 import {HttpClient} from '@angular/common/http';
 import {UrlUtility} from '../../../utility/url.utility';
+import * as NoSleep from 'nosleep.js';
 
 const VOLUME_LOWEST = 0;
 const VOLUME_HIGHEST = 1;
@@ -19,6 +19,11 @@ const ICON_VOLUME_UP = 'volume_up';
 
 const ICON_PLAY = 'play_arrow';
 const ICON_PAUSE = 'pause';
+
+// This is the event for 'NoSleep'.
+// It is needed because 'NoSleep' must be wrapped in a user input event handler.
+// e.g. a mouse or touch handler
+const EVENT_NO_SLEEP = 'click';
 
 @Component({
   selector: 'app-timer-run',
@@ -53,8 +58,16 @@ export class TimerComponent implements OnDestroy {
   // We default the volume to 70%.
   private volume = VOLUME_DEFAULT;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  private noSleep;
+
+  constructor(private route: ActivatedRoute,
+              private http: HttpClient) {
     this.displayPause = false;
+
+    this.noSleep = new NoSleep();
+
+    // Enable wake lock.
+    document.addEventListener(EVENT_NO_SLEEP, this.enableNoSleep, false);
 
     this.intervalNotification1 = new Audio('assets/sounds/beep_1.mp3');
     this.intervalNotification2 = new Audio('assets/sounds/beep_2.mp3');
@@ -89,6 +102,10 @@ export class TimerComponent implements OnDestroy {
   runTimer(intervals: Interval[], resuming: boolean) {
     // Remove the old interval timer if there is one, so we don't run into issues creating a new one.
     clearInterval(this.intervalTimer);
+
+    // We enable the no sleep, so then the computer or phone doesn't go to sleep while the intervals are running.
+    // This gets disabled later if the timer stops or the timer is paused.
+    this.enableNoSleep();
 
     const interval = intervals[this.intervalIndex];
     // If the interval is undefined, then we reached the end of the intervals, and we should finish.
@@ -136,6 +153,13 @@ export class TimerComponent implements OnDestroy {
           this.runTimer(intervals, false);
         }
       }, Time.SECOND);
+    } else {
+      // We subtract from the index here because there aren't any intervals left,
+      // and we don't want to display to the user that there is 1 more interval, so we just remove it.
+      this.intervalIndex--;
+
+      // We disable 'NoSleep' here just in case the timer is actually finished.
+      this.disableNoSleep();
     }
   }
 
@@ -162,7 +186,10 @@ export class TimerComponent implements OnDestroy {
    * Smoothly scrolls to the current interval.
    */
   scrollToInterval() {
-    document.getElementById(this.intervalIndex.toString()).scrollIntoView({ behavior: 'smooth' });
+    const view = document.getElementById(this.intervalIndex.toString());
+    if (view !== null) {
+      view.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   /**
@@ -182,15 +209,18 @@ export class TimerComponent implements OnDestroy {
       // The timer is started again, so create a new timer and resume where we left off.
       this.runTimer(this.timer.intervals, true);
     } else {
-      // The timer is paused, so clear the innterval timer so it doesn't continue.
+      // The timer is paused, so clear the interval timer so it doesn't continue.
       clearInterval(this.intervalTimer);
+
+      // We disable 'NoSleep' here because the timer is paused.
+      this.disableNoSleep();
     }
 
     this.paused = !this.paused;
   }
 
   /**
-   * This is a hotlistener that listens for whenever a key was pressed.
+   * This is a HotListener that listens for whenever a key was pressed.
    *
    * @param event The KeyboardEvent that was executed.
    */
@@ -226,7 +256,10 @@ export class TimerComponent implements OnDestroy {
    * @return Boolean value on whether or not the timer has finished.
    */
   isTimerFinished() {
-    return this.intervalIndex === this.timer.intervals.length && this.timer.totalDuration === 0;
+    return this.timer !== undefined &&
+           this.timer.intervals !== undefined &&
+           this.intervalIndex === this.timer.intervals.length &&
+           this.timer.totalDuration === 0;
   }
 
   /**
@@ -280,5 +313,21 @@ export class TimerComponent implements OnDestroy {
     }
 
     return icon;
+  }
+
+  /**
+   * Keeps the screen awake while the timer is running.
+   */
+  enableNoSleep() {
+    this.noSleep.enable();
+
+    document.removeEventListener(EVENT_NO_SLEEP, this.enableNoSleep, false);
+  }
+
+  /**
+   * Disables the no sleep so the device can sleep again.
+   */
+  disableNoSleep() {
+    this.noSleep.disable();
   }
 }
