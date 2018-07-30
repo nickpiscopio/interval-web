@@ -7,6 +7,9 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { ShareComponent } from '../../share/share.component';
+import {HttpClient} from '@angular/common/http';
+import {ApiUtility} from '../../../utility/api.utility';
+import {UrlUtility} from '../../../utility/url.utility';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 0;
@@ -19,35 +22,43 @@ const GROUP_INTERVALS = 0;
 export class TimerCreateComponent {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
+  private apiUtility: ApiUtility;
+
   private timer: Timer;
 
   private color: Color;
 
-  constructor(private route: ActivatedRoute, private router: Router, private ngZone: NgZone, private dialog: MatDialog) {
+  private isLoading = false;
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private ngZone: NgZone,
+              private dialog: MatDialog,
+              private http: HttpClient) {
+    this.apiUtility = new ApiUtility(this.http);
+
     this.color = new Color();
 
-    // Tries to parse the timer that comes in the URL, if it can, then we set it.
-    try {
-      const urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
-      this.timer = new Timer(urlObj.name, urlObj.intervals);
+    new UrlUtility(route, http).getTimer((timer) => {
+      if (timer !== undefined) {
+        this.timer = timer;
 
-      // We finalize the timer here just in case there are intervals that don't have anything in them.
-      this.timer.finalize();
+        const intervals = this.timer.intervals;
+        const length = intervals.length;
+        for (let i = 0; i < length; i++) {
+          // Generate a color for each interval since we start off with intervals.
+          this.color.generateColor(intervals[i].name);
+        }
 
-      const intervals = this.timer.intervals;
-      const length = intervals.length;
-      for (let i = 0; i < length; i++) {
-        // Generate a color for each interval since we start off with intervals.
-        this.color.generateColor(intervals[i].name);
+        // We add an interval here because we always want at least 1.
+        this.timer.addDefaultInterval();
+      } else {
+        this.timer = new Timer('', []);
+
+        // We add an interval here because we always want at least 1.
+        this.timer.addDefaultInterval();
       }
-    } catch (err) {
-      console.log(TimerCreateComponent.name + ' error: ', err);
-
-      this.timer = new Timer('', []);
-    }
-
-    // We add an interval here because we always want at least 1.
-    this.timer.addDefaultInterval();
+    });
   }
 
   /**
@@ -93,6 +104,9 @@ export class TimerCreateComponent {
     this.timer.removeIntervalAndCalculateDuration(Number(index));
   }
 
+  /**
+   * Opens the share dialog.
+   */
   share() {
     this.dialog.open(ShareComponent, {
       data: { timer: this.timer }
@@ -103,11 +117,19 @@ export class TimerCreateComponent {
    * Starts the timer.
    */
   start() {
-    const timer = JSON.stringify(this.timer);
+    let timer = JSON.stringify(this.timer);
+    console.log('Timer: ', timer);
 
-    console.info('Timer: ', timer);
+    this.apiUtility.storeTimer(this.timer, (data) => {
+      if (data !== undefined) {
+        const id = data.id;
+        if (id !== undefined) {
+          timer = id;
+        }
+      }
 
-    this.router.navigate([Route.getTimerRoute(timer, true)]);
+      this.router.navigate([Route.getTimerRoute(timer, true)]);
+    });
   }
 
   /**

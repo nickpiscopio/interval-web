@@ -1,5 +1,11 @@
 export class Route {
-  public static readonly DOMAIN = window.location.hostname + ":4200/";
+  // External routes.
+  private static readonly ROUTE_TIMER = '/timer';
+  public static readonly ROUTE_TIMER_CREATE = Route.ROUTE_TIMER + '/create';
+  public static readonly ROUTE_TIMER_UPDATE = Route.ROUTE_TIMER + '/update';
+  public static readonly ROUTE_TIMER_GET = Route.ROUTE_TIMER + '/get';
+
+  public static readonly DOMAIN = window.location.hostname + ':4200/';
   // Internal routes.
   private static readonly ROOT = '/';
   private static readonly PREFIX_PARAM = ':';

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
@@ -51,6 +52,7 @@ import { ShareComponent } from './content/share/share.component';
   imports: [
     CommonModule,
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     DragulaModule.forRoot(),
     ClipboardModule,

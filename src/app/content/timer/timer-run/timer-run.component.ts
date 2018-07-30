@@ -6,6 +6,8 @@ import { Interval } from '../interval/interval';
 import { fade } from '../../../animations/fade';
 import { Time } from '../../../utility/time.utility';
 import { KeyCode } from '../../../constant/key-code.constant.1';
+import {HttpClient} from '@angular/common/http';
+import {UrlUtility} from '../../../utility/url.utility';
 
 const VOLUME_LOWEST = 0;
 const VOLUME_HIGHEST = 1;
@@ -51,7 +53,7 @@ export class TimerComponent implements OnDestroy {
   // We default the volume to 70%.
   private volume = VOLUME_DEFAULT;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.displayPause = false;
 
     this.intervalNotification1 = new Audio('assets/sounds/beep_1.mp3');
@@ -60,21 +62,16 @@ export class TimerComponent implements OnDestroy {
     this.intervalNotification1.volume = this.volume;
     this.intervalNotification2.volume = this.volume;
 
-    // Tries to parse the timer that comes in the URL, if it can, then we set it.
-    try {
-      let urlObj = JSON.parse(this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM));
-      this.timer = new Timer(urlObj.name, urlObj.intervals);
-      this.timer.finalize();
-    } catch (err) {
-      console.log(TimerComponent.name + ' error: ', err);
-    }
+    new UrlUtility(route, http).getTimer((timer) => {
+      if (timer !== undefined) {
+        this.timer = timer;
 
-    if (this.timer !== undefined) {
-      let intervals = this.timer.intervals;
-      if (intervals !== undefined && this.objectKeys(intervals).length > 0) {
-        this.runTimer(intervals, false);
+        const intervals = this.timer.intervals;
+        if (intervals !== undefined && this.objectKeys(intervals).length > 0) {
+          this.runTimer(intervals, false);
+        }
       }
-    }
+    });
   }
 
   ngOnDestroy() {
@@ -93,12 +90,12 @@ export class TimerComponent implements OnDestroy {
     // Remove the old interval timer if there is one, so we don't run into issues creating a new one.
     clearInterval(this.intervalTimer);
 
-    let interval = intervals[this.intervalIndex];
+    const interval = intervals[this.intervalIndex];
     // If the interval is undefined, then we reached the end of the intervals, and we should finish.
     if (interval !== undefined) {
       this.intervalName = interval.name;
 
-      let nextInterval = intervals[this.intervalIndex + 1];
+      const nextInterval = intervals[this.intervalIndex + 1];
       if (nextInterval !== undefined) {
         this.nextIntervalName = nextInterval.name;
       } else {
@@ -158,7 +155,7 @@ export class TimerComponent implements OnDestroy {
     // Scroll to the interval because the user has selected it.
     this.scrollToInterval();
 
-    this.runTimer(this.timer.intervals, false)
+    this.runTimer(this.timer.intervals, false);
   }
 
   /**
@@ -229,7 +226,7 @@ export class TimerComponent implements OnDestroy {
    * @return Boolean value on whether or not the timer has finished.
    */
   isTimerFinished() {
-    return this.intervalIndex == this.timer.intervals.length && this.timer.totalDuration == 0;
+    return this.intervalIndex === this.timer.intervals.length && this.timer.totalDuration === 0;
   }
 
   /**
@@ -260,7 +257,7 @@ export class TimerComponent implements OnDestroy {
     if (this.volume > VOLUME_LOWEST) {
       this.volume = VOLUME_LOWEST;
     } else {
-      this.volume = VOLUME_DEFAULT
+      this.volume = VOLUME_DEFAULT;
     }
   }
 
