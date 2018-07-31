@@ -47,6 +47,8 @@ export class ApiUtility {
    * @param callback        The function that gets called when the API returns.
    */
   storeTimer(timer: Timer, callback) {
+    timer.finalize();
+
     const body = {
       timer: EncryptUtility.encode(JSON.stringify(timer))
     };

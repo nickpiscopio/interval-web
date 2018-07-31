@@ -119,6 +119,10 @@ export class TimerCreateComponent {
   displayShareDialog() {
     this.dialog.open(ShareComponent, {
       data: { timer: this.timer, message: '' }
+    }).afterClosed().subscribe(() => {
+      // We add an interval here because we always want at least 1.
+      // We finalized the intervals when we shared.
+      this.timer.addDefaultInterval();
     });
   }
 

@@ -216,11 +216,11 @@ export class IntervalCreateComponent implements OnChanges {
    * There are only allowed to be 6 indecies in the time array at any point in time.
    */
   setTime() {
-    // The first two indecies will always be the hours.
+    // The first two indices will always be the hours.
     this.hours = this.time[0] + this.time[1];
-    // The second two indecies will always be the minutes.
+    // The second two indices will always be the minutes.
     this.minutes = this.time[2] + this.time[3];
-    // The third two indecies will always be the seconds.
+    // The third two indices will always be the seconds.
     this.seconds = this.time[4] + this.time[5];
 
     // Now that the time has been changed by the user, parse it to be millis.
