@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Route} from '../constant/route.constant';
-import {StatusCode} from '../constant/status-code.constant.1';
+import {StatusCode} from '../constant/status-code.constant';
 import {Communication} from './communication.utility';
-import {Timer} from '../content/timer/timer';
+import {Timer} from '../fragments/content/timer/timer';
 import {EncryptUtility} from './encrypt.utility';
 
 export class ApiUtility {

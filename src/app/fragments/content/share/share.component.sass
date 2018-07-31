@@ -1,0 +1,53 @@
+@import '../../../../styles/color'
+@import '../../../../styles/integer'
+
+$social-icon-width: 40px
+
+div
+  text-align: center
+
+button
+  float: right
+
+h1
+  display: inline
+  font-weight: 300
+
+p
+  margin-top: $margin-small
+  margin-bottom: $margin-xxx-small 
+
+mat-card
+  padding: $margin-x-small
+  
+  input
+    padding-top: 3px
+    text-align: left
+    width: 100%
+    font-size: $font-size-medium
+    
+    color: $color4
+  
+.layout button
+    margin-left: $margin-xx-small
+    padding: $margin-xxx-small 14px
+    color: $color4
+
+#wrapper-social
+  margin-top: $margin-normal
+
+.social [class*="fa fa-"]
+  background-color: $color3
+  border-radius: $social-icon-width
+  color: $color-text
+  display: inline-block
+  height: $social-icon-width
+  line-height: $social-icon-width
+  margin: auto ($margin-normal / 2)
+  width: $social-icon-width
+  font-size: 18px
+  text-align: center
+
+.social [class*="fa fa-"]:hover
+  background-color: $color1
+  

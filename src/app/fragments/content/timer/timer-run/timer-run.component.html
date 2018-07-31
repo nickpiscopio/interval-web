@@ -1,0 +1,83 @@
+<div *ngIf="!isLoading; else loading" id="body" class="row" [@fade]>
+
+  <div id="wrapper" class="padding-none col-md-9 order-md-2">
+    <div class="layout column">
+      <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
+      <div id="wrapper-timer" class="match-parent d-flex align-items-center">
+        <div>
+          <h2 id="interval-current">{{intervalName}}</h2>
+
+          <h1>
+            <app-clock-display [time]="time"
+                               [isTimerFinished]="isTimerFinished()"></app-clock-display>
+            <!-- <p *ngIf="isTimerFinished()">FINISHED!</p> -->
+          </h1>
+          <div *ngIf="displayNextIntervalLabel()" id="wrapper-interval-next">
+            <p>NEXT INTERVAL</p>
+            <h2>{{nextIntervalName}}</h2>
+          </div>
+        </div>
+        
+      </div>
+      
+      <app-footer></app-footer>
+    </div>
+
+    <div id="wrapper-controls">
+      <button *ngIf="!paused"mat-icon-button
+              (click)="setTimerActivation(false)">
+        <mat-icon>pause</mat-icon>
+      </button>
+
+      <button mat-icon-button
+              (click)="setVolume()">
+        <mat-icon>{{getVolumeIcon()}}</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <div *ngIf="timer !== undefined" id="wrapper-intervals" class="padding-none col-md-3 order-md-1 mat-elevation-z2">
+    <div class="layout column">
+      <h4>{{timer.name}}</h4>
+
+      <div id="wrapper-title-intervals" class="row align-items-end">
+        <div id="title" class="col">
+          <h5>INTERVALS</h5>
+        </div>
+        <div class="padding-none col-auto">
+          <p><span>{{getCurrentIntervalNumber()}}</span>/{{getIntervalTotal()}}</p>
+        </div>
+      </div>
+      <div id="intervals" class="match-parent">
+        <div *ngFor="let interval of timer.intervals; let i = index">
+          <app-interval-display [index]="i"
+                                [interval]="interval"
+                                [currentIndex]="intervalIndex"
+                                (intervalSelected)="selectInterval($event)"></app-interval-display>
+        </div>
+      </div>
+      <div id="wrapper-duration" class="row align-items-end">
+        <div id="title" class="col">
+          <p>REMAINING DURATION</p>
+        </div>
+        <div class="padding-none col-auto">
+          <app-clock-display [time]="getRemainingDuration()"></app-clock-display>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
+  <div id="wrapper-pause-action">
+    <p *ngIf="paused">INTERVAL PAUSED</p>
+    <button mat-fab id="btn-pause">
+      <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

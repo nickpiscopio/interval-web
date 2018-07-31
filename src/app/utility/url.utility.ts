@@ -3,7 +3,7 @@ import {Route} from '../constant/route.constant';
 import {EncryptUtility} from './encrypt.utility';
 import {ActivatedRoute} from '@angular/router';
 import {ApiUtility} from './api.utility';
-import {Timer} from '../content/timer/timer';
+import {Timer} from '../fragments/content/timer/timer';
 
 export class UrlUtility {
   private apiUtility: ApiUtility;

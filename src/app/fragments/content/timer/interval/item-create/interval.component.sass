@@ -1,0 +1,95 @@
+@import '../../../../../../styles/color'
+@import '../../../../../../styles/integer'
+
+mat-card
+  margin-bottom: 9px
+  background-color: $color-background
+  box-shadow: none !important
+  border: 1px solid $color-disabled
+  padding: $margin-x-small
+  transition: all $duration-transition ease
+  font-size: $font-size-medium
+
+  // The user is actively on this card.
+  &.active
+    padding: $margin-normal
+    font-size: $font-size-large
+
+    .indicator
+      margin-left: -$margin-normal
+  
+    .icon-drag
+      margin-top: 7px
+
+  // Values have been added.
+  &.dirty
+    border: 0
+    background-color: $color-card
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) !important
+
+    .duration
+      margin-right: $margin-medium
+
+      input &.middle
+        margin-left: 2px
+        
+      .suffix
+        font-size: .5em
+
+.row
+  margin: 0
+
+.layout input
+  margin-top: 0
+  align-self: flex-end
+
+.indicator
+  width: 10px
+  margin-left: -$margin-x-small
+  margin-right: $margin-x-small
+
+.icon-drag
+  margin-top: 3px
+  margin-left: -20px
+  margin-right: 16px
+  color: $color-disabled
+  cursor: grab
+
+.menu
+  position: absolute
+  top: $margin-xxxx-small
+  right: $margin-xxxx-small
+  color: $color-disabled
+
+.duration
+  align-self: flex-end
+  padding-left: 3px 
+  padding-right: 7px
+  margin-right: 12px
+  
+  &.active
+    border-width: 2px
+    border-bottom-width: 2px
+    border-bottom-color: $color1
+    border-bottom-style: solid
+    transition: border-width 75ms linear
+
+  > div
+    display: inline-block
+
+    &.active span
+      color: $color4
+    
+    span 
+      display: inline-block
+      color: $color-grey-light
+
+  input
+    text-align: center
+    
+    &.middle
+      margin-left: 2px
+    
+  .suffix
+    font-size: .5em
+    margin-left: -1px

@@ -13,7 +13,7 @@ export class Time {
   parseTime(time: number) {
     if (time > 0) {
       // This is the time left in seconds.
-      let timeInSeconds = time / Time.SECOND;
+      const timeInSeconds = time / Time.SECOND;
 
       this.hours = Math.floor(timeInSeconds / 3600);
       this.minutes = Math.floor((timeInSeconds % 3600) / 60);

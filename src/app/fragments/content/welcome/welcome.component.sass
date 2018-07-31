@@ -1,0 +1,45 @@
+@import '../../../../styles/color'
+@import '../../../../styles/integer'
+  
+.row 
+  height: 100vh
+  text-align: center
+
+  > div
+    width: 100%
+
+  h3
+    font-size: $font-size-normal
+    letter-spacing: 3px
+    margin-bottom: $margin-xx-small
+
+  img
+    width: 325px
+
+  p 
+    margin-top: $margin-x-small
+    font-style: italic
+
+button
+  margin-top: $margin-normal
+  padding: $margin-small 22px 14px $margin-normal
+  background-color: $color1
+  color: $color-button-opaque
+  letter-spacing: 1px
+  opacity: 0
+  transition: opacity 275ms ease-in-out
+
+  mat-icon
+    margin-top: -4px
+    margin-right: $margin-xx-small
+
+button.active
+  opacity: 1
+
+#wrapper
+  background-image: url("../../../../assets/images/interval_background_welcome.jpg")
+
+app-footer
+  position: fixed
+  bottom: 0
+  width: 100%

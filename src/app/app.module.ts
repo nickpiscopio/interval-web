@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -26,16 +27,18 @@ import { routes } from './app.router';
 
 // Components
 import { AppComponent } from './app.component';
-import { WelcomeComponent } from './content/welcome/welcome.component';
-import { TimerComponent } from './content/timer/timer-run/timer-run.component';
-import { TimerCreateComponent } from './content/timer/timer-create/timer-create.component';
-import { FooterComponent } from './fragments/footer/footer.component';
-import { IntervalCreateComponent } from './content/timer/interval/item-create/interval.component';
-import { IntervalDisplayComponent } from './content/timer/interval/item-display/interval.component';
-import { ClockDisplayComponent } from './fragments/clock-display/clock-display.component';
+import { WelcomeComponent } from './fragments/content/welcome/welcome.component';
+import { TimerComponent } from './fragments/content/timer/timer-run/timer-run.component';
+import { TimerCreateComponent } from './fragments/content/timer/timer-create/timer-create.component';
+import { FooterComponent } from './fragments/modules/footer/footer.component';
+import { IntervalCreateComponent } from './fragments/content/timer/interval/item-create/interval.component';
+import { IntervalDisplayComponent } from './fragments/content/timer/interval/item-display/interval.component';
+import { ClockDisplayComponent } from './fragments/modules/clock-display/clock-display.component';
+import { LoadingComponent } from './fragments/modules/loading/loading.component';
+import { ProgressComponent } from './fragments/modules/progress/progress.component';
 
 // Dialogs
-import { ShareComponent } from './content/share/share.component';
+import { ShareComponent } from './fragments/content/share/share.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,8 @@ import { ShareComponent } from './content/share/share.component';
     IntervalCreateComponent,
     IntervalDisplayComponent,
     ClockDisplayComponent,
+    LoadingComponent,
+    ProgressComponent,
     ShareComponent
   ],
   imports: [
@@ -64,6 +69,7 @@ import { ShareComponent } from './content/share/share.component';
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatSnackBarModule,
     routes

@@ -1,0 +1,96 @@
+<div *ngIf="!isLoading; else loading" id="body" class="layout column" [@fade]>
+
+  <div class="row">
+    <div id="wrapper" class="match-parent col-md-9">
+      <header class="mat-elevation-z2">
+        <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_with.svg" />
+      </header>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="layout column">
+              <h1>Create a timer</h1>
+              <div class="title">
+                <mat-icon>access_time</mat-icon>
+                <h3>INTERVALS</h3>
+              </div>
+              <div *ngIf="hasIntervals()" id="wrapper-intervals" class="match-parent">
+                <ul dragula="GROUP_INTERVALS" [(dragulaModel)]="timer.intervals">
+                  <li *ngFor="let interval of timer.intervals; let i = index">
+                    <app-interval-create [index]="i"
+                                          [interval]="interval"
+                                          [color]="color.getIntervalColor(interval.name)"
+                                          (updateInterval)="updateInterval($event)"
+                                          (duplicateInterval)="duplicateInterval($event)"
+                                          (removeInterval)="removeInterval($event)"></app-interval-create>
+                  </li>
+                </ul>
+              </div>
+              <div id="wrapper-duration" class="align-items-end">
+                <app-footer></app-footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="timer !== undefined" id="overview" class="col-md-3 mat-elevation-z2">
+      <div id="top">
+        <div class="title">
+          <mat-icon>description</mat-icon>
+          <h3>TIMER OVERVIEW</h3>
+        </div>
+  
+        <div id="description" class="row">
+          <div class="col">
+            <p>INTERVALS</p>
+            <h3>{{getTotalIntervals()}}</h3>
+          </div>
+          <div class="col">
+            <p>DURATION</p>
+            <h3><app-clock-display [time]="timer.totalDuration"></app-clock-display></h3>
+          </div>
+        </div>
+        
+        <div id="wrapper-name">
+          <mat-form-field>
+          <mat-label>TIMER NAME</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      [(ngModel)]="timer.name"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
+        </div>
+      </div>  
+
+      <div class="row"> 
+        <button id="btn-share"
+                class="col"
+                mat-button
+                (click)="share()"
+                [disabled]="!isValidTimer()">
+          <mat-icon>share</mat-icon>
+          SHARE
+        </button>
+        <button id="btn-start"
+                mat-button
+                class="col"
+                color="primary"
+                (click)="start()" 
+                [disabled]="!isValidTimer()">
+          START
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      
+    </div>
+
+  </div>
+  
+</div>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
