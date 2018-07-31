@@ -51,6 +51,12 @@ export class TimerComponent implements OnDestroy {
 
   time: number;
 
+  // Boolean value for if the timer is paused or not.
+  paused = false;
+
+  // Boolean value to tell whether the timer is loading or not.
+  isLoading = false;
+
   // This is the current interval index that is being displayed.
   intervalIndex = 0;
 
@@ -59,13 +65,6 @@ export class TimerComponent implements OnDestroy {
 
   private intervalNotification1;
   private intervalNotification2;
-
-  private displayPause: boolean;
-  // Boolean value for if the timer is paused or not.
-  private paused = false;
-
-  // Boolean value to tell whether the timer is loading or not.
-  isLoading = false;
 
   // We default the volume to 70%.
   private volume = VOLUME_DEFAULT;
@@ -78,8 +77,6 @@ export class TimerComponent implements OnDestroy {
               private http: HttpClient) {
 
     this.isLoading = true;
-
-    this.displayPause = false;
 
     this.noSleep = new NoSleep();
 
@@ -267,7 +264,7 @@ export class TimerComponent implements OnDestroy {
    * @return Whether the pause should be shown.
    */
   shouldShowPause() {
-    return this.displayPause || this.paused;
+    return this.paused;
   }
 
   /**
@@ -329,7 +326,7 @@ export class TimerComponent implements OnDestroy {
   getVolumeIcon() {
     let icon;
 
-    switch(this.volume) {
+    switch (this.volume) {
       case VOLUME_LOWEST:
         icon = ICON_VOLUME_OFF;
         break;
