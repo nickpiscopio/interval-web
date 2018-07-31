@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, Renderer2, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges } from '@angular/core';
 import { Interval } from '../interval';
 import { Class } from '../../../../../constant/class.constant';
 import { Time } from '../../../../../utility/time.utility';
@@ -32,19 +32,17 @@ export class IntervalCreateComponent implements OnChanges {
   @Output() duplicateInterval = new EventEmitter<number>();
   @Output() removeInterval = new EventEmitter<number>();
 
-  private hours = DEFAULT_TIME;
-  private minutes = DEFAULT_TIME;
-  private seconds = DEFAULT_TIME;
+  hours = DEFAULT_TIME;
+  minutes = DEFAULT_TIME;
+  seconds = DEFAULT_TIME;
 
-  private time = ['0','0','0','0','0','0'];
+  private time = ['0', '0', '0', '0', '0', '0'];
 
   // Boolean value to tell whether the inputs were selected or not.
   private nameSelected = false;
   private durationSelected = false;
 
   private timeUtil = new Time();
-
-  constructor(private renderer: Renderer2) { }
 
   ngOnChanges(changes) {
     if (changes.interval !== undefined && changes.interval.currentValue !== undefined) {
@@ -88,7 +86,7 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Gets the digits for a specified time. We always want there to be a leading zero for time.
-   * 
+   *
    * @param time  The string time that is checking the digits.
    */
   getTimeDigits(time: string) {
@@ -97,14 +95,14 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Checks to see if the value entered in the input is valid.
-   * 
+   *
    * @param event   The KeyboardEvent that references the keys that were pressed by the user.
-   * 
+   *
    * @return Boolean value on whether or not the key that was pressed was numberic.
    */
   isKeyAllowed(event: KeyboardEvent) {
-    var charCode = event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != KeyCode.KEY_CODE_DELETE ||
+    const charCode = event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== KeyCode.KEY_CODE_DELETE ||
         event.shiftKey ||
         event.altKey) {
       return false;
@@ -115,36 +113,36 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Executes when the user changes the duration.
-   * 
+   *
    * @param event   The KeyboardEvent that references the keys that were pressed by the user.
    */
   onChangeDuration(event: KeyboardEvent) {
-    let maxTimeLength = 6;
+    const  maxTimeLength = 6;
 
     let tempArr = this.getTimeArray();
 
-    switch(event.keyCode) {
+    switch (event.keyCode) {
         case KeyCode.KEY_CODE_BACKSPACE:
         case KeyCode.KEY_CODE_DELETE:
           // We create an array that is the exact number of missing indecies.
-          // We always need 6 indecies in the duration for it to display properly.
-          let prefixArr = new Array(maxTimeLength - tempArr.length);
+          // We always need 6 indices in the duration for it to display properly.
+          const prefixArr = new Array(maxTimeLength - tempArr.length);
           // We set each index to be the default digit.
           prefixArr.fill(DEFAULT_TIME_DIGIT);
 
-          // Concatinate the arrays.
+          // Concatenate the arrays.
           tempArr = prefixArr.concat(tempArr);
 
           break;
         default:
-          let arrLength = tempArr.length;
+          const arrLength = tempArr.length;
 
-          // We only want 6 indecies in the array at a time, so we need to remove from the head since we are adding from the end.
+          // We only want 6 indices in the array at a time, so we need to remove from the head since we are adding from the end.
           if (arrLength > maxTimeLength) {
             tempArr.splice(0, arrLength - maxTimeLength);
           } else if (arrLength < maxTimeLength) {
             // Add to the array since we selected both values and inserted 1 new one already.
-            // We unshift to get back to 6 indecies.
+            // We unshift to get back to 6 indices.
             tempArr.unshift(DEFAULT_TIME_DIGIT);
           }
           
@@ -191,7 +189,7 @@ export class IntervalCreateComponent implements OnChanges {
     if (this.isDurationEnabled(this.hours)) {
       this.hoursInput.nativeElement.focus();
     } else {
-      this.focusMinutes()
+      this.focusMinutes();
     }
   }
 
@@ -233,11 +231,11 @@ export class IntervalCreateComponent implements OnChanges {
    * Converts the time to milliseconds and then notifies the change the user made to the duration.
    */
   convertTimeToMillis() {
-    let hoursInSeconds = Math.floor(Number(this.hours) * 3600);
-    let minutesInSeconds = Math.floor((Number(this.minutes) * 60));
-    let seconds = Number(this.seconds);
+    const hoursInSeconds = Math.floor(Number(this.hours) * 3600);
+    const minutesInSeconds = Math.floor((Number(this.minutes) * 60));
+    const seconds = Number(this.seconds);
 
-    this.interval.duration = (hoursInSeconds + minutesInSeconds + seconds) * 1000
+    this.interval.duration = (hoursInSeconds + minutesInSeconds + seconds) * 1000;
 
     this.onChange();
   }
@@ -246,22 +244,22 @@ export class IntervalCreateComponent implements OnChanges {
    * Gets the time array.
    */
   getTimeArray() {
-    return this.hours.split("").concat(this.minutes.split("").concat(this.seconds.split("")));
+    return this.hours.split('').concat(this.minutes.split('').concat(this.seconds.split('')));
   }
 
   /**
    * Checks to see if the interval has any values.
    */
   hasValues() {
-    let name = this.interval.name;
-    let duration = this.interval.duration;
+    const name = this.interval.name;
+    const duration = this.interval.duration;
     return (name !== undefined && name.trim() !== '') ||
            (duration !== undefined && duration > 0);
   }
 
   /**
    * Gets the class for the interval card that will change the way it is displayed to the user depending upon if there are values or not.
-   * 
+   *
    * @return The class for the mat card.
    */
   getMatCardClass() {
@@ -280,7 +278,7 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Gets the class for the hours depending upon if there are values or not.
-   * 
+   *
    * @return The class for the hours.
    */
   getHoursClass() {
@@ -289,7 +287,7 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Gets the class for the minutes depending upon if there are values or not.
-   * 
+   *
    * @return The class for the minutes.
    */
   getMinutesClass() {
@@ -298,7 +296,7 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Gets the class for the seconds depending upon if there are values or not.
-   * 
+   *
    * @return The class for the seconds.
    */
   getSecondsClass() {
@@ -307,9 +305,9 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Gets the class for the duration enablement depending upon if there are values or not.
-   * 
+   *
    * @param model   The duration model to check if there is a value.
-   * 
+   *
    * @return The class for the duration.
    */
   getDurationEnablementClass(model: string) {
@@ -318,18 +316,18 @@ export class IntervalCreateComponent implements OnChanges {
 
   /**
    * Checks to see if the duration is enabled or not.
-   * 
+   *
    * @param model   The duration model to check if there is a value.
-   * 
+   *
    * @return Boolean value for whether the duration input is enabled.
    */
   isDurationEnabled(model: string) {
-    return model !== DEFAULT_TIME
+    return model !== DEFAULT_TIME;
   }
 
   /**
    * Gets the class for the duration selection.
-   * 
+   *
    * @return The class for whether the duration is active or not.
    */
   getDurationSelectionClass() {

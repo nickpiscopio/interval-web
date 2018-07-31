@@ -32,13 +32,15 @@ export class UrlUtility {
           const timer = data.timer;
           if (timer !== undefined && timer.length > 0) {
             this.initTimer(EncryptUtility.decode(timer), callback);
+          } else {
+            callback();
           }
         });
       }
     } catch (err) {
-      console.log(UrlUtility.name + ' error: ', err);
-
       callback();
+
+      console.log(UrlUtility.name + ' error: ', err);
     }
   }
 

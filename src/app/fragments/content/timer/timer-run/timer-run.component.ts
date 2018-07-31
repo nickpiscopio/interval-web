@@ -1,5 +1,5 @@
 import { Component, OnDestroy, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Timer } from '../timer';
 import { Interval } from '../interval/interval';
 import { fade } from '../../../../animations/fade';
@@ -12,6 +12,9 @@ import {UrlUtility} from '../../../../utility/url.utility';
 // Once the timer stops running, we allow the device to sleep again.
 // Documentation: https://github.com/richtr/NoSleep.js?utm_source=recordnotfound.com
 import * as NoSleep from 'nosleep.js';
+import {MessageUtility} from '../../../../utility/message.utility';
+import {MatDialog} from '@angular/material';
+import {Route} from '../../../../constant/route.constant';
 
 const VOLUME_LOWEST = 0;
 const VOLUME_HIGHEST = 1;
@@ -28,6 +31,10 @@ const ICON_PAUSE = 'pause';
 // It is needed because 'NoSleep' must be wrapped in a user input event handler.
 // e.g. a mouse or touch handler
 const EVENT_NO_SLEEP = 'click';
+
+const ERROR_OPENING_TIMER_TITLE = 'That timer must be a ghost!';
+const ERROR_OPENING_TIMER_MESSAGE = 'We can\'t find the timer you are looking for. Would you like to create your own?';
+const ERROR_OPENING_TIMER_POSITIVE_BUTTON = 'CREATE TIMER';
 
 @Component({
   selector: 'app-timer-run',
@@ -65,7 +72,9 @@ export class TimerComponent implements OnDestroy {
 
   private noSleep;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private dialog: MatDialog,
               private http: HttpClient) {
 
     this.isLoading = true;
@@ -91,6 +100,16 @@ export class TimerComponent implements OnDestroy {
         if (intervals !== undefined && intervals.length > 0) {
           this.runTimer(intervals, false);
         }
+      } else {
+        new MessageUtility(dialog)
+          .openDialog(ERROR_OPENING_TIMER_TITLE,
+                      ERROR_OPENING_TIMER_MESSAGE,
+                     null,
+                      ERROR_OPENING_TIMER_POSITIVE_BUTTON)
+          .afterClosed().subscribe(() => {
+            // Go to the create screen back because we don't have a valid timer.
+            this.router.navigate([Route.INTERNAL_ROUTE_TIMER_CREATE]);
+        });
       }
 
       this.isLoading = false;

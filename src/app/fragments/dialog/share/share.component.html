@@ -1,12 +1,14 @@
-<div class="dialog">
+<div>
   <button #close mat-icon-button class="right btn-close" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button>
   <h1>Share <input [(ngModel)]="timer.name" (blur)="getUrl()"/></h1>
-  <p>Use the link below to save your timer or to share it with friends:</p>
-  <div class="layout">
-    <mat-card class="match-parent"><input [(ngModel)]="url" readonly="readonly"/></mat-card>
-    <button mat-raised-button ngxClipboard [cbContent]="url" (click)="copyUrl()"><mat-icon>file_copy</mat-icon></button>
-  </div>
-  <div id="wrapper-social">
+
+  <div *ngIf="!isLoading; else loading">
+    <p>Use the link below to save your timer or to share it with friends:</p>
+    <div class="layout">
+      <mat-card class="match-parent"><input [(ngModel)]="url" readonly="readonly"/></mat-card>
+      <button mat-raised-button ngxClipboard [cbContent]="url" (click)="copyUrl()"><mat-icon>file_copy</mat-icon></button>
+    </div>
+    <div id="wrapper-social">
       <a class="social" href="https://twitter.com/intent/tweet?hashtags=Fitness,App,Intencity&original_referer=https%3A%2F%2Fpublish.twitter.com%2F&ref_src=twsrc%5Etfw&url=http://beta.intencity.fit" target="_blank">
         <mat-icon fontSet="fontawesome" fontIcon="fa-twitter"></mat-icon>
       </a>
@@ -22,5 +24,14 @@
       <a class="social" href="https://www.reddit.com/submit?url=http%3A%2F%2Fbeta.intencity.fit&resubmit=true&title=Fitness+Application+Utilizes+AI" target="_blank">
         <mat-icon fontSet="fontawesome" fontIcon="fa-reddit-alien"></mat-icon>
       </a>
+    </div>
   </div>
+
+  <ng-template #loading>
+    <div id="wrapper-progress">
+      <app-progress [showProgress]="showProgress"
+                    [center]="centered"></app-progress>
+    </div>
+  </ng-template>
+
 </div>

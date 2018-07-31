@@ -38,7 +38,8 @@ import { LoadingComponent } from './fragments/modules/loading/loading.component'
 import { ProgressComponent } from './fragments/modules/progress/progress.component';
 
 // Dialogs
-import { ShareComponent } from './fragments/content/share/share.component';
+import { DialogComponent } from './fragments/dialog/dialog/dialog.component';
+import { ShareComponent } from './fragments/dialog/share/share.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ShareComponent } from './fragments/content/share/share.component';
     ClockDisplayComponent,
     LoadingComponent,
     ProgressComponent,
+    DialogComponent,
     ShareComponent
   ],
   imports: [
@@ -75,6 +77,7 @@ import { ShareComponent } from './fragments/content/share/share.component';
     routes
   ],
   entryComponents: [
+    DialogComponent,
     ShareComponent
   ],
   providers: [],

@@ -33,10 +33,10 @@ export class ApiUtility {
         }
       },
       (err) => {
-        // This function gets called when we fail to update a protocol into the database.
-        console.error(err);
-
         callback(body);
+
+        // This function gets called when we fail to update a protocol into the database.
+        console.log(err);
       });
   }
 
@@ -61,10 +61,10 @@ export class ApiUtility {
         }
       },
       (err) => {
-        // This function gets called when we fail to update a protocol into the database.
-        console.error(err);
-
         callback();
+
+        // This function gets called when we fail to update a protocol into the database.
+        console.log(err);
       });
   }
 }

@@ -6,7 +6,7 @@ import { Color } from '../../../../utility/color.utility';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { ShareComponent } from '../../share/share.component';
+import { ShareComponent } from '../../../dialog/share/share.component';
 import {HttpClient} from '@angular/common/http';
 import {ApiUtility} from '../../../../utility/api.utility';
 import {UrlUtility} from '../../../../utility/url.utility';
