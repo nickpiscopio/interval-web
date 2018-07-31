@@ -5,6 +5,7 @@ import { Route } from '../../../constant/route.constant';
 import {ApiUtility} from '../../../utility/api.utility';
 import {HttpClient} from '@angular/common/http';
 import {fade} from '../../../animations/fade';
+import {Network} from '../../../constant/network.constant';
 
 const MESSAGE_COPY = 'URL copied to clipboard!';
 
@@ -80,5 +81,56 @@ export class ShareComponent {
     this.snackBar.open(MESSAGE_COPY, null, {
       duration: 2000
     });
+  }
+
+  /**
+   * Gets the Twitter URL.
+   *
+   * @return The URL to share on Twitter.
+   */
+  getTwitterUrl() {
+    return 'https://twitter.com/intent/tweet?hashtags=Interval,HIIT,Fitness,App&original_referer=https%3A%2F%2Fpublish.twitter.com%2F&ref_src=twsrc%5Etfw&url=' + this.url;
+  }
+
+  /**
+   * Gets the Facebook URL.
+   *
+   * @return The URL to share on Facebook.
+   */
+  getFacebookUrl() {
+    return 'https://www.facebook.com/sharer/sharer.php?u=' + this.url;
+  }
+
+  /**
+   * Gets the Google Plus URL.
+   *
+   * @return The URL to share on Google Plus.
+   */
+  getGooglePlusUrl() {
+    return 'https://plus.google.com/share?url=' + this.url;
+  }
+
+  /**
+   * Gets the LinkedIn URL.
+   *
+   * @return The URL to share on LinkedIn.
+   */
+  getLinkedInUrl() {
+   return 'https://www.linkedin.com/shareArticle?mini=true&url=' + this.url;
+  }
+
+  /**
+   * Gets the reddit URL.
+   *
+   * @return The URL to share on reddit.
+   */
+  getRedditUrl() {
+    let name = 'Interval';
+
+    const timerName = this.timer.name;
+    if (timerName !== undefined && timerName.trim().length > 0) {
+      name += ' HIIT: ' + timerName;
+    }
+    return 'https://www.reddit.com/submit?url=' + this.url + '&resubmit=true&title=' + name;
   }
 }
