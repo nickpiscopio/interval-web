@@ -5,7 +5,6 @@ import { Route } from '../../../constant/route.constant';
 import {ApiUtility} from '../../../utility/api.utility';
 import {HttpClient} from '@angular/common/http';
 import {fade} from '../../../animations/fade';
-import {Network} from '../../../constant/network.constant';
 
 const MESSAGE_COPY = 'URL copied to clipboard!';
 
@@ -22,6 +21,8 @@ export class ShareComponent {
   showProgress = true;
   centered = true;
 
+  message: string;
+
   timer: Timer;
 
   url: string;
@@ -30,7 +31,7 @@ export class ShareComponent {
 
   private apiUtility: ApiUtility;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { timer: Timer },
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { timer: Timer, message: string },
               dialogRef: MatDialogRef<ShareComponent>,
               private snackBar: MatSnackBar,
               private http: HttpClient) {
@@ -38,6 +39,8 @@ export class ShareComponent {
     this.dialogRef = dialogRef;
 
     this.timer = data.timer;
+
+    this.message = data.message;
 
     this.apiUtility = new ApiUtility(http);
 
@@ -81,6 +84,13 @@ export class ShareComponent {
     this.snackBar.open(MESSAGE_COPY, null, {
       duration: 2000
     });
+  }
+
+  /**
+   * Returns whether or not to show the message inside the share dialog.
+   */
+  showMessage() {
+    return this.message !== undefined && this.message.length > 0;
   }
 
   /**

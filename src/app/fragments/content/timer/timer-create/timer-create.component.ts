@@ -116,9 +116,9 @@ export class TimerCreateComponent {
   /**
    * Opens the share dialog.
    */
-  share() {
+  displayShareDialog() {
     this.dialog.open(ShareComponent, {
-      data: { timer: this.timer }
+      data: { timer: this.timer, message: '' }
     });
   }
 

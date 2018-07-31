@@ -5,13 +5,15 @@
       <img alt="Interval Logo" src="../../../assets/images/interval_icon_color_without.svg" />
       <div id="wrapper-timer" class="match-parent d-flex align-items-center">
         <div>
-          <h2 id="interval-current">{{intervalName}}</h2>
+          <h2 *ngIf="!isTimerFinished" id="interval-current">{{intervalName}}</h2>
 
           <h1>
             <app-clock-display [time]="time"
-                               [isTimerFinished]="isTimerFinished()"></app-clock-display>
-            <!-- <p *ngIf="isTimerFinished()">FINISHED!</p> -->
+                               [isTimerFinished]="isTimerFinished"></app-clock-display>
           </h1>
+
+          <h3 *ngIf="isTimerFinished">FINISHED!</h3>
+
           <div *ngIf="displayNextIntervalLabel()" id="wrapper-interval-next">
             <p>NEXT INTERVAL</p>
             <h2>{{nextIntervalName}}</h2>
@@ -24,9 +26,9 @@
     </div>
 
     <div id="wrapper-controls">
-      <button *ngIf="!paused"mat-icon-button
-              (click)="setTimerActivation(false)">
-        <mat-icon>pause</mat-icon>
+      <button *ngIf="!paused" mat-icon-button
+              (click)="setTimerActivation()">
+        <mat-icon>{{getPauseIcon()}}</mat-icon>
       </button>
 
       <button mat-icon-button
@@ -68,14 +70,6 @@
     </div>
   </div>
 
-</div>
-<div id="wrapper-pause" *ngIf="shouldShowPause()" [@fade] (click)="setTimerActivation(false)">
-  <div id="wrapper-pause-action">
-    <p *ngIf="paused">INTERVAL PAUSED</p>
-    <button mat-fab id="btn-pause">
-      <mat-icon>{{getStartPauseButtonIcon()}}</mat-icon>
-    </button>
-  </div>
 </div>
 
 <ng-template #loading>

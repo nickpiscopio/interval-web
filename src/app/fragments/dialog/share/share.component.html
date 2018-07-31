@@ -3,11 +3,13 @@
   <h1>Share <input [(ngModel)]="timer.name" (blur)="getUrl()"/></h1>
 
   <div *ngIf="!isLoading; else loading">
+    <h3 *ngIf="showMessage()">{{message}}</h3>
     <p>Use the link below to save your timer or to share it with friends:</p>
     <div class="layout">
       <mat-card class="match-parent"><input [(ngModel)]="url" readonly="readonly"/></mat-card>
       <button mat-raised-button ngxClipboard [cbContent]="url" (click)="copyUrl()"><mat-icon>file_copy</mat-icon></button>
     </div>
+    <h4>SHARE ON SOCIAL MEDIA</h4>
     <div id="wrapper-social">
       <a class="social" href="{{getTwitterUrl()}}" target="_blank">
         <mat-icon fontSet="fontawesome" fontIcon="fa-twitter"></mat-icon>

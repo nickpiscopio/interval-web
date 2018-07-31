@@ -15,6 +15,7 @@ import * as NoSleep from 'nosleep.js';
 import {MessageUtility} from '../../../../utility/message.utility';
 import {MatDialog} from '@angular/material';
 import {Route} from '../../../../constant/route.constant';
+import {ShareComponent} from '../../../dialog/share/share.component';
 
 const VOLUME_LOWEST = 0;
 const VOLUME_HIGHEST = 1;
@@ -24,7 +25,7 @@ const ICON_VOLUME_DOWN = 'volume_down';
 const ICON_VOLUME_OFF = 'volume_off';
 const ICON_VOLUME_UP = 'volume_up';
 
-const ICON_PLAY = 'play_arrow';
+const ICON_SHARE = 'share';
 const ICON_PAUSE = 'pause';
 
 // This is the event for 'NoSleep'.
@@ -35,6 +36,8 @@ const EVENT_NO_SLEEP = 'click';
 const ERROR_OPENING_TIMER_TITLE = 'That timer must be a ghost!';
 const ERROR_OPENING_TIMER_MESSAGE = 'We can\'t find the timer you are looking for. Would you like to create your own?';
 const ERROR_OPENING_TIMER_POSITIVE_BUTTON = 'CREATE TIMER';
+const MESSAGE_SHARE_WHILE_PAUSED = 'INTERVAL IS PAUSED';
+const MESSAGE_CONGRATULATIONS = 'CONGRATULATIONS ON FINISHING!';
 
 @Component({
   selector: 'app-timer-run',
@@ -43,7 +46,6 @@ const ERROR_OPENING_TIMER_POSITIVE_BUTTON = 'CREATE TIMER';
   animations: [fade]
 })
 export class TimerComponent implements OnDestroy {
-
   timer: Timer;
 
   intervalName: string;
@@ -56,6 +58,9 @@ export class TimerComponent implements OnDestroy {
 
   // Boolean value to tell whether the timer is loading or not.
   isLoading = false;
+
+  // Flag to tell if the timer is finished or not.
+  isTimerFinished: boolean;
 
   // This is the current interval index that is being displayed.
   intervalIndex = 0;
@@ -136,6 +141,8 @@ export class TimerComponent implements OnDestroy {
     const interval = intervals[this.intervalIndex];
     // If the interval is undefined, then we reached the end of the intervals, and we should finish.
     if (interval !== undefined) {
+      this.isTimerFinished = false;
+
       this.intervalName = interval.name;
 
       const nextInterval = intervals[this.intervalIndex + 1];
@@ -180,13 +187,29 @@ export class TimerComponent implements OnDestroy {
         }
       }, Time.SECOND);
     } else {
+      this.isTimerFinished = true;
       // We subtract from the index here because there aren't any intervals left,
       // and we don't want to display to the user that there is 1 more interval, so we just remove it.
       this.intervalIndex--;
 
       // We disable 'NoSleep' here just in case the timer is actually finished.
       this.disableNoSleep();
+
+      this.displayShareDialog(MESSAGE_CONGRATULATIONS);
+
+      this.paused = true;
     }
+  }
+
+  /**
+   * Opens the share dialog.
+   */
+  displayShareDialog(message: string) {
+    this.dialog.open(ShareComponent, {
+      data: { timer: this.timer, message: message }
+    }).afterClosed().subscribe(() => {
+      this.setTimerActivation();
+    });
   }
 
   /**
@@ -231,17 +254,25 @@ export class TimerComponent implements OnDestroy {
    * Starts or stops the timer depending upon what was already done.
    */
   setTimerActivation() {
-    if (this.paused) {
-      // The timer is started again, so create a new timer and resume where we left off.
-      this.runTimer(this.timer.intervals, true);
-    } else {
-      // The timer is paused, so clear the interval timer so it doesn't continue.
-      clearInterval(this.intervalTimer);
+    // We only want to pause/resume if the timer isn't finished.
+    if (!this.isTimerFinished) {
+      if (this.paused) {
+        // The timer is started again, so create a new timer and resume where we left off.
+        this.runTimer(this.timer.intervals, true);
+      } else {
+        // The timer is paused, so clear the interval timer so it doesn't continue.
+        clearInterval(this.intervalTimer);
 
-      // We disable 'NoSleep' here because the timer is paused.
-      this.disableNoSleep();
+        // We disable 'NoSleep' here because the timer is paused.
+        this.disableNoSleep();
+
+        this.displayShareDialog(MESSAGE_SHARE_WHILE_PAUSED);
+      }
+    } else if (!this.paused) {
+      this.displayShareDialog(MESSAGE_CONGRATULATIONS);
     }
 
+    // This is outside of the condition because it displays the pause/share button if the timer isn't paused.
     this.paused = !this.paused;
   }
 
@@ -253,39 +284,9 @@ export class TimerComponent implements OnDestroy {
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     // We want to listen to the space bar being hit to pause and start the timer.
-    if (event.keyCode === KeyCode.KEY_CODE_SPACE) {
+    if (!this.paused && event.keyCode === KeyCode.KEY_CODE_SPACE) {
       this.setTimerActivation();
     }
-  }
-
-  /**
-   * Returns whether the pause should be shown.
-   *
-   * @return Whether the pause should be shown.
-   */
-  shouldShowPause() {
-    return this.paused;
-  }
-
-  /**
-   * Gets the icon for the start/pause button.
-   *
-   * @return The icon for the start/pause button.
-   */
-  getStartPauseButtonIcon() {
-    return this.paused ? ICON_PLAY : ICON_PAUSE;
-  }
-
-  /**
-   * Checks to see if the timer has finished.
-   *
-   * @return Boolean value on whether or not the timer has finished.
-   */
-  isTimerFinished() {
-    return this.timer !== undefined &&
-           this.timer.intervals !== undefined &&
-           this.intervalIndex === this.timer.intervals.length &&
-           this.timer.totalDuration === 0;
   }
 
   /**
@@ -321,7 +322,7 @@ export class TimerComponent implements OnDestroy {
   }
 
   /**
-   * Gets the icon of the volumne button
+   * Gets the icon of the volume button
    */
   getVolumeIcon() {
     let icon;
@@ -339,6 +340,13 @@ export class TimerComponent implements OnDestroy {
     }
 
     return icon;
+  }
+
+  /**
+   * Gets the icon of the pause button
+   */
+  getPauseIcon() {
+    return this.isTimerFinished ? ICON_SHARE : ICON_PAUSE;
   }
 
   /**
