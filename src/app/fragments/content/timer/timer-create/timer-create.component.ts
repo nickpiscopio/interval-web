@@ -16,7 +16,8 @@ import {Subscription} from 'rxjs';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 'intervals';
-const GROUP_INTERVALS_CLASS_NAME = 'icon-drag';
+const CLASS_NAME_DRAGGABLE = 'icon-drag';
+const CLASS_NAME_DRAGGABLE_2 = 'indicator';
 
 @Component({
   selector: 'app-timer-create',
@@ -101,7 +102,8 @@ export class TimerCreateComponent implements OnDestroy {
     // Only move the interval when using the movable indicator.
     this.dragulaService.createGroup(GROUP_INTERVALS, {
       moves: (el, container, handle) => {
-        return handle.classList.contains(GROUP_INTERVALS_CLASS_NAME);
+        return handle.classList.contains(CLASS_NAME_DRAGGABLE) ||
+               handle.classList.contains(CLASS_NAME_DRAGGABLE_2);
       }
     });
 

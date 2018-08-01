@@ -1,25 +1,29 @@
 @import '../../../../../../styles/color'
 @import '../../../../../../styles/integer'
 
+$padding-card-additional: 2px
+
 mat-card
-  margin-bottom: 9px
+  margin-bottom: 8px
+  padding: 0
   background-color: $color-background
   box-shadow: none !important
   border: 1px solid $color-disabled
-  padding: $margin-x-small
-  transition: all $duration-transition ease
   font-size: $font-size-medium
+
+  .wrapper-content-interval
+    margin-top: $margin-xx-small + $padding-card-additional
+    margin-bottom: $margin-xx-small
+    margin-right: 26px
+    transition: all $duration-transition ease
 
   // The user is actively on this card.
   &.active
-    padding: $margin-normal
     font-size: $font-size-large
 
-    .indicator
-      margin-left: -$margin-normal
-  
-    .icon-drag
-      margin-top: 7px
+    .wrapper-content-interval
+      margin-top: $margin-small + $padding-card-additional
+      margin-bottom: $margin-small
 
   // Values have been added.
   &.dirty
@@ -28,8 +32,6 @@ mat-card
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) !important
 
     .duration
-      margin-right: $margin-medium
-
       input &.middle
         margin-left: 2px
         
@@ -43,17 +45,24 @@ mat-card
   margin-top: 0
   align-self: flex-end
 
+.wrapper-indicator
+  display: flex
+  align-items: center
+
 .indicator
   width: 10px
-  margin-left: -$margin-x-small
-  margin-right: $margin-x-small
+  margin-top: -1px
+  height: 60%
+  transition: all $duration-transition ease
 
 .icon-drag
-  margin-top: 3px
-  margin-left: -20px
-  margin-right: 16px
+  padding-left: $margin-xxx-small
+  width: 34px
   color: $color-disabled
   cursor: grab
+
+.col-sm
+  padding-left: 5px
 
 .menu
   position: absolute
@@ -66,13 +75,6 @@ mat-card
   padding-left: 3px 
   padding-right: 7px
   margin-right: 12px
-  
-  &.active
-    border-width: 2px
-    border-bottom-width: 2px
-    border-bottom-color: $color1
-    border-bottom-style: solid
-    transition: border-width 75ms linear
 
   > div
     display: inline-block
