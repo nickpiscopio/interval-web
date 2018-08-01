@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import {Component, ViewChild, NgZone, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Route } from '../../../../constant/route.constant';
@@ -11,9 +11,12 @@ import {HttpClient} from '@angular/common/http';
 import {ApiUtility} from '../../../../utility/api.utility';
 import {UrlUtility} from '../../../../utility/url.utility';
 import {fade} from '../../../../animations/fade';
+import {DragulaService} from 'ng2-dragula';
+import {Subscription} from 'rxjs';
 
 // This is the group to allow reordering intervals by dragging.
-const GROUP_INTERVALS = 0;
+const GROUP_INTERVALS = 'intervals';
+const GROUP_INTERVALS_CLASS_NAME = 'icon-drag';
 
 @Component({
   selector: 'app-timer-create',
@@ -21,7 +24,7 @@ const GROUP_INTERVALS = 0;
   styleUrls: ['./timer-create.component.sass'],
   animations: [fade]
 })
-export class TimerCreateComponent {
+export class TimerCreateComponent implements OnDestroy {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   timer: Timer;
@@ -33,12 +36,16 @@ export class TimerCreateComponent {
 
   private apiUtility: ApiUtility;
 
+  // RxJS Subscription is an excellent API for managing many unsubscribe calls.
+  // See note below about unsubscribing.
+  private subs = new Subscription();
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private ngZone: NgZone,
               private dialog: MatDialog,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private dragulaService: DragulaService) {
 
     this.isLoading = true;
 
@@ -68,6 +75,54 @@ export class TimerCreateComponent {
 
       this.isLoading = false;
     });
+
+    this.initDragula();
+  }
+
+  ngOnDestroy() {
+    // destroy all the subscriptions at once
+    this.subs.unsubscribe();
+  }
+
+  /**
+   * Initializes Dragula.
+   */
+  initDragula() {
+    let scrollable = true;
+
+    const listener = function(e) {
+      if (!scrollable) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('touchmove', listener, { passive: false });
+
+    // Only move the interval when using the movable indicator.
+    this.dragulaService.createGroup(GROUP_INTERVALS, {
+      moves: (el, container, handle) => {
+        return handle.classList.contains(GROUP_INTERVALS_CLASS_NAME);
+      }
+    });
+
+
+    this.subs.add(this.dragulaService.drag(GROUP_INTERVALS)
+      .subscribe(({ name, el, source }) => {
+        scrollable = false;
+      })
+    );
+
+    this.subs.add(this.dragulaService.drop(GROUP_INTERVALS)
+      .subscribe(({ name, el, source }) => {
+        scrollable = true;
+      })
+    );
+
+    this.subs.add(this.dragulaService.dragend(GROUP_INTERVALS)
+      .subscribe(({ name, el }) => {
+        scrollable = true;
+      })
+    );
   }
 
   /**
