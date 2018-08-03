@@ -16,7 +16,10 @@ Navigate to unzipped filed
 Change directories to the root of interval-web
     
     ulimit -n 8192
-    sudo caddy -conf ./caddy.conf
+    
+Run caddy. (May need sudo)
+
+    caddy -conf ./caddy.conf
     
 Install npm
 
