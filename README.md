@@ -1,5 +1,40 @@
 # Interval
 
+Install caddy
+https://caddyserver.com/tutorial/beginner
+
+### Mac
+Download caddy
+Navigate to unzipped filed
+
+    mv ./caddy /usr/local/bin
+ 
+### Linux 
+
+    curl https://getcaddy.com | bash -s personal
+    
+Change directories to the root of interval-web
+    
+    ulimit -n 8192
+    sudo caddy -conf ./caddy.conf
+    
+Install npm
+
+    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+
+Versions
+Node v10.4.1
+NPM 6.2.0
+
+    node -v
+    npm -v
+    
+Change directories into the frontend
+    
+    npm install
+    npm start
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
