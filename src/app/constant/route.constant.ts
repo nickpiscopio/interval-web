@@ -5,7 +5,7 @@ export class Route {
   public static readonly ROUTE_TIMER_UPDATE = Route.ROUTE_TIMER + '/update';
   public static readonly ROUTE_TIMER_GET = Route.ROUTE_TIMER + '/get';
 
-  public static readonly DOMAIN = window.location.hostname + ':4200/';
+  public static readonly DOMAIN = window.location.hostname + '/';
   // Internal routes.
   private static readonly ROOT = '/';
   private static readonly PREFIX_PARAM = ':';
