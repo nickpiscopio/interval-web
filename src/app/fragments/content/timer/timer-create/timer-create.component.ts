@@ -83,6 +83,9 @@ export class TimerCreateComponent implements OnDestroy {
   ngOnDestroy() {
     // destroy all the subscriptions at once
     this.subs.unsubscribe();
+
+    // Destroy the interval group because we left the page.
+    this.dragulaService.destroy(GROUP_INTERVALS);
   }
 
   /**
@@ -103,10 +106,9 @@ export class TimerCreateComponent implements OnDestroy {
     this.dragulaService.createGroup(GROUP_INTERVALS, {
       moves: (el, container, handle) => {
         return handle.classList.contains(CLASS_NAME_DRAGGABLE) ||
-               handle.classList.contains(CLASS_NAME_DRAGGABLE_2);
+          handle.classList.contains(CLASS_NAME_DRAGGABLE_2);
       }
     });
-
 
     this.subs.add(this.dragulaService.drag(GROUP_INTERVALS)
       .subscribe(({ name, el, source }) => {

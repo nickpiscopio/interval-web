@@ -1,6 +1,6 @@
 <div>
   <button #close mat-icon-button class="right btn-close" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button>
-  <h1>Share <input [(ngModel)]="timer.name" (blur)="getUrl()"/></h1>
+  <h1>Share <input [(ngModel)]="timer.name" placeholder="Timer Name" (blur)="getUrl()"/></h1>
 
   <div *ngIf="!isLoading; else loading">
     <h3 *ngIf="showMessage()">{{message}}</h3>

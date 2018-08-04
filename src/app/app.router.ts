@@ -5,9 +5,11 @@ import { Route } from './constant/route.constant';
 import { WelcomeComponent } from './fragments/content/welcome/welcome.component';
 import { TimerCreateComponent } from './fragments/content/timer/timer-create/timer-create.component';
 import { TimerComponent } from './fragments/content/timer/timer-run/timer-run.component';
+import { TermsRouteComponent } from './fragments/content/terms/route/terms.component';
 
 const appRoutes: Routes = [
   { path: Route.INTERNAL_WELCOME, component: WelcomeComponent },
+  { path: Route.INTERNAL_TERMS, component: TermsRouteComponent },
   { path: Route.INTERNAL_ROUTE_TIMER_CREATE, component: TimerCreateComponent },
   { path: Route.INTERNAL_ROUTE_TIMER_RUN, component: TimerComponent },
 

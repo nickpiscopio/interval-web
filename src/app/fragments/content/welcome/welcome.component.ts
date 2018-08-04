@@ -3,6 +3,8 @@ import { Route } from '../../../constant/route.constant';
 import { trigger, style, transition, animate, state } from '@angular/animations';
 import { Router } from '@angular/router';
 import { Class } from '../../../constant/class.constant';
+import {TermsDialogComponent} from '../../dialog/terms/terms.component';
+import {MatDialog} from '@angular/material';
 
 const THRESHOLD_SHOW_BUTTON = 550;
 
@@ -26,7 +28,7 @@ export class WelcomeComponent implements AfterContentInit {
 
   buttonClass: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private dialog: MatDialog) {}
 
   ngAfterContentInit() {
     // We want to show the button after a certain threshold.
@@ -34,6 +36,13 @@ export class WelcomeComponent implements AfterContentInit {
       this.slideTitle = true;
       this.buttonClass = Class.ACTIVE;
     }, THRESHOLD_SHOW_BUTTON);
+  }
+
+  /**
+   * Opens the terms dialog.
+   */
+  openTerms() {
+    this.dialog.open(TermsDialogComponent);
   }
 
   /**

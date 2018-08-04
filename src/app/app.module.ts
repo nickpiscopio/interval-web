@@ -28,6 +28,9 @@ import { routes } from './app.router';
 // Components
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './fragments/content/welcome/welcome.component';
+import { TermsContentComponent } from './fragments/content/terms/terms.component';
+import { TermsRouteComponent } from './fragments/content/terms/route/terms.component';
+import { TermsDialogComponent } from './fragments/dialog/terms/terms.component';
 import { TimerComponent } from './fragments/content/timer/timer-run/timer-run.component';
 import { TimerCreateComponent } from './fragments/content/timer/timer-create/timer-create.component';
 import { FooterComponent } from './fragments/modules/footer/footer.component';
@@ -45,6 +48,9 @@ import { ShareComponent } from './fragments/dialog/share/share.component';
   declarations: [
     AppComponent,
     WelcomeComponent,
+    TermsContentComponent,
+    TermsRouteComponent,
+    TermsDialogComponent,
     TimerComponent,
     TimerCreateComponent,
     FooterComponent,
@@ -78,7 +84,8 @@ import { ShareComponent } from './fragments/dialog/share/share.component';
   ],
   entryComponents: [
     DialogComponent,
-    ShareComponent
+    ShareComponent,
+    TermsDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -364,4 +364,15 @@ export class TimerComponent implements OnDestroy {
   disableNoSleep() {
     this.noSleep.disable();
   }
+
+  /**
+   * Tells when the terms visibility changed.
+   *
+   * @param isVisible   Boolean value telling if terms is visible.
+   */
+  onTermsVisibilityChanged(isVisible: boolean) {
+    if (isVisible) {
+      this.setTimerActivation();
+    }
+  }
 }
