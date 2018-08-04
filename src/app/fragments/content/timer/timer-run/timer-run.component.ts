@@ -66,7 +66,6 @@ export class TimerComponent implements OnDestroy {
   intervalIndex = 0;
 
   private intervalTimer;
-  private pauseTimer;
 
   private intervalNotification1;
   private intervalNotification2;
@@ -75,6 +74,8 @@ export class TimerComponent implements OnDestroy {
   private volume = VOLUME_DEFAULT;
 
   private noSleep;
+
+  private destroyed = false;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -119,9 +120,12 @@ export class TimerComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroyed = true;
     // We need to destroy all timers in case we go back to a different screen or navigate away for any reason.
     clearInterval(this.intervalTimer);
-    clearInterval(this.pauseTimer);
+
+    // We disable 'NoSleep' here because we left the timer page.
+    this.disableNoSleep();
   }
 
   /**
@@ -254,26 +258,28 @@ export class TimerComponent implements OnDestroy {
    * Starts or stops the timer depending upon what was already done.
    */
   setTimerActivation() {
-    // We only want to pause/resume if the timer isn't finished.
-    if (!this.isTimerFinished) {
-      if (this.paused) {
-        // The timer is started again, so create a new timer and resume where we left off.
-        this.runTimer(this.timer.intervals, true);
-      } else {
-        // The timer is paused, so clear the interval timer so it doesn't continue.
-        clearInterval(this.intervalTimer);
+    if (!this.destroyed) {
+      // We only want to pause/resume if the timer isn't finished.
+      if (!this.isTimerFinished) {
+        if (this.paused) {
+          // The timer is started again, so create a new timer and resume where we left off.
+          this.runTimer(this.timer.intervals, true);
+        } else {
+          // The timer is paused, so clear the interval timer so it doesn't continue.
+          clearInterval(this.intervalTimer);
 
-        // We disable 'NoSleep' here because the timer is paused.
-        this.disableNoSleep();
+          // We disable 'NoSleep' here because the timer is paused.
+          this.disableNoSleep();
 
-        this.displayShareDialog(MESSAGE_SHARE_WHILE_PAUSED);
+          this.displayShareDialog(MESSAGE_SHARE_WHILE_PAUSED);
+        }
+      } else if (!this.paused) {
+        this.displayShareDialog(MESSAGE_CONGRATULATIONS);
       }
-    } else if (!this.paused) {
-      this.displayShareDialog(MESSAGE_CONGRATULATIONS);
-    }
 
-    // This is outside of the condition because it displays the pause/share button if the timer isn't paused.
-    this.paused = !this.paused;
+      // This is outside of the condition because it displays the pause/share button if the timer isn't paused.
+      this.paused = !this.paused;
+    }
   }
 
   /**

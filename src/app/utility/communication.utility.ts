@@ -53,7 +53,7 @@ export class Communication {
         },
         // For Error Response
         (err) => {
-          error(err);
+          error("hey0: ", err);
         }
       );
   }
