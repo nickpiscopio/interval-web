@@ -11,7 +11,7 @@ export class ClockDisplayComponent implements OnChanges {
   // Flag to check if the timer is finished.
   @Input() isTimerFinished: boolean;
 
-  private timeUtil = new Time();
+  timeUtil = new Time();
 
   ngOnChanges(changes) {
     if (changes.time !== undefined && changes.time.currentValue >= 0) {
@@ -28,11 +28,11 @@ export class ClockDisplayComponent implements OnChanges {
 
   /**
    * Checks to see if seconds should be displayed.
-   * 
+   *
    * @return Boolean value on whether or not the seconds should be displayed.
    */
-  shouldDisplaySeconds() {    
-    return (this.timeUtil.hours == 0 && this.timeUtil.minutes == 0 && !this.isTimerFinished) || 
+  shouldDisplaySeconds() {
+    return (this.timeUtil.hours === 0 && this.timeUtil.minutes === 0 && !this.isTimerFinished) ||
            (this.timeUtil.seconds > 0 && !this.isTimerFinished);
   }
 }
