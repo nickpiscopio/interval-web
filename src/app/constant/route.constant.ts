@@ -19,7 +19,6 @@ export class Route {
 
   private static readonly INTERNAL_ROUTE_TIMER = Route.getTimerRoute(Route.PREFIX_PARAM + Route.INTERNAL_TIMER_PARAM, false);
 
-  public static readonly INTERNAL_ROUTE_TERMS = Route.ROOT + Route.INTERNAL_TERMS;
   public static readonly INTERNAL_ROUTE_TIMER_CREATE = Route.INTERNAL_ROUTE_TIMER;
   public static readonly INTERNAL_ROUTE_TIMER_RUN = Route.INTERNAL_ROUTE_TIMER + Route.INTERNAL_TIMER_SUFFIX;
 
