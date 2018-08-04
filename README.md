@@ -36,6 +36,11 @@ NPM 6.2.0
 Change directories into the frontend
     
     npm install
+    
+The following needs to be changed before starting:
+    
+    vi src/app/constant/network.constant.ts
+    public static readonly IP = 'interval.intencity.fit';
     npm start
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
