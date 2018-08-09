@@ -35,7 +35,7 @@ export class MetaUtility {
 
     // Facebook
     this.updatePropertyTag('og:title', this.name);
-    this.updatePropertyTag('og:url', this.url);
+    this.updatePropertyTag('og:url', 'http://interval.intencity.fit');
     this.updatePropertyTag('og:image', this.image);
     this.updatePropertyTag('og:description', this.description);
 
