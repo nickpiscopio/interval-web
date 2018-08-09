@@ -49,8 +49,6 @@ export class TimerCreateComponent implements OnDestroy {
               private dragulaService: DragulaService,
               private meta: Meta) {
 
-    this.meta.updateTag({ property: 'og:image', content: 'http://interval.intencity.fit/assets/images/logo_social.jpg' });
-
     this.isLoading = true;
 
     this.apiUtility = new ApiUtility(this.http);
