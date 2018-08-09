@@ -13,6 +13,7 @@ import {UrlUtility} from '../../../../utility/url.utility';
 import {fade} from '../../../../animations/fade';
 import {DragulaService} from 'ng2-dragula';
 import {Subscription} from 'rxjs';
+import {Meta} from '@angular/platform-browser';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 'intervals';
@@ -37,8 +38,7 @@ export class TimerCreateComponent implements OnDestroy {
 
   private apiUtility: ApiUtility;
 
-  // RxJS Subscription is an excellent API for managing many unsubscribe calls.
-  // See note below about unsubscribing.
+  // RxJS Subscription managing many unsubscribe calls.
   private subs = new Subscription();
 
   constructor(private route: ActivatedRoute,
@@ -46,7 +46,8 @@ export class TimerCreateComponent implements OnDestroy {
               private ngZone: NgZone,
               private dialog: MatDialog,
               private http: HttpClient,
-              private dragulaService: DragulaService) {
+              private dragulaService: DragulaService,
+              private meta: Meta) {
 
     this.isLoading = true;
 
@@ -54,7 +55,7 @@ export class TimerCreateComponent implements OnDestroy {
 
     this.color = new Color();
 
-    new UrlUtility(route, http).getTimer((timer) => {
+    new UrlUtility(route, http, meta).getTimer((timer) => {
       if (timer !== undefined) {
         this.timer = timer;
 

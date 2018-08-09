@@ -16,6 +16,7 @@ import {MessageUtility} from '../../../../utility/message.utility';
 import {MatDialog} from '@angular/material';
 import {Route} from '../../../../constant/route.constant';
 import {ShareComponent} from '../../../dialog/share/share.component';
+import {Meta} from '@angular/platform-browser';
 
 const VOLUME_LOWEST = 0;
 const VOLUME_HIGHEST = 1;
@@ -70,7 +71,7 @@ export class TimerComponent implements OnDestroy {
   private intervalNotification1;
   private intervalNotification2;
 
-  // We default the volume to 70%.
+  // We default the volume to 60%.
   private volume = VOLUME_DEFAULT;
 
   private noSleep;
@@ -80,7 +81,8 @@ export class TimerComponent implements OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private dialog: MatDialog,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private meta: Meta) {
 
     this.isLoading = true;
 
@@ -95,7 +97,7 @@ export class TimerComponent implements OnDestroy {
     this.intervalNotification1.volume = this.volume;
     this.intervalNotification2.volume = this.volume;
 
-    new UrlUtility(route, http).getTimer((timer) => {
+    new UrlUtility(route, http, meta).getTimer((timer) => {
       if (timer !== undefined) {
         this.timer = timer;
 

@@ -4,11 +4,13 @@ import {EncryptUtility} from './encrypt.utility';
 import {ActivatedRoute} from '@angular/router';
 import {ApiUtility} from './api.utility';
 import {Timer} from '../fragments/content/timer/timer';
+import {Meta} from '@angular/platform-browser';
+import {MetaUtility} from './meta.utility';
 
 export class UrlUtility {
   private apiUtility: ApiUtility;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private meta: Meta) {
     this.apiUtility = new ApiUtility(this.http);
   }
 
@@ -25,13 +27,15 @@ export class UrlUtility {
       const urlTimer = this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM);
       const id = Number(urlTimer);
 
+      const url = Route.getTimerRoute(urlTimer, false);
+
       if (isNaN(id)) {
-        this.initTimer(urlTimer, callback);
+        this.initTimer(urlTimer, url, callback);
       } else {
         this.apiUtility.getTimer(Number(urlTimer), (data) => {
           const timer = data.timer;
           if (timer !== undefined && timer.length > 0) {
-            this.initTimer(EncryptUtility.decode(timer), callback);
+            this.initTimer(EncryptUtility.decode(timer), url, callback);
           } else {
             callback();
           }
@@ -47,12 +51,18 @@ export class UrlUtility {
   /**
    * Initializes the timer.
    *
-   * @param timerString  The timer to decrypt.
-   * @param callback  The function that is called when the process completes.
+   * @param timerString   The timer to decrypt.
+   * @param url           The url of the timer.
+   * @param callback      The function that is called when the process completes.
    */
-  private initTimer(timerString: string, callback) {
+  private initTimer(timerString: string, url: string, callback) {
     const tempTimer = JSON.parse(timerString);
     const timer = new Timer(tempTimer.name, tempTimer.intervals);
+
+    // Adds the meta data tags to each page that has a timer.
+    // This is for social media cards.
+    new MetaUtility(this.meta, timer.name, url).addProperties();
+
     if (timer !== undefined) {
       timer.finalize();
 
