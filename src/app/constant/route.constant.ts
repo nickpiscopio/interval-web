@@ -6,6 +6,7 @@ export class Route {
   public static readonly ROUTE_TIMER_GET = Route.ROUTE_TIMER + '/get';
 
   public static readonly DOMAIN = window.location.hostname + '/';
+  public static readonly DOMAIN_FULL = 'http://' + Route.DOMAIN;
   // Internal routes.
   private static readonly ROOT = '/';
   private static readonly PREFIX_PARAM = ':';

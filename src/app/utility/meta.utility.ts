@@ -4,14 +4,24 @@ export class MetaUtility {
   private meta: Meta;
 
   private author = 'Interval Fitness Timer';
+  private name = this.author;
+  private url = 'http://interval.intencity.fit';
   private copyrightDate = '2018';
   private rights = '&copy; ' + this.copyrightDate + ' All Rights Reserved. Interval.Intencity.fit';
 
   private description = 'Interval: High intensity interval training timer by Intencity.';
   private image = 'http://interval.intencity.fit/assets/images/logo_social.jpg';
 
-  constructor(meta: Meta, private name: string, private url: string) {
+  constructor(meta: Meta, name?: string, url?: string) {
     this.meta = meta;
+
+    if (name !== undefined && name.trim() !== '') {
+      this.name = name;
+    }
+
+    if (url !== undefined  && url.trim() !== '') {
+      this.url = url;
+    }
   }
 
   /**

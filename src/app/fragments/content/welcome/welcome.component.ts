@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Class } from '../../../constant/class.constant';
 import {TermsDialogComponent} from '../../dialog/terms/terms.component';
 import {MatDialog} from '@angular/material';
+import {MetaUtility} from '../../../utility/meta.utility';
+import {Meta} from '@angular/platform-browser';
 
 const THRESHOLD_SHOW_BUTTON = 550;
 
@@ -28,7 +30,11 @@ export class WelcomeComponent implements AfterContentInit {
 
   buttonClass: string;
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private dialog: MatDialog, private meta: Meta) {
+    // Adds the meta data tags to each page that has a timer.
+    // This is for social media cards.
+    new MetaUtility(this.meta).addProperties();
+  }
 
   ngAfterContentInit() {
     // We want to show the button after a certain threshold.

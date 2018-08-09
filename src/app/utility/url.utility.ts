@@ -27,7 +27,7 @@ export class UrlUtility {
       const urlTimer = this.route.snapshot.paramMap.get(Route.INTERNAL_TIMER_PARAM);
       const id = Number(urlTimer);
 
-      const url = Route.getTimerRoute(urlTimer, false);
+      const url = Route.DOMAIN_FULL + Route.getTimerRoute(urlTimer, false);
 
       if (isNaN(id)) {
         this.initTimer(urlTimer, url, callback);
