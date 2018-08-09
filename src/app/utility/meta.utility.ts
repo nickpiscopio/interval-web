@@ -10,7 +10,7 @@ export class MetaUtility {
   private rights = '&copy; ' + this.copyrightDate + ' All Rights Reserved. Interval.Intencity.fit';
 
   private description = 'Interval: High intensity interval training timer by Intencity.';
-  private image = 'http://interval.intencity.fit/assets/images/logo_social.jpg';
+  private image = 'assets/images/logo_social.jpg';
 
   constructor(meta: Meta, name?: string, url?: string) {
     this.meta = meta;
