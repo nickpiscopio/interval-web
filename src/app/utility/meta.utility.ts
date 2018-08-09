@@ -27,59 +27,59 @@ export class MetaUtility {
   /**
    * Adds meta data properties.
    */
-  addProperties() {
+  updateMetaProperties() {
     // Schema.org markup for Google+
-    this.addItemPropTag('name', this.name);
-    this.addItemPropTag('description', this.description);
-    this.addItemPropTag('image', this.image);
+    this.updateItemPropTag('name', this.name);
+    this.updateItemPropTag('description', this.description);
+    this.updateItemPropTag('image', this.image);
 
     // Facebook
-    this.addPropertyTag('og:title', this.name);
-    this.addPropertyTag('og:url', this.url);
-    this.addPropertyTag('og:image', this.image);
-    this.addPropertyTag('og:description', this.description);
+    this.updatePropertyTag('og:title', this.name);
+    this.updatePropertyTag('og:url', this.url);
+    this.updatePropertyTag('og:image', this.image);
+    this.updatePropertyTag('og:description', this.description);
 
     // Twitter
-    this.addNameTag('twitter:card', 'summary');
-    this.addNameTag('twitter:title', this.name);
-    this.addNameTag('twitter:description', this.description);
+    this.updateNameTag('twitter:card', 'summary');
+    this.updateNameTag('twitter:title', this.name);
+    this.updateNameTag('twitter:description', this.description);
     // Twitter Summary card images must be at least 120x120px
-    this.addNameTag('twitter:image', this.image);
+    this.updateNameTag('twitter:image', this.image);
 
     // Legal
-    this.addNameTag('author', this.author);
-    this.addNameTag('description', this.description);
-    this.addNameTag('dcterms.rights', this.rights);
-    this.addNameTag('dcterms.dateCopyrighted', this.copyrightDate);
+    this.updateNameTag('author', this.author);
+    this.updateNameTag('description', this.description);
+    this.updateNameTag('dcterms.rights', this.rights);
+    this.updateNameTag('dcterms.dateCopyrighted', this.copyrightDate);
   }
 
   /**
-   * Adds a tag with an itemprop.
+   * Updates a tag with a specified itemprop.
    *
    * @param property  The name of the property to set.
    * @param content   The content of the property to set.
    */
-  private addItemPropTag(property: string, content: string) {
-    this.meta.addTag({ itemprop: property, content: content });
+  private updateItemPropTag(property: string, content: string) {
+    this.meta.updateTag({ itemprop: property, content: content });
   }
 
   /**
-   * Adds a tag with a property.
+   * Updates a tag with a specified property.
    *
    * @param property  The name of the property to set.
    * @param content   The content of the property to set.
    */
-  private addPropertyTag(property: string, content: string) {
-    this.meta.addTag({ property: property, content: content });
+  private updatePropertyTag(property: string, content: string) {
+    this.meta.updateTag({ property: property, content: content });
   }
 
   /**
-   * Adds a tag with a name.
+   * Updates a tag with a specified name.
    *
    * @param property  The name of the property to set.
    * @param content   The content of the property to set.
    */
-  private addNameTag(property: string, content: string) {
-    this.meta.addTag({ name: property, content: content });
+  private updateNameTag(property: string, content: string) {
+    this.meta.updateTag({ name: property, content: content });
   }
 }

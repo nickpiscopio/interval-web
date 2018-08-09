@@ -61,7 +61,7 @@ export class UrlUtility {
 
     // Adds the meta data tags to each page that has a timer.
     // This is for social media cards.
-    new MetaUtility(this.meta, timer.name, url).addProperties();
+    new MetaUtility(this.meta, timer.name, url).updateMetaProperties();
 
     if (timer !== undefined) {
       timer.finalize();

@@ -33,7 +33,7 @@ export class WelcomeComponent implements AfterContentInit {
   constructor(private router: Router, private dialog: MatDialog, private meta: Meta) {
     // Adds the meta data tags to each page that has a timer.
     // This is for social media cards.
-    new MetaUtility(this.meta).addProperties();
+    new MetaUtility(this.meta).updateMetaProperties();
   }
 
   ngAfterContentInit() {
