@@ -1,0 +1,6 @@
+AddDefaultCharset UTF-8
+RewriteEngine On
+RewriteBase   /
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+RewriteRule ^post/(.*)$ http://interval.intencity.fit [NC,L]
