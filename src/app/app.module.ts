@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 // Documentation: https://github.com/valor-software/ng2-dragula
 import { DragulaModule } from 'ng2-dragula';
 import { ClipboardModule } from 'ngx-clipboard';
+import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
 
 // Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +45,20 @@ import { ProgressComponent } from './fragments/modules/progress/progress.compone
 import { DialogComponent } from './fragments/dialog/dialog/dialog.component';
 import { ShareComponent } from './fragments/dialog/share/share.component';
 
+export function metaFactory(): MetaLoader {
+  return new MetaStaticLoader({
+    pageTitlePositioning: PageTitlePositioning.PrependPageTitle,
+    pageTitleSeparator: ' - ',
+    applicationName: 'Interval',
+    defaults: {
+      title: 'Interval',
+      description: 'Fitness timer',
+      'og:image': 'http://interval.intencity.fit/assets/images/logo_social.jpg',
+      'og:type': 'website'
+    }
+  });
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +78,10 @@ import { ShareComponent } from './fragments/dialog/share/share.component';
     ShareComponent
   ],
   imports: [
+    MetaModule.forRoot({
+      provide: MetaLoader,
+      useFactory: (metaFactory)
+    }),
     CommonModule,
     BrowserModule,
     HttpClientModule,

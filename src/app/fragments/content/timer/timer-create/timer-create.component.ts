@@ -1,4 +1,4 @@
-import {Component, ViewChild, NgZone, OnDestroy} from '@angular/core';
+import {Component, ViewChild, NgZone, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Timer } from '../timer';
 import { Route } from '../../../../constant/route.constant';
@@ -14,6 +14,7 @@ import {fade} from '../../../../animations/fade';
 import {DragulaService} from 'ng2-dragula';
 import {Subscription} from 'rxjs';
 import {Meta} from '@angular/platform-browser';
+import { MetaService } from '@ngx-meta/core';
 
 // This is the group to allow reordering intervals by dragging.
 const GROUP_INTERVALS = 'intervals';
@@ -26,7 +27,7 @@ const CLASS_NAME_DRAGGABLE_2 = 'indicator';
   styleUrls: ['./timer-create.component.sass'],
   animations: [fade]
 })
-export class TimerCreateComponent implements OnDestroy {
+export class TimerCreateComponent implements OnInit, OnDestroy {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   timer: Timer;
@@ -47,7 +48,8 @@ export class TimerCreateComponent implements OnDestroy {
               private dialog: MatDialog,
               private http: HttpClient,
               private dragulaService: DragulaService,
-              private meta: Meta) {
+              private meta: Meta,
+              private readonly metaService: MetaService) {
 
     this.isLoading = true;
 
@@ -79,6 +81,11 @@ export class TimerCreateComponent implements OnDestroy {
     });
 
     this.initDragula();
+  }
+
+  ngOnInit() {
+    // this.metaService.setTitle('Interval Timer');
+    // this.metaService.setTag('og:image', 'http://interval.intencity.fit/assets/images/logo_social.jpg');
   }
 
   ngOnDestroy() {
