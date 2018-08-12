@@ -84,8 +84,8 @@ export class TimerCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.metaService.setTitle('Interval Timer');
-    // this.metaService.setTag('og:image', 'http://interval.intencity.fit/assets/images/logo_social.jpg');
+    this.metaService.setTitle('Interval Timer');
+    this.metaService.setTag('og:image', 'http://interval.intencity.fit/assets/images/logo_social.jpg');
   }
 
   ngOnDestroy() {
